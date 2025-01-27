@@ -1,13 +1,22 @@
-import { useState } from 'react'
-import Titulo from './components/Titulo';
+
 import Example  from './components/People';
+import Navbar from './components/NavBar';;
+import "./index.css"; 
+import { Routes, Route } from 'react-router-dom';
+import AboutPage from './about/page'
+// O el archivo CSS que hayas usado para Tailwind
 
-import './App.css'
 
-function App() {
+const App : React.FC = () => {
   return (
-        <Example/>)
-
-}
+    <>
+        <Routes>
+        <Route path="/about" element={<AboutPage />} />
+        </Routes>
+        <Navbar/>
+        <Example/>
+        </>
+        );
+};
 
 export default App
