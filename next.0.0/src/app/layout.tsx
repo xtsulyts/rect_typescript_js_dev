@@ -24,6 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <link rel="stylesheet" href="https://rsms.me/inter/inter.css"></link>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
