@@ -1,16 +1,20 @@
 import Form from "./components/Form";
 import Card, {CardBody} from "./components/Card"
-import List from "./components/List";
+import NavBar from "./components/NavBar";
+import Footer from "./components/Footer";
 
 
 export default function Home() {
   return (
     <>
-        <Card>
+     <NavBar></NavBar>
+        <Card>        
           <CardBody title="VISUALIZA" text="CREALO"></CardBody>
-          <List></List>
-        </Card>
-        <Form/>
+      </Card>
+      <Form/>
+      <Footer enlaces="hola"></Footer>
+        
+        
     </>
 
   );

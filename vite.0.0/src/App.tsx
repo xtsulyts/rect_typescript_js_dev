@@ -10,11 +10,11 @@ import AboutPage from './about/page'
 const App : React.FC = () => {
   return (
     <>
-        <Routes>
+        {/* <Routes>
         <Route path="/about" element={<AboutPage />} />
-        </Routes>
+        </Routes> */}
         <Navbar/>
-        <Example/>
+        <Example/>  
         </>
         );
 };

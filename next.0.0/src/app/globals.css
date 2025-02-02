@@ -20,5 +20,10 @@ body {
 
 .card, p {
  background-color: aqua;
- text-decoration-color: #b31414;
+ text-decoration-color: #1b0505;
+}
+.card-header, li{
+  background-color: #5a3636;
+  text-decoration-color: aliceblue;
+  display: inline-block;
 }

@@ -1,4 +1,6 @@
 import React from "react";
+import { Routes, Route } from 'react-router-dom';
+import AboutPage from './about/page'
 
 
 const Navbar: React.FC = () => {
@@ -6,7 +8,7 @@ const Navbar: React.FC = () => {
     <nav className="bg-blue-600 text-white p-4">
       <div className="container mx-auto flex items-center justify-between">
         {/* Logo */}
-        <div className="text-xl font-bold">MyApp</div>
+        <div className="text-xl font-bold">Pagina de prueba</div>
 
         {/* Navigation Links */}
         <ul className="flex space-x-4">
@@ -16,7 +18,7 @@ const Navbar: React.FC = () => {
             </a>
           </li>
           <li>
-            <a href="#" className="hover:text-blue-200">
+            <a href="./about" className="hover:text-blue-200">
               About
             </a>
           </li>
