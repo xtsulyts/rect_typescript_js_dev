@@ -1,4 +1,8 @@
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 
 :root {
   --background: #240606;
@@ -7,8 +11,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #1e4626;
-    --foreground: #f01111;
+    --background: #333834;
+    --foreground: #e2cfcf;
   }
 }
 
@@ -18,12 +22,12 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.card, p {
- background-color: aqua;
+/* .card, p {
+ background-color: rgb(47, 73, 73);
  text-decoration-color: #1b0505;
 }
 .card-header, li{
   background-color: #5a3636;
   text-decoration-color: aliceblue;
   display: inline-block;
-}
+} */

@@ -12,7 +12,7 @@ export default function Home() {
           <CardBody title="VISUALIZA" text="CREALO"></CardBody>
       </Card>
       <Form/>
-      <Footer enlaces="hola"></Footer>
+      <Footer enlaces="esto es el footer"></Footer>
         
         
     </>

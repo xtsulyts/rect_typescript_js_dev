@@ -1,14 +1,23 @@
 import React from 'react'
-
-type Props = {
+ type footerProps = {
     enlaces: string;
-}
+ }
 
-function Footer({enlaces}: Props) {
+function Footer(props: footerProps) {
     return(
-        <div {...="hhhh"}>
-        <h5>estos es un footer</h5>
-    </div>
+        <footer className="footer">
+  <div className="content has-text-centered">
+    <p>
+      <strong>{props.enlaces}</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>.
+      The source code is licensed
+      <a href="https://opensource.org/license/mit">MIT</a>. The
+      website content is licensed
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0//"
+        >CC BY NC SA 4.0</a
+      >.
+    </p>
+  </div>
+</footer>
     )
 
 }
