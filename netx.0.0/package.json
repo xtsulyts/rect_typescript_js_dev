@@ -9,15 +9,35 @@
     "lint": "next lint"
   },
   "dependencies": {
+<<<<<<< HEAD:netx.0.0/package.json
+=======
+    "@headlessui/react": "^2.2.0",
+    "@heroicons/react": "^2.2.0",
+    "next": "15.1.5",
+    "postcss": "^8.5.1",
+>>>>>>> cec953233dbae8ee8f92c73c0fe7d75fe98f12ff:next.0.0/package.json
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "next": "15.2.4"
   },
   "devDependencies": {
+<<<<<<< HEAD:netx.0.0/package.json
     "@tailwindcss/postcss": "^4",
     "tailwindcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "15.2.4",
     "@eslint/eslintrc": "^3"
+=======
+    "@eslint/eslintrc": "^3",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "autoprefixer": "^10.4.20",
+    "daisyui": "^4.12.23",
+    "eslint": "^9",
+    "eslint-config-next": "15.1.5",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5"
+>>>>>>> cec953233dbae8ee8f92c73c0fe7d75fe98f12ff:next.0.0/package.json
   }
 }
