@@ -1,0 +1,33 @@
+.header {
+    background-color: #333;
+    color: white;
+    padding: 1rem;
+  }
+  
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .header-menu {
+    display: flex;
+    list-style: none;
+    gap: 1rem;
+  }
+  
+  .header-menu-item a {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .header-login-btn {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
