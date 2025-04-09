@@ -1,15 +1,22 @@
-import Home from "./component/Home";
-
+import Home from "./component/Home"
+import Perfil from "./component/Perfil"
+import Button from "./component/Button.jsx"
 
 export default function App() {
 
-  const viewWindows = true
+  const mensaje = [
+    {
+      id: 1,
+      nombre: "walter",
+    }
+  ]
   return (
     <>
-    <Header></Header>
-    <Home />
+    <Button boton="esto es un boton"/>
+    <Home estoesunaprop="holaaa"/>
+    <Perfil propDesdePadre="walter"/>
     
-    <Footer></Footer>
+  
     </>
 
   );

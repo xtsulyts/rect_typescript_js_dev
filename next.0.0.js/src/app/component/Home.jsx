@@ -1,17 +1,24 @@
+"use client"
+
 import { useState } from 'react'
+//import "globals.css"
 
-const [windowsView, setWindowsView] = useState(null);
 
-function Home ({windowsView}) {
+function Home (props, nombe, apellido) {
+    const [windowsView, setWindowsView] = useState("");
     const handleWindowsView = () => {
-        mostrarWindows = setWindowsView("hola como estas.")
+       setWindowsView("holaaaaa")
+        
     }
 
     return (
         <>
-        <div>
-            <button onClick= { handleWindowsView}>Precionar Boton</button>
-        </div>
+        
+            
+            
+            
+            <div>esto es una props {props.estoesunaprop}</div>
+        
         </>
     )
 }
