@@ -1,7 +1,9 @@
 import React from 'react';
+import logo from '/src/assets/react.svg';
 //import './Header.css'; // Archivo de estilos (opcional)
 
-const Header = ({ titulo, logo, menuItems, onLogin, usuario }) => {
+const Header = ({ titulo,menuItems, onLogin, usuario }) => {
+ 
   return (
     <header className="header">
       <div className="header-container">

@@ -6,7 +6,7 @@ import '../styles/Galeria.css';
 
 const Galeria = ({ productos, onProductClick }) => {
   return (
-    <div >  
+    <div className='galleryContainer'>  
       {productos.map((producto) => (
         <div 
           key={producto.id} 
