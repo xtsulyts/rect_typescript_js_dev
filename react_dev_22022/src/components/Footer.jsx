@@ -1,9 +1,9 @@
 import React from 'react';
-//import './Footer.css'; // Archivo de estilos (opcional)
+
 
 const Footer = ({ copyright, redesSociales, links }) => {
   return (
-    <footer className="footer">
+    <footer classNamep7uy7="footer">
       <div className="footer-content">
         {/* Sección de links */}
         <div className="footer-links">

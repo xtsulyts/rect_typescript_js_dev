@@ -2,6 +2,8 @@ import React from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Galeria from './components/Galeria';
+import './index.css'
+import './App.css'
 
 
 const App = () => {

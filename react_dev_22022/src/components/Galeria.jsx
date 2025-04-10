@@ -10,18 +10,18 @@ const Galeria = ({ productos, onProductClick }) => {
       {productos.map((producto) => (
         <div 
           key={producto.id} 
-          className="product-card"
+          className="productCard"
           onClick={() => onProductClick && onProductClick(producto.id)}
         >
-          <div className="card-header">
-            <span className="product-codigo">#{producto.codigo}</span>
+          <div className="cardHeader">
+            <span className="productCodigo">#{producto.codigo}</span>
           </div>
-          <div className="card-body">
-            <h3 className="product-nombre">{producto.nombre}</h3>
-            <p className="product-cantidad">Disponibles: {producto.cantidad}</p>
+          <div className="cardBody">
+            <h3 className="productNombre">{producto.nombre}</h3>
+            <p className="productCantidad">Disponibles: {producto.cantidad}</p>
           </div>
-          <div className="card-footer">
-            <button className="product-button">Ver detalles</button>
+          <div className="cardFooter">
+            <button className="productButton">Ver detalles</button>
           </div>
         </div>
       ))}
