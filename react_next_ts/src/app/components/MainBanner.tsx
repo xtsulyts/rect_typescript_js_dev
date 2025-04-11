@@ -56,35 +56,51 @@ const MainEcommerce = () => {
 
   const [currentProductIndex, setCurrentProductIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (!isHovered) {
-        setCurrentProductIndex((prevIndex) => 
-          prevIndex === products.length - 1 ? 0 : prevIndex + 1
-        );
+      if (!isHovered && !isAnimating) {
+        animateTransition();
       }
-    }, 3000); // Cambia cada 3 segundos
+    }, 3000);
 
     return () => clearInterval(interval);
-  }, [isHovered, products.length]);
+  }, [isHovered, isAnimating]);
+
+  const animateTransition = () => {
+    setIsAnimating(true);
+    setTimeout(() => {
+      setCurrentProductIndex((prevIndex) => 
+        prevIndex === products.length - 1 ? 0 : prevIndex + 1
+      );
+      setIsAnimating(false);
+    }, 1000); // Duración de la animación
+  };
 
   const nextProduct = () => {
-    setCurrentProductIndex((prevIndex) => 
-      prevIndex === products.length - 1 ? 0 : prevIndex + 1
-    );
+    if (!isAnimating) animateTransition();
   };
 
   const prevProduct = () => {
-    setCurrentProductIndex((prevIndex) => 
-      prevIndex === 0 ? products.length - 1 : prevIndex - 1
-    );
+    if (!isAnimating) {
+      setIsAnimating(true);
+      setTimeout(() => {
+        setCurrentProductIndex((prevIndex) => 
+          prevIndex === 0 ? products.length - 1 : prevIndex - 1
+        );
+        setIsAnimating(false);
+      }, 1000);
+    }
   };
+
   return (
     <main className="container mx-auto px-4 py-8">
       {/* Hero Banner */}
-      <section className="mb-12 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 p-8 text-white relative overflow-hidden">
-      <div className="flex flex-col md:flex-row justify-between items-center">
+     
+      <section className="mb-12 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 p-8 text-white relative overflow-hidden h-[400px]"> 
+      <div className="flex flex-col md:flex-row justify-between items-center h-full">
         <div className="max-w-2xl z-10">
           <h1 className="mb-4 text-4xl font-bold md:text-5xl">Oferta de Temporada</h1>
           <p className="mb-6 text-xl">Hasta 40% de descuento en productos seleccionados</p>
@@ -96,38 +112,65 @@ const MainEcommerce = () => {
           </button>
         </div>
         
-        {/* Imagen del producto */}
+        {/* Contenedor para la imagen animada */}
         <div 
-          className="relative mt-6 md:mt-0 md:absolute md:right-8 md:bottom-0"
+          className="relative h-full w-full md:absolute md:right-0 md:top-0 md:h-full md:w-1/2"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          <img 
-            src={products[currentProductIndex].image} 
-            alt={products[currentProductIndex].name}
-            className="h-48 w-48 object-cover rounded-lg shadow-xl"
-          />
+          {/* Imagen actual */}
+          <div className={`
+            absolute inset-0 md:left-0 md:right-auto md:w-48 md:h-48
+            flex items-center justify-center
+            transition-all duration-1000 ease-in-out
+            ${isAnimating ? 
+                'transform translate-x-[-50%] opacity-0' :  // Se detiene en el centro y desaparece
+                'transform translate-x-full opacity-100'}  // Comienza completamente a la derecha
+              
+              // Y:
+              'transform translate-x-full opacity-100' 
+          `}>
+            <img 
+              src={products[currentProductIndex].image} 
+              alt={products[currentProductIndex].name}
+              className="h-full w-full object-cover rounded-lg shadow-xl"
+            />
+          </div>
           
-          {/* Controles de navegación */}
-          {isHovered && (
-            <div className="absolute bottom-0 left-0 right-0 flex justify-between p-2">
-              <button 
-                onClick={prevProduct}
-                className="bg-white bg-opacity-80 rounded-full p-2 text-blue-600 hover:bg-opacity-100"
-              >
-                <FaArrowLeft />
-              </button>
-              <button 
-                onClick={nextProduct}
-                className="bg-white bg-opacity-80 rounded-full p-2 text-blue-600 hover:bg-opacity-100"
-              >
-                <FaArrowRight />
-              </button>
+          {/* Imagen siguiente (para la transición) */}
+          {isAnimating && (
+            <div className={`
+              absolute inset-0 md:left-0 md:right-auto md:w-48 md:h-48
+              flex items-center justify-center
+              transition-all duration-1000 ease-in-out
+              transform -translate-x-full opacity-100
+            `}>
+              <img 
+                src={products[(currentProductIndex + 1) % products.length].image} 
+                alt={products[(currentProductIndex + 1) % products.length].name}
+                className="h-48 w-48 object-cover rounded-lg shadow-xl"
+              />
             </div>
           )}
           
+          {/* Controles de navegación */}
+          <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-4">
+            <button 
+              onClick={prevProduct}
+              className="bg-white bg-opacity-80 rounded-full p-2 text-blue-600 hover:bg-opacity-100"
+            >
+              <FaArrowLeft />
+            </button>
+            <button 
+              onClick={nextProduct}
+              className="bg-white bg-opacity-80 rounded-full p-2 text-blue-600 hover:bg-opacity-100"
+            >
+              <FaArrowRight />
+            </button>
+          </div>
+          
           {/* Info del producto */}
-          <div className="absolute -bottom-2 left-0 right-0 bg-black bg-opacity-50 p-2 rounded-b-lg">
+          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-50 p-2 rounded-lg">
             <p className="text-sm font-semibold truncate">{products[currentProductIndex].name}</p>
             <p className="text-xs">${products[currentProductIndex].price.toFixed(2)}</p>
           </div>

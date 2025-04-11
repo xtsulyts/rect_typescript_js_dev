@@ -3,7 +3,7 @@ import {IconButton} from "./Boton";
 import { useTheme } from "next-themes";
 
 const Header = () => {
-    const { theme, setTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
 
   const toggleDarkMode = () => {
     setTheme(theme === "dark" ? "light" : "dark");
@@ -39,7 +39,7 @@ const Header = () => {
           <IconButton
             icon={<FaMoon className="block dark:hidden" />}
             secondaryIcon={<FaSun className="hidden dark:block" />}
-            onClick={(toggleDarkMode) } //=> console.log("Toggle dark mode")}
+            onClick={() => console.log("Toggle dark mode")}
             ariaLabel="Alternar modo oscuro"
           />
         </div>
