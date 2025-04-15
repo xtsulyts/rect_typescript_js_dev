@@ -1,16 +1,7 @@
-<<<<<<< HEAD
-
-import { useState, useEffect } from 'react';
-import { FaBars, FaTimes, FaShopify, FaSearch, FaUser, FaMoon, FaSun } from 'react-icons/fa';
-import { useTheme } from 'next-themes';
-
-
-=======
 import { useState, useEffect } from 'react';
 import { FaBars, FaTimes, FaShopify, FaSearch, FaUser, FaMoon, FaSun } from 'react-icons/fa';
 import { useTheme } from 'next-themes';
 import React from 'react';
->>>>>>> linux
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -89,11 +80,7 @@ const Header = () => {
             <button
               key={item}
               className="whitespace-nowrap px-1 py-1 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400 transition-colors"
-<<<<<<< HEAD
               onClick={() => console.log(`Click ${item}`)}
-=======
-              onClick={() => console.log({item})}
->>>>>>> linux
             >
               {item}
             </button>
@@ -117,11 +104,7 @@ const Header = () => {
                   key={item}
                   className="w-full text-left py-2 px-1 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400"
                   onClick={() => {
-<<<<<<< HEAD
-                    console.log(`Click ${item}`);
-=======
                     console.log({item});
->>>>>>> linux
                     setIsMobileMenuOpen(false);
                   }}
                 >
@@ -136,9 +119,4 @@ const Header = () => {
   );
 };
 
-<<<<<<< HEAD
 export default Header;
-
-=======
-export default Header;
->>>>>>> linux
