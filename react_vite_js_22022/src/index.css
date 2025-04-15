@@ -1,18 +1,1 @@
-/* index.css
-@import 'normalize.css'; /* Opcional: Reset de estilos */
-
-:root {
-  --color-primary: #42b983; /* Variables CSS */
-}
-
-body {
-  font-family: 'Arial', sans-serif;
-  margin: 0;
-  background-color: #bcb1b1;
-}
-
-/* Estilos base para enlaces, botones, etc. */
-a {
-  color: var(--color-primary);
-  text-decoration: none;
-} 
+@import "tailwindcss"

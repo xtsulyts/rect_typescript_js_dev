@@ -6,6 +6,7 @@ import './index.css'
 import './App.css'
 
 
+
 const App = () => {
   const productos = [
     { id: 1, codigo: 1001, nombre: 'Producto A', cantidad: 5 },
