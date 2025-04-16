@@ -1,6 +1,4 @@
 import React from 'react';
-//import './Galeria.css'; 
-//import './../styles/Galeria.css';
 import '../styles/Galeria.css';
 
 
