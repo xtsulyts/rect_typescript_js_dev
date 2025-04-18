@@ -49,4 +49,15 @@
     background-color: #f9f9f9;
     text-align: center;
   }
+
+
   
+  
+  .producto-imagen {
+    width: 100%;       /* Ocupa todo el ancho del contenedor */
+    height: 200px;     /* Altura fija, puedes cambiarla */
+    object-fit: cover;  /* Asegura que la imagen cubra el espacio sin distorsionarse */
+    border-radius: 8px 8px 0 0; /* Bordes redondeados solo arriba si la imagen está en la parte superior */
+    transition: transform 0.3s ease; /* Efecto suave al hacer hover */
+    
+  }
