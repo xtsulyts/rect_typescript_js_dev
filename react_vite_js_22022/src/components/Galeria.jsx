@@ -1,5 +1,6 @@
 import React from 'react';
-import '../styles/Galeria.css';
+import Boton from './Boton';
+import '../components/estilos/Galeria.css';
 
 
 const Galeria = ({ productos, onProductClick }) => {
@@ -19,7 +20,7 @@ const Galeria = ({ productos, onProductClick }) => {
             <p className="productCantidad">Disponibles: {producto.cantidad}</p>
           </div>
           <div className="cardFooter">
-            <button className="productButton">Ver detalles</button>
+            <Boton onClick={()=>{console.log("click en componente")}}/>
           </div>
         </div>
       ))}

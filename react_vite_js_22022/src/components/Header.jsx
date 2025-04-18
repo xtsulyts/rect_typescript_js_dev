@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from '/src/assets/react.svg';
-import '../styles/Header.css'; // Archivo de estilos (opcional)
+import '../components/estilos/Header.css'; // Archivo de estilos (opcional)
 
 const Header = ({ titulo,menuItems, onLogin, usuario }) => {
  
