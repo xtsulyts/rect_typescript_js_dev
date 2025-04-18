@@ -61,3 +61,7 @@
     transition: transform 0.3s ease; /* Efecto suave al hacer hover */
     
   }
+
+ .productCantidad.agotado { color: #ff3b30; }
+ .productCantidad.poco-stock { color: #ff9500; }
+ .productCantidad.disponible { color: #34c759; }
