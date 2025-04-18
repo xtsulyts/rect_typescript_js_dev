@@ -10,7 +10,7 @@ const MainEcommerce = () => {
       name: 'Zapatos Deportivos Pro',
       price: 89.99,
       rating: 4.8,
-      image: "/shoes_1.webp",
+      image: "https://images.pexels.com/photos/1464625/pexels-photo-1464625.jpeg?auto=compress&cs=tinysrgb&w=400",
       isNew: true,
     },
     {
