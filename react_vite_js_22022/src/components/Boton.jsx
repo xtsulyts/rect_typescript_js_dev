@@ -1,9 +1,4 @@
 import React from "react";
-<<<<<<< HEAD
-//import { useState } from "react";
-=======
-
->>>>>>> origin/windows
 
 const Boton = ({ 
     onClick, 
