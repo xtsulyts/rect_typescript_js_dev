@@ -49,16 +49,19 @@
     background-color: #f9f9f9;
     text-align: center;
   }
+
+
   
-  .productButton {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
   
-  .productButton:hover {
-    background-color: #45a049;
+  .producto-imagen {
+    width: 100%;       /* Ocupa todo el ancho del contenedor */
+    height: 200px;     /* Altura fija, puedes cambiarla */
+    object-fit: cover;  /* Asegura que la imagen cubra el espacio sin distorsionarse */
+    border-radius: 8px 8px 0 0; /* Bordes redondeados solo arriba si la imagen está en la parte superior */
+    transition: transform 0.3s ease; /* Efecto suave al hacer hover */
+    
   }
+
+ .productCantidad.agotado { color: #ff3b30; }
+ .productCantidad.poco-stock { color: #ff9500; }
+ .productCantidad.disponible { color: #34c759; }
