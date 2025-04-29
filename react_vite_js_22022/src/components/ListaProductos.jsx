@@ -1,13 +1,16 @@
 import React from "react";
-//import { productos } from './utils/data';
 import Productos from "./Productos";
-import Boton from "./Boton";
+import "../components/estilos/ListaProductos.css"
 
-const ListaProductos = ({ productosList, agregarCarrito }) => {
+const ListaProductos = ({ productos, agregarCarrito }) => {
   return (
-    <div>
-      {productosList.map((producto) => (
-        <Productos producto={producto} agregarCarrito={agregarCarrito} />
+    <div className="galleryContainer">
+      {productos.map((producto) => (
+        <Productos 
+          key={producto.codigo}  // Key única basada en producto.codigo
+          producto={producto} 
+          agregarCarrito={agregarCarrito}  // Se pasa como referencia
+        />
       ))}
     </div>
   );

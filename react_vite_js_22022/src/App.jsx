@@ -4,20 +4,18 @@ import './index.css'
 import './App.css'
 
 
-
 const App = () => {
-
-  const [carrito, setCarrito] = useState([])
+  const [carrito, setCarrito] = useState([]);
 
   const handleAgregarCarrito = (producto) => {
-    setCarrito([...carrito, producto])
-
-  }
+    setCarrito([...carrito, producto]);
+  };
 
   return (
-    <>
-      <Home carrito={carrito} handleAgregarCarrito={handleAgregarCarrito}/>
-    </>
+    <Home 
+      carrito={carrito} 
+      handleAgregarCarrito={handleAgregarCarrito} 
+    />
   );
 };
 

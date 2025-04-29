@@ -13,7 +13,8 @@ const Boton = ({
     const tipoStyles = {
       compra: "bg-blue-600 hover:bg-blue-700 text-white focus:ring-blue-500",
       login: "bg-gray-800 hover:bg-gray-300 text-gray-800 focus:ring-gray-500",
-      eliminar: "bg-red-600 hover:bg-red-700 text-white focus:ring-red-500"
+      eliminar: "bg-red-600 hover:bg-red-700 text-white focus:ring-red-500",
+      finalizarCompra: "mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md transition duration-200"
     }
   
     return (

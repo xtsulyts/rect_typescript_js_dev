@@ -5,10 +5,7 @@ import "../components/estilos/Productos.css";
 const Productos = ({ producto, agregarCarrito }) => {
   return (
     <div className="galleryContainer">
-      <div className="productCard"
-        key={producto.codigo}
-        onClick={() => agregarCarrito(producto.codigo)}
-      >
+      <div className="productCard" key={producto.codigo}>
         <div className="cardHeader">
           <span className="productCodigo">#{producto.codigo}</span>
         </div>
@@ -20,10 +17,10 @@ const Productos = ({ producto, agregarCarrito }) => {
               alt={producto.nombre}
             />
           )}
-          <h3 className="productoNobre">{producto.nombre}</h3>
+          <h3 className="productoNobre">{producto.nombre} - ${producto.precio}</h3>
+         
           <p
             className={`productCantidad ${
-              //asignacion dinamica de clases CSS
               !producto.cantidad
                 ? "agotado"
                 : producto.cantidad < 3
@@ -42,7 +39,7 @@ const Productos = ({ producto, agregarCarrito }) => {
           <Boton
             tipo="compra"
             children={"comprar"}
-            onClick={agregarCarrito(producto)}
+            onClick={() => agregarCarrito(producto)} 
           />
         </div>
       </div>

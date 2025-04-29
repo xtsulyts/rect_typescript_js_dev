@@ -11,7 +11,7 @@ const Header = ({ titulo,menuItems, onLogin, usuarioProp }) => {
         {/* Logo y título */}
         <div className="header-brand">
           {logo && <img src={logo} alt="Logo" className="header-logo" />}
-          <h1 className="header-titulo">{titulo || 'Mi Aplicación'}</h1>
+          <h1 className="header-titulo">{titulo || 'E-Shoes Shop'}</h1>
         </div>
 
         {/* Menú de navegación */}
