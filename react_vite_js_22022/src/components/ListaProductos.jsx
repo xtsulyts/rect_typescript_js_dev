@@ -1,35 +1,19 @@
-import React from 'react';
+import React from "react";
+import Productos from "./Productos";
+import "../components/estilos/ListaProductos.css"
 
-const ListProduct = ({
-  id,
-  codigo,
-  nombre,
-  cantidad,
-  onItemClick,
-  className = ''
-}) => {
-  const handleClick = () => {
-    if (onItemClick) {
-      onItemClick(id);
-    }
-  };
-
+const ListaProductos = ({ productos, agregarCarrito }) => {
   return (
-    <div 
-      className={`lista-item ${className}`}
-      onClick={handleClick}
-      style={{ cursor: onItemClick ? 'pointer' : 'default' }}
-    >
-      <div className="lista-item__header">
-        <span className="lista-item__codigo">Código: {codigo}</span>
-        <span className="lista-item__id">ID: {id}</span>
-      </div>
-      <div className="lista-item__body">
-        <h3 className="lista-item__nombre">{nombre}</h3>
-        <span className="lista-item__cantidad">Cantidad: {cantidad}</span>
-      </div>
+    <div className="galleryContainer">
+      {productos.map((producto) => (
+        <Productos 
+          key={producto.codigo}  // Key única basada en producto.codigo
+          producto={producto} 
+          agregarCarrito={agregarCarrito}  // Se pasa como referencia
+        />
+      ))}
     </div>
   );
 };
 
-export default ListProduct;
+export default ListaProductos;

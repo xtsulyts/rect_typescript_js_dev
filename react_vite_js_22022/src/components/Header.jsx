@@ -2,15 +2,16 @@ import React from 'react';
 import logo from '/src/assets/react.svg';
 import '../components/estilos/Header.css'; // Archivo de estilos (opcional)
 
-const Header = ({ titulo,menuItems, onLogin, usuario }) => {
- 
+
+const Header = ({ titulo,menuItems, onLogin, usuarioProp }) => {
+
   return (
     <header className="header">
       <div className="header-container">
         {/* Logo y título */}
         <div className="header-brand">
           {logo && <img src={logo} alt="Logo" className="header-logo" />}
-          <h1 className="header-titulo">{titulo || 'Mi Aplicación'}</h1>
+          <h1 className="header-titulo">{titulo || 'E-Shoes Shop'}</h1>
         </div>
 
         {/* Menú de navegación */}
@@ -26,8 +27,8 @@ const Header = ({ titulo,menuItems, onLogin, usuario }) => {
 
         {/* Área de usuario */}
         <div className="header-user">
-          {usuario ? (
-            <span>Bienvenido, {usuario.nombre}</span>
+          {usuarioProp ? (
+            <span>Bienvenido, {usuarioProp}</span>
           ) : (
             <button onClick={onLogin} className="header-login-btn">
               Iniciar sesión
