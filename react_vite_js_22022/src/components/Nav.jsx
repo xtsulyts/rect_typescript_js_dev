@@ -1,56 +1,49 @@
-import React, { useState } from 'react';
-import { ShoppingCartIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { useState } from "react";
+import {
+  ShoppingCartIcon,
+  Bars3Icon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 
-function Nav() {
+function Nav({ onMostrarCarrito }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <nav className="bg-white shadow-lg">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex justify-between">
-          {/* Logo o marca - puedes reemplazar esto */}
+          {/* Logo */}
           <div className="flex items-center py-4">
             <span className="font-semibold text-gray-800 text-lg"></span>
           </div>
-          
-          {/* Menú para desktop (hidden en mobile) */}
+
+          {/* Menú desktop */}
           <div className="hidden md:flex items-center space-x-1">
-            <a href="#" className="py-4 px-3 text-gray-700 hover:text-blue-500 transition duration-300">
-              Contacto
-            </a>
-            <a href="#" className="py-4 px-3 text-gray-700 hover:text-blue-500 transition duration-300">
-              Información
-            </a>
-            <a href="#" className="py-4 px-3 flex items-center text-gray-700 hover:text-blue-500 transition duration-300">
+            {/* Otros elementos del menú... */}
+            <button
+              onClick={onMostrarCarrito}
+              className="py-4 px-3 flex items-center text-gray-700 hover:text-blue-500 transition duration-300"
+            >
               <ShoppingCartIcon className="h-5 w-5 mr-1" />
               Carrito
-            </a>
-          </div>
-          
-          {/* Botón hamburguesa (mobile) */}
-          <div className="md:hidden flex items-center">
-            <button 
-              onClick={() => setIsOpen(!isOpen)}
-              className="outline-none mobile-menu-button"
-            >
-              {isOpen ? (
-                <XMarkIcon className="h-6 w-6 text-gray-700" />
-              ) : (
-                <Bars3Icon className="h-6 w-6 text-gray-700" />
-              )}
             </button>
           </div>
         </div>
       </div>
-      
-      {/* Menú mobile (condicional) */}
-      <div className={`md:hidden ${isOpen ? 'block' : 'hidden'}`}>
-        <a href="#" className="block py-2 px-4 text-sm hover:bg-gray-100">Contacto</a>
-        <a href="#" className="block py-2 px-4 text-sm hover:bg-gray-100">Información</a>
-        <a href="#" className=" py-2 px-4 text-sm hover:bg-gray-100 flex items-center">
+
+      {/* Menú mobile desplegable */}
+      <div className={`md:hidden ${isOpen ? "block" : "hidden"}`}>
+        {/* Otros elementos del menú... */}
+        <button
+          onClick={() => {
+            onMostrarCarrito();
+            setIsOpen(false);
+          }}
+          className="w-full py-2 px-4 text-sm hover:bg-gray-100 flex items-center text-left"
+        >
           <ShoppingCartIcon className="h-5 w-5 mr-2" />
           Carrito
-        </a>
+        </button>
       </div>
     </nav>
   );

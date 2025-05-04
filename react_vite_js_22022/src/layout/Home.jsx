@@ -6,21 +6,30 @@ import Main from '../components/Main'
 import Footer from '../components/Footer'
 import { productosLista } from '../components/utils/data'
 import Carrito from '../components/Carrito'
+import { useState } from 'react'
 
 
 
-const Home = ({ carrito, costo,  handleAgregarCarrito }) => {
+const Home = ({ carrito, totalCarrito,  handleAgregarCarrito }) => {
+  const [mostrarCarrito, setMostrarCarrito] = useState(false);
   console.log('carrito desde Home',carrito)
   return (
     <>
-      <Header />
-      <Nav />
+      <Header
+        totalCarrito={totalCarrito} />
+      <Nav onMostrarCarrito={()=> setMostrarCarrito(true)}/>
       <ListaProductos 
         productos={productosLista}  //  productosLista importado de data.js
         agregarCarrito={handleAgregarCarrito} 
       />
-      <Carrito carritoItems={carrito}
-      costo={costo} />
+        {mostrarCarrito && (
+        <div className="">
+          <Carrito 
+            carritoItems={carrito}
+            onCerrar={() => setMostrarCarrito(false)} 
+          />
+        </div>
+      )}
       <Main />
       <Footer />
     </>

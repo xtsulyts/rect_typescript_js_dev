@@ -1,10 +1,13 @@
 import React from 'react';
 //import logo from '/src/assets/react.svg';
 import '../components/estilos/Header.css'; // Archivo de estilos (opcional)
-import  { FaShopify} from 'react-icons/fa';
+import  { FaShopify } from 'react-icons/fa';
+import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 
+;
 
-const Header = ({ titulo, menuItems, onLogin, usuarioProp }) => {
+const Header = ({ titulo, menuItems, onLogin, usuarioProp, totalCarrito }) => {
+  
 
   return (
     <header className="header">
@@ -14,7 +17,13 @@ const Header = ({ titulo, menuItems, onLogin, usuarioProp }) => {
           {<FaShopify  className="header-logo" />}
           <h1 className="header-titulo">{titulo || 'E-Shoes Shop'}</h1>
         </div> 
-     
+        
+        <div className="flex items-center bg-indigo-50 rounded-full px-4 py-2">
+          <ShoppingCartIcon className="h-5 w-5 mr-2 text-indigo-600" />
+          <span className="font-bold text-indigo-800">
+            ${totalCarrito}
+          </span>
+        </div>
 
         {/* Menú de navegación */}
         <nav className="header-nav">

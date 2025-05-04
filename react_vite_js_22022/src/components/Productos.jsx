@@ -11,18 +11,33 @@ const Productos = ({ producto, agregarCarrito }) => {
   //console.log(costoCompra)
 
   const incrementar = () => {
-    if (stock >0) {
-      setCantidad(prev => prev + 1);
+    if (stock > 0) {
+      setCantidad(prev => {
+        const nuevaCantidad = prev + 1;
+        const nuevoCosto = nuevaCantidad * producto.precio; // Calcula el costo total
+        
+        // Actualiza el carrito con la nueva cantidad
+        agregarCarrito(producto, nuevaCantidad);
+        
+        // Actualiza el costo de compra
+        setCostoCompra(nuevoCosto);
+        
+        return nuevaCantidad;
+      });
+      
       setStock(prev => prev - 1);
-      setCostoCompra( costoCompra + producto.precio  )
     }
   };
-
   const decrementar = () => {
     if (cantidad > 0) {
-      setCantidad(prev => prev - 1);
+      setCantidad(prev => {
+        const nuevaCantidad = prev - 1;
+        // Llamar a agregarCarrito con el nuevo valor
+        agregarCarrito(producto, nuevaCantidad);
+        return nuevaCantidad;
+      });
       setStock(prev => prev + 1);
-      setCostoCompra( costoCompra - producto.precio  )
+      setCostoCompra(prev => prev - producto.precio);
     }
   };
   
@@ -77,17 +92,6 @@ const Productos = ({ producto, agregarCarrito }) => {
             tipo="eliminar"
             children={"➖"}
             onClick={decrementar} 
-          />
-        
-       
-          <Boton
-            tipo="compra"
-            children={ <a href="#" className="py-4 px-2 flex items-center text-white   hover:text-yellow transition duration-300">
-              Agregar
-              <ShoppingCartIcon className="h-5 w-5 mr-1" />
-              
-            </a>}
-            onClick={() => agregarCarrito(producto)} 
           />
         </div>
 
