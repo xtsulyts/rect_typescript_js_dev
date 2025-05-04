@@ -3,6 +3,7 @@ import Productos from "./Productos";
 import "../components/estilos/ListaProductos.css"
 
 const ListaProductos = ({ productos, agregarCarrito }) => {
+  console.log(productos)
   return (
     <div className="galleryContainer">
       {productos.map((producto) => (
