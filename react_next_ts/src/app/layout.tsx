@@ -17,8 +17,8 @@ import { ReactNode } from "react";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="es" suppressHydrationWarning>
-      <body>
+    <html lang="es" suppressHydrationWarning title="e-commerce">
+      <body title="">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
         </ThemeProvider>

@@ -1,47 +1,43 @@
-import React from 'react';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import Galeria from './components/Galeria';
+import React, { useState } from 'react';
+import Home from './layout/Home';
 import './index.css'
 import './App.css'
 
 
 const App = () => {
-  const productos = [
-    { id: 1, codigo: 1001, nombre: 'Producto A', cantidad: 5 },
-    { id: 2, codigo: 1002, nombre: 'Producto B', cantidad: 3 },
-    { id: 3, codigo: 1003, nombre: 'Producto C', cantidad: 8 },
-    { id: 1, codigo: 1001, nombre: 'Producto A', cantidad: 5 },
-    { id: 2, codigo: 1002, nombre: 'Producto B', cantidad: 3 },
-    { id: 3, codigo: 1003, nombre: 'Producto C', cantidad: 8 },
-    { id: 1, codigo: 1001, nombre: 'Producto A', cantidad: 5 },
-    { id: 2, codigo: 1002, nombre: 'Producto B', cantidad: 3 },
-    { id: 3, codigo: 1003, nombre: 'Producto C', cantidad: 8 },
-  ];
+  const [carrito, setCarrito] = useState([]);
+  console.log('carrito desde app []', carrito)
 
-  // const handleItemClick = (id) => {
-  //   console.log(`Item con ID ${id} clickeado`);
-  // };
+// En el componente padre:
+const handleAgregarCarrito = (producto, cantidad) => {
+  setCarrito(prevItems => {
+    const itemExistente = prevItems.find(item => item.nombre === producto.nombre);
+    
+    if (itemExistente) {
+      return prevItems.map(item =>
+        item.nombre === producto.nombre
+          ? { ...item, cantidad } // Usa la cantidad que viene del hijo
+          : item
+      );
+    } else {
+      return [...prevItems, { ...producto, cantidad }]; // Agrega con la cantidad inicial
+    }
+  });
+};
 
-  const handleProductClick = (productId) => {
-    console.log('Producto seleccionado:', productId);
-    // Aquí podrías navegar a una página de detalle o mostrar un modal
-  }
+// Calculamos el importe total aquí
+const totalCarrito = carrito.reduce(
+  (total, item) => total + (item.precio * item.cantidad),
+  0
+).toFixed(2);
+
   return (
-    <>
-    <Header titulo={"TRABAJO INTEGRADOR REACT"}/>
-    <div className="app">
-      <h1>Catálogo de Productos</h1>
-      <Galeria
-        productos={productos} 
-        onProductClick={handleProductClick}
-      />
-    </div>
-   
-    <Footer/>
-    </>
+    <Home 
+      carrito={carrito} 
+      handleAgregarCarrito={handleAgregarCarrito} 
+      totalCarrito={totalCarrito}
+    />
   );
 };
 
 export default App;
-
