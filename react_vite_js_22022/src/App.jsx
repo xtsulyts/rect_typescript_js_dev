@@ -6,8 +6,10 @@ import './App.css'
 
 const App = () => {
   const [carrito, setCarrito] = useState([]);
+  console.log('carrito desde app []', carrito)
 
   const handleAgregarCarrito = (producto) => {
+    console.log('producto desde app handlecarrito', producto)
     setCarrito([...carrito, producto]);
   };
 

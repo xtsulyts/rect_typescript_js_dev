@@ -3,6 +3,7 @@ import React from 'react'
 import Boton from './Boton'
 
 const Carrito = ({ carritoItems }) => {
+  console.log("carrito items",carritoItems)
   return (
     <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">CARRITO DE COMPRAS</h2>
@@ -14,7 +15,7 @@ const Carrito = ({ carritoItems }) => {
           {carritoItems.map((item, index) => (
             <li key={index} className="py-3 flex justify-between">
               <span className="text-gray-700 font-medium">{item.nombre}</span>
-              <span className="text-green-600 font-semibold">${item.precio.toLocaleString()}</span>
+              <span className="text-green-600 font-semibold">${item.precio}</span>
             </li>
           ))}
         </ul>

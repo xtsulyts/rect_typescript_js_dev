@@ -10,7 +10,7 @@ function Nav() {
         <div className="flex justify-between">
           {/* Logo o marca - puedes reemplazar esto */}
           <div className="flex items-center py-4">
-            <span className="font-semibold text-gray-800 text-lg">E-Shoes Shop</span>
+            <span className="font-semibold text-gray-800 text-lg"></span>
           </div>
           
           {/* Menú para desktop (hidden en mobile) */}

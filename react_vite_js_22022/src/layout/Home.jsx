@@ -9,7 +9,8 @@ import Carrito from '../components/Carrito'
 
 
 
-const Home = ({ carrito, handleAgregarCarrito }) => {
+const Home = ({ carrito, costo,  handleAgregarCarrito }) => {
+  console.log('carrito desde Home',carrito)
   return (
     <>
       <Header />
@@ -18,7 +19,8 @@ const Home = ({ carrito, handleAgregarCarrito }) => {
         productos={productosLista}  //  productosLista importado de data.js
         agregarCarrito={handleAgregarCarrito} 
       />
-      <Carrito carritoItems={carrito} />
+      <Carrito carritoItems={carrito}
+      costo={costo} />
       <Main />
       <Footer />
     </>

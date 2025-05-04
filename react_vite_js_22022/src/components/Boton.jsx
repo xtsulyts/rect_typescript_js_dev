@@ -13,8 +13,9 @@ const Boton = ({
     const tipoStyles = {
       compra: "bg-blue-600 hover:bg-blue-700 text-white focus:ring-blue-500",
       login: "bg-gray-800 hover:bg-gray-300 text-gray-800 focus:ring-gray-500",
-      eliminar: "bg-red-600 hover:bg-red-700 text-white focus:ring-red-500",
-      finalizarCompra: "mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md transition duration-200"
+      // eliminar: "bg-red-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition-colors duration-200",
+      finalizarCompra: "mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md transition duration-200",
+      // Agregar: "bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition-colors duration-200",
     }
   
     return (

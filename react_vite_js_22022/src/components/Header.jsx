@@ -1,18 +1,20 @@
 import React from 'react';
-import logo from '/src/assets/react.svg';
+//import logo from '/src/assets/react.svg';
 import '../components/estilos/Header.css'; // Archivo de estilos (opcional)
+import  { FaShopify} from 'react-icons/fa';
 
 
-const Header = ({ titulo,menuItems, onLogin, usuarioProp }) => {
+const Header = ({ titulo, menuItems, onLogin, usuarioProp }) => {
 
   return (
     <header className="header">
       <div className="header-container">
         {/* Logo y título */}
-        <div className="header-brand">
-          {logo && <img src={logo} alt="Logo" className="header-logo" />}
+       <div className="header-brand">
+          {<FaShopify  className="header-logo" />}
           <h1 className="header-titulo">{titulo || 'E-Shoes Shop'}</h1>
-        </div>
+        </div> 
+     
 
         {/* Menú de navegación */}
         <nav className="header-nav">
