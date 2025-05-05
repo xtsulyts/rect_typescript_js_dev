@@ -12,17 +12,17 @@ const Carrito = ({ carritoItems, onCerrar }) => {
     <div className="fixed inset-0 z-50 flex justify-end bg-green bg-opacity-50">
       {/* Contenedor principal con altura automática */}
       <div
-        className="max-w-md w-full bg-white overflow-y-auto"
+        className="max-w-md w-full bg-white/90  overflow-y-auto"
         style={{
           maxHeight: "90vh", // Altura máxima del 90% del viewport
-          top: "5vh", // Margen superior
+          top: "10vh", // Margen superior
           bottom: "auto", // Anulamos el bottom:0
           position: "fixed", // Mantenemos posición fija
         }}
       >
         <div className="p-6">
           {/* Encabezado */}
-          <div className="flex justify-between items-center mb-4 sticky top-10 bg-white z-10 pb-4 border-b">
+          <div className="flex justify-between items-center mb-4 sticky top-0 bg-white z-10 pb-4 border-b">
             <h2 className="text-2xl font-bold text-gray-800">
               CARRITO DE COMPRAS
             </h2>
