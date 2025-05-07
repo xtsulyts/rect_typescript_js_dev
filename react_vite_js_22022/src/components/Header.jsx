@@ -15,7 +15,7 @@ const Header = ({ titulo, menuItems, onLogin, usuarioProp, totalCarrito }) => {
         {/* Logo y título */}
        <div className="header-brand">
           {<FaShopify  className="header-logo" />}
-          <h1 className="header-titulo">{titulo || 'E-Shoes Shop'}</h1>
+          <h1 className="header-titulo">{titulo || 'E-Shop'}</h1>
         </div> 
         
         <div className="flex items-center bg-indigo-50 rounded-full px-4 py-2">

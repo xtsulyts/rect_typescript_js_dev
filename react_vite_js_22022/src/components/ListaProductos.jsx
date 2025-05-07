@@ -5,7 +5,7 @@ import "../components/estilos/ListaProductos.css"
 const ListaProductos = ({ productos, agregarCarrito, costo }) => {
   console.log("lista", productos)
   // console.log("agregar al carrito", agregarCarrito)
-  console.log(costo)
+  //console.log(costo)
   return (
     <div className="galleryContainer">
       {productos.map((producto) => (
