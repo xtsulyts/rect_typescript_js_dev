@@ -6,7 +6,7 @@ import './App.css'
 
 const App = () => {
   const [carrito, setCarrito] = useState([]);
-  console.log('carrito desde app []', carrito)
+  //console.log('carrito desde app []', carrito)
 
 // En el componente padre:
 const handleAgregarCarrito = (producto, cantidad) => {

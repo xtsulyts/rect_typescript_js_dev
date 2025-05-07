@@ -7,7 +7,7 @@ import Footer from '../components/Footer'
 //import { productosLista } from '../components/utils/data'
 import Carrito from '../components/Carrito'
 import { useState, useEffect } from 'react'
-//import loading from '../assets/loading.webm'
+import loadingGift from '../assets/loading.webm'
 
 
 const API_KEY = '9tNEjFhwUIus25QDwOd8iywPhg5QEyYDWiVS9NlvWfD2MeSClgYAU125';
@@ -18,6 +18,7 @@ const Home = ({ carrito, totalCarrito,  handleAgregarCarrito }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [imagenes, setImagenes] = useState([]);
+  const LOADER_URL = "https://upload.wikimedia.org/wikipedia/commons/d/de/Ajax-loader.gif";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,8 +27,8 @@ const Home = ({ carrito, totalCarrito,  handleAgregarCarrito }) => {
         setError(null);
         
         // Hacer ambas llamadas a API simultáneamente
-        const [imagesResponse, salonesResponse] = await Promise.all([
-          fetch('https://api.pexels.com/v1/search?query=laptop_page=100', {
+        const [imagesResponse, productosResponse] = await Promise.all([
+          fetch('https://api.pexels.com/v1/search?query=products=1', {
             headers: { 'Authorization': API_KEY }
           }),
           fetch('https://67f5e9af913986b16fa5e489.mockapi.io/api/products')
@@ -35,24 +36,24 @@ const Home = ({ carrito, totalCarrito,  handleAgregarCarrito }) => {
         
         // Verificar respuestas
         if (!imagesResponse.ok) throw new Error('Error en API de imágenes');
-        if (!salonesResponse.ok) throw new Error('Error en API de salones');
+        if (!productosResponse.ok) throw new Error('Error en API de salones');
         
         // Convertir a JSON
-        const [imagesData, salonesData] = await Promise.all([
+        const [imagesData, productosData] = await Promise.all([
           imagesResponse.json(),
-          salonesResponse.json()
+          productosResponse.json()
         ]);
 
         // Guardar las imágenes por separado
         setImagenes(imagesData.photos);
-        console.log(imagesData)
-        console.log(salonesData)
+        console.log(imagesResponse)
+        //console.log(productosResponse)
         
         // Combinar datos
-        const combinedData = salonesData.map((salon, index) => {
+        const combinedData = productosData.map((producto, index) => {
           const imageIndex = index % imagesData.photos.length;
           return {
-            ...salon,
+            ...producto,
             imagen: imagesData.photos[imageIndex]?.src.medium || 'https://via.placeholder.com/300'
           };
         });
@@ -66,7 +67,7 @@ const Home = ({ carrito, totalCarrito,  handleAgregarCarrito }) => {
       }
     };
     console.log(error);
-    console.log(imagenes)
+    console.log(imagenes.index)
 
     fetchData();
   }, []); // El array vacío [] significa que se ejecuta solo al montar el componente
@@ -76,16 +77,17 @@ const Home = ({ carrito, totalCarrito,  handleAgregarCarrito }) => {
 
 
   return (
-    <>
+    <>  
       <Header
         totalCarrito={totalCarrito} />
       <Nav onMostrarCarrito={()=> setMostrarCarrito(true)}/>
-      {loading? <img src={loading} alt='loadind'/>:
+      {loading? (<img src={LOADER_URL} alt='loadind'
+      style={{ width: "330px", height: "330px" }}/>):
       <ListaProductos 
       productos={productos}  //  productosLista importado de data.js
       agregarCarrito={handleAgregarCarrito} 
-    />  
-      }
+    /> }
+      
         {mostrarCarrito && (
         <div className="">
           <Carrito 

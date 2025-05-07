@@ -3,7 +3,7 @@ import Productos from "./Productos";
 import "../components/estilos/ListaProductos.css"
 
 const ListaProductos = ({ productos, agregarCarrito, costo }) => {
-  console.log("lista", productos)
+  //console.log("lista", productos)
   // console.log("agregar al carrito", agregarCarrito)
   //console.log(costo)
   return (

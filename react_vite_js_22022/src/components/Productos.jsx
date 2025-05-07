@@ -93,7 +93,7 @@ const Productos = ({ producto, agregarCarrito }) => {
              
              {cantidad !== 0 && (
               <span className="text-gray-600 font-medium">
-                Unidades: {cantidad}
+                Un: {cantidad}
               </span>
             )}
             
