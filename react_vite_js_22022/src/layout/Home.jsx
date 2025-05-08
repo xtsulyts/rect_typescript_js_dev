@@ -7,7 +7,7 @@ import Footer from '../components/Footer'
 //import { productosLista } from '../components/utils/data'
 import Carrito from '../components/Carrito'
 import { useState, useEffect } from 'react'
-import loadingGift from '../assets/loading.webm'
+//import loadingGift from '../assets/loading.webm'
 
 
 const API_KEY = '9tNEjFhwUIus25QDwOd8iywPhg5QEyYDWiVS9NlvWfD2MeSClgYAU125';
@@ -28,7 +28,7 @@ const Home = ({ carrito, totalCarrito,  handleAgregarCarrito }) => {
         
         // Hacer ambas llamadas a API simultáneamente
         const [imagesResponse, productosResponse] = await Promise.all([
-          fetch('https://api.pexels.com/v1/search?query=products=1', {
+          fetch("https://api.pexels.com/v1/search?query=sneakers&per_page=148", {
             headers: { 'Authorization': API_KEY }
           }),
           fetch('https://67f5e9af913986b16fa5e489.mockapi.io/api/products')
