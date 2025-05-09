@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Home from './layout/Home';
 import './index.css'
 import './App.css'
-
+//import Root from './routes/routes';
 
 const App = () => {
   const [carrito, setCarrito] = useState([]);

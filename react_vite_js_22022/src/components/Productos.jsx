@@ -92,9 +92,9 @@ const Productos = ({ producto, agregarCarrito }) => {
           <div className="flex items-center justify-between">
              
              {cantidad !== 0 && (
-              <span className="text-gray-600 font-medium">
-                Un: {cantidad}
-              </span>
+             <span className="animate-bounce bg-amber-400 text-black font-black px-2 py-1 rounded-lg shadow-[0_0_15px_#f59e0b]">
+             {cantidad}
+           </span>
             )}
             
             {costoCompra !== 0 && (
