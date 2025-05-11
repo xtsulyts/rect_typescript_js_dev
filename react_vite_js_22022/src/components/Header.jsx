@@ -3,12 +3,16 @@ import React from 'react';
 import '../components/estilos/Header.css'; // Archivo de estilos (opcional)
 import  { FaShopify } from 'react-icons/fa';
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
+import Nav from './Nav';
 
-;
-
-const Header = ({ titulo, menuItems, onLogin, usuarioProp, totalCarrito }) => {
+const Header = ({ titulo, totalCarrito, usuarioProp, onLogin }) => {
+const menuItems = [{
+  texto: "inicio",
+  url: "productos",
   
-
+}
+]
+const item = ["hola"]
   return (
     <header className="header">
       <div className="header-container">
@@ -25,16 +29,7 @@ const Header = ({ titulo, menuItems, onLogin, usuarioProp, totalCarrito }) => {
           </span>
         </div>
 
-        {/* Menú de navegación */}
-        <nav className="header-nav">
-          <ul className="header-menu">
-            {menuItems?.map((item, index) => (
-              <li key={index} className="header-menu-item">
-                <a href={item.url}>{item.texto}</a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+
 
         {/* Área de usuario */}
         <div className="header-user">
@@ -47,7 +42,10 @@ const Header = ({ titulo, menuItems, onLogin, usuarioProp, totalCarrito }) => {
           )}
         </div>
       </div>
+      <Nav/>
+      
     </header>
+    
   );
 };
 
