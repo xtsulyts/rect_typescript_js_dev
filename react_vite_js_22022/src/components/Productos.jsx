@@ -3,6 +3,8 @@ import Boton from "./Boton";
 //import "../components/estilos/Productos.css";
 
 const Productos = ({ producto, agregarCarrito }) => {
+  console.log(agregarCarrito)
+  console.log(producto)
   const [cantidad, setCantidad] = useState(0);
   const [stock, setStock] = useState(producto.cantidad); //cantidad es un atriburo del array ListaProductos
   const [costoCompra, setCostoCompra] = useState(0);

@@ -1,15 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 //import logo from '/src/assets/react.svg';
 import '../components/estilos/Header.css'; // Archivo de estilos (opcional)
 import  { FaShopify } from 'react-icons/fa';
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
+import Nav from './Nav';
 
-;
 
-const Header = ({ titulo, menuItems, onLogin, usuarioProp, totalCarrito }) => {
+
+const Header = ({ titulo, menuItems,totalCarrito, onMostrarCarrito }) => {
+  console.log(onMostrarCarrito)
+  const[usuario, setusuario] = useState("walter")
+  const[onLogin, setOnlogin]= useState(false);
+
+  
   
 
   return (
+    <>
     <header className="header">
       <div className="header-container">
         {/* Logo y título */}
@@ -38,16 +45,21 @@ const Header = ({ titulo, menuItems, onLogin, usuarioProp, totalCarrito }) => {
 
         {/* Área de usuario */}
         <div className="header-user">
-          {usuarioProp ? (
-            <span>Bienvenido, {usuarioProp}</span>
+          {usuario ? (
+            <span>Bienvenido, {usuario}</span>
           ) : (
             <button onClick={onLogin} className="header-login-btn">
               Iniciar sesión
             </button>
           )}
         </div>
+        
       </div>
+      
     </header>
+    <Nav
+    />
+      </>
   );
 };
 

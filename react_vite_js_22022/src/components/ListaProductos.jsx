@@ -1,12 +1,16 @@
 import React from "react";
 import Productos from "./Productos";
 import "../components/estilos/ListaProductos.css"
+import Nav from "./Nav";
+import Header from "./Header";
+
 
 const ListaProductos = ({ productos, agregarCarrito, costo }) => {
-  //console.log("lista", productos)
-  // console.log("agregar al carrito", agregarCarrito)
-  //console.log(costo)
+  console.log(costo)
+  console.log(agregarCarrito)
   return (
+    <>
+    <Header/>
     <div className="galleryContainer">
       {productos.map((producto) => (
         <Productos 
@@ -17,6 +21,7 @@ const ListaProductos = ({ productos, agregarCarrito, costo }) => {
         />
       ))}
     </div>
+    </>
   );
 };
 

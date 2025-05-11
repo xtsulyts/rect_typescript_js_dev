@@ -1,93 +1,125 @@
 import React from "react";
 import Boton from "./Boton";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon, ShoppingBagIcon } from "@heroicons/react/24/outline";
+import { Link, useNavigate } from "react-router-dom";
 
 const Carrito = ({ carritoItems, onCerrar }) => {
+  const navigate = useNavigate();
   const importeCompra = carritoItems.reduce(
     (total, item) => total + item.precio * item.cantidad,
     0
   );
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end bg-green bg-opacity-50">
-      {/* Contenedor principal con altura automática */}
-      <div
-        className="max-w-md w-full bg-white/90  overflow-y-auto"
-        style={{
-          maxHeight: "90vh", // Altura máxima del 90% del viewport
-          top: "10vh", // Margen superior
-          bottom: "auto", // Anulamos el bottom:0
-          position: "fixed", // Mantenemos posición fija
-        }}
-      >
-        <div className="p-6">
-          {/* Encabezado */}
-          <div className="flex justify-between items-center mb-4 sticky top-0 bg-white z-10 pb-4 border-b">
-            <h2 className="text-2xl font-bold text-gray-800">
-              CARRITO DE COMPRAS
-            </h2>
-            <button
-              onClick={onCerrar}
-              className="text-gray-500 hover:text-gray-700 ml-4"
-            >
-              <XMarkIcon className="h-6 w-6" />
-            </button>
-          </div>
+    <div className="fixed inset-0 z-50 bg-white bg-opacity-30 backdrop-blur-sm transition-opacity duration-300">
+      {/* Contenedor principal - ahora ocupa toda la pantalla */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Panel del carrito - ajustado para no solaparse con el header */}
+        <div className="absolute inset-y-0 right-0 flex max-w-full pl-10 mt-16"> {/* Añadido mt-16 para bajar el contenido */}
+          <div className="w-screen max-w-md">
+            <div className="flex flex-col h-full bg-white shadow-xl">
+              {/* Encabezado */}
+              <div className="flex-1 overflow-y-auto py-6 px-4 sm:px-6">
+                <div className="flex items-start justify-between sticky top-0 bg-white pb-4">
+                  <h2 className="text-2xl font-bold text-gray-900">Tu Carrito</h2>
+                  <button
+                    onClick={onCerrar}
+                    className="p-1 rounded-full hover:bg-gray-100 transition-colors -mr-2"
+                    aria-label="Cerrar carrito"
+                  >
+                    <XMarkIcon className="h-6 w-6 text-gray-500" />
+                  </button>
+                </div>
 
-          {/* Lista de items */}
-          {carritoItems.length === 0 ? (
-            <p className="text-gray-500 italic text-center py-4">
-              El carrito está vacío
-            </p>
-          ) : (
-            <>
-              <ul className="divide-y divide-gray-200">
-                {carritoItems
-                  .filter((item) => item.cantidad > 0)
-                  .map((item, index) => (
-                    <li
-                      key={index}
-                      className="py-3 flex justify-between hover:bg-gray-50 transition-colors"
-                    >
-                      <div className="flex gap-2">
-                        <span className="text-gray-700 font-medium">
-                          {item.nombre}
-                        </span>
-                        <span className="text-blue-600">x{item.cantidad}</span>
-                      </div>
-                      <span className="text-green-600 font-semibold">
-                        ${(item.precio * item.cantidad).toFixed(2)}
-                      </span>
-                    </li>
-                  ))}
-              </ul>
+                {/* Contenido del carrito */}
+                <div className="mt-8">
+                  {carritoItems.length === 0 ? (
+                    <div className="h-full flex flex-col items-center justify-center py-12">
+                      <ShoppingBagIcon className="h-16 w-16 text-gray-300 mb-4" />
+                      <p className="text-gray-500 text-lg mb-6">Tu carrito está vacío</p>
+                      <Boton
+                        tipo="seguirComprando"
+                        children={"Explorar productos"}
+                       onClick={() => navigate('/productos')}
+                        className="w-full max-w-xs py-3"
+                      />
+                    </div>
+                  ) : (
+                    <ul className="divide-y divide-gray-200">
+                      {carritoItems
+                        .filter((item) => item.cantidad > 0)
+                        .map((item, index) => (
+                          <li
+                            key={index}
+                            className="py-6 flex"
+                          >
+                            <div className="flex-shrink-0 w-24 h-24 rounded-md overflow-hidden bg-gray-100">
+                              {item.imagen ? (
+                                <img
+                                  src={item.imagen}
+                                  alt={item.nombre}
+                                  className="w-full h-full object-cover object-center"
+                                />
+                              ) : (
+                                <ShoppingBagIcon className="w-full h-full text-gray-400 p-4" />
+                              )}
+                            </div>
 
-              {/* Total - lo mantenemos sticky abajo */}
-              <div className="sticky bottom-0 bg-white pt-4 border-t border-gray-200">
-                <p className="text-xl font-bold text-gray-800 text-right mb-4">
-                  Total: ${importeCompra.toFixed(2)}
-                </p>
-                <Boton
-                  tipo="finalizarCompra"
-                  children={"Finalizar Compra"}
-                  onClick={() => {
-                    console.log("Finalizar Compra");
-                    onCerrar();
-                  }}
-                  className="w-full py-3" // Botón más prominente
-                />
-                <Boton
-                  tipo="seguirComprando"
-                  children={"Seguir Comprando"}
-                  onClick={() => {
-                    console.log("Seguir Comprando");
-                    onCerrar();
-                  }}
-                  className="w-full py-3" // Botón más prominente
-                />
+                            <div className="ml-4 flex-1 flex flex-col">
+                              <div>
+                                <h3 className="text-base font-medium text-gray-900">
+                                  {item.nombre}
+                                </h3>
+                                <p className="mt-1 text-sm text-gray-500">
+                                  Cantidad: {item.cantidad}
+                                </p>
+                              </div>
+                              <div className="flex-1 flex items-end justify-between">
+                                <p className="text-sm text-gray-500">
+                                  ${item.precio.toFixed(2)} c/u
+                                </p>
+                                <p className="text-base font-medium text-green-600">
+                                  ${(item.precio * item.cantidad).toFixed(2)}
+                                </p>
+                              </div>
+                            </div>
+                          </li>
+                        ))}
+                    </ul>
+                  )}
+                </div>
               </div>
-            </>
-          )}
+
+              {/* Total y botones (solo si hay items) */}
+              {carritoItems.length > 0 && (
+                <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
+                  <div className="flex justify-between text-base font-medium text-gray-900 mb-4">
+                    <p>Subtotal</p>
+                    <p>${importeCompra.toFixed(2)}</p>
+                  </div>
+                  <p className="mt-0.5 text-sm text-gray-500 mb-6">
+                    Envío e impuestos calculados al finalizar
+                  </p>
+                  <div className="space-y-4">
+                    <Boton
+                      tipo="finalizarCompra"
+                      children={"Pagar ahora"}
+                      onClick={() => navigate('/productos')}
+                     
+                      className="w-full py-3 text-lg"
+                    />
+                    <Boton
+                      tipo="seguirComprando"
+                      children={"Seguir comprando"}
+                      onClick={() => navigate('/productos')}
+                    
+                      className="w-full py-3 bg-white text-gray-800 border border-gray-300 hover:bg-gray-50"
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>
