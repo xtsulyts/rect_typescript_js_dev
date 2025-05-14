@@ -5,21 +5,25 @@ import Nav from "./Nav";
 import Header from "./Header";
 
 
-const ListaProductos = ({ productos, agregarCarrito, costo }) => {
-  console.log(costo)
-  console.log(agregarCarrito)
+const ListaProductos = ({ productos, agregarCarrito, costoCompra }) => {
+ console.log(productos)
+ 
+ 
   return (
     <>
-    <Header/>
+    <Header
+     costo={costoCompra}/>
     <div className="galleryContainer">
-      {productos.map((producto) => (
-        <Productos 
-          key={producto.codigo}  // Key única basada en producto.codigo
-          producto={producto} 
-          agregarCarrito={agregarCarrito} 
-          costo={costo} // Se pasa como referencia
-        />
-      ))}
+      {productos.map((producto) => {
+        return (
+          <Productos
+            key={producto.codigo} // Key única basada en producto.codigo
+            producto={producto}
+            agregarCarrito={agregarCarrito}
+            costo={producto} // Se pasa como referencia
+          />
+        );
+      })}
     </div>
     </>
   );

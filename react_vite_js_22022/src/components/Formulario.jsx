@@ -13,34 +13,74 @@ const Formulario = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
+  /**
+ * Manejador genérico de cambios para inputs de formulario.
+ * Actualiza el estado del formulario y limpia los errores asociados al campo modificado.
+ * 
+ * @param {Object} e - Evento del input que se está modificando
+ * @param {Object} e.target - Elemento del input que disparó el evento
+ * @param {string} e.target.name - Nombre del campo que se está modificando
+ * @param {string} e.target.value - Nuevo valor del campo
+ * 
+ * @example
+ * <input 
+ *   name="email"
+ *   value={formData.email}
+ *   onChange={handleChange}
+ * />
+ */
   const handleChange = (e) => {
+    // 1. Extrae name y value del input que cambió
     const { name, value } = e.target;
+    // 2. Actualiza el estado del formulario manteniendo los valores existentes
     setFormData(prev => ({
-      ...prev,
-      [name]: value
+      ...prev, // Copia todos los valores anteriores
+      [name]: value // Actualiza solo el campo que cambió
     }));
-    
-    // Clear error when user types
+    // 3. Limpia el error de validación para este campo (si existe)
     if (errors[name]) {
       setErrors(prev => ({
-        ...prev,
-        [name]: null
+        ...prev, // Copia todos los errores anteriores
+        [name]: null // Elimina el error para este campo
       }));
     }
   };
 
+
+  /**
+ * Valida los campos de un formulario y establece los mensajes de error correspondientes.
+ * 
+ * @returns {boolean} - Retorna `true` si el formulario es válido (sin errores), `false` si hay errores
+ * 
+ * @example
+ * const isValid = validateForm();
+ * if (isValid) {
+ *   // Proceder con el envío del formulario
+ * }
+ */
   const validateForm = () => {
+    // 1. Inicia un objeto para almacenar los errores
     const newErrors = {};
-    
+
+    // 2. Validación campo por campo
+
+    // Validación para el campo 'name'
     if (!formData.name.trim()) newErrors.name = 'Nombre es requerido';
+
+    // Validación para el campo 'email' (requerido + formato)
     if (!formData.email.trim()) {
       newErrors.email = 'Email es requerido';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = 'Email no válido';
     }
+
+    // Validación para el campo 'message'
     if (!formData.message.trim()) newErrors.message = 'Mensaje es requerido';
-    
+
+    // 3. Actualiza el estado de errores
     setErrors(newErrors);
+
+    // 4. Retorna si el formulario es válido (sin errores)
     return Object.keys(newErrors).length === 0;
   };
 

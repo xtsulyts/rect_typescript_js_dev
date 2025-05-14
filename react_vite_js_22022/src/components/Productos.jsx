@@ -2,14 +2,19 @@ import React, { useState } from "react";
 import Boton from "./Boton";
 //import "../components/estilos/Productos.css";
 
+/**
+ * Componente principal de la aplicación
+ * Maneja el estado global, rutas y efectos secundarios
+ */
 const Productos = ({ producto, agregarCarrito }) => {
-  console.log(agregarCarrito)
-  console.log(producto)
+  // console.log(agregarCarrito)
+  // console.log(producto)
   const [cantidad, setCantidad] = useState(0);
   const [stock, setStock] = useState(producto.cantidad); //cantidad es un atriburo del array ListaProductos
   const [costoCompra, setCostoCompra] = useState(0);
   // console.log(stock)
   //console.log(costoCompra)
+  
 
   const incrementar = () => {
     if (stock > 0) {
@@ -94,8 +99,8 @@ const Productos = ({ producto, agregarCarrito }) => {
           <div className="flex items-center justify-between">
              
              {cantidad !== 0 && (
-              <span className="text-gray-600 font-medium">
-                Un: {cantidad}
+              <span className="animate-bounce bg-amber-500 text-black font-black px-3 py-1 rounded-lg shadow-[0_0_15px_#f59e0b]">
+                {cantidad}
               </span>
             )}
             

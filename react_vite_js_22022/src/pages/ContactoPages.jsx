@@ -1,11 +1,11 @@
 import React from 'react'
 import Formulario from '../components/Formulario'
 import Header from '../components/Header'
-const Contacto = () => {
+const Contacto = ({ carrito }) => {
   
   return (
     <div>
-      <Header/>
+      <Header carritoItems={carrito}/>
         <Formulario/>
       
     </div>

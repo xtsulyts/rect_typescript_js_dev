@@ -5,11 +5,11 @@ import  { FaShopify } from 'react-icons/fa';
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import Nav from './Nav';
 
+// PENDIENTE PASAR COMPONENTE Carrito
 
-
-const Header = ({ titulo, menuItems,totalCarrito, onMostrarCarrito }) => {
-  console.log(onMostrarCarrito)
-  const[usuario, setusuario] = useState("walter")
+const Header = ({ menuItems,totalCarrito }) => {
+  //console.log(onMostrarCarrito)
+  const[usuario, setusuario] = useState("usuario")
   const[onLogin, setOnlogin]= useState(false);
 
   
@@ -22,7 +22,7 @@ const Header = ({ titulo, menuItems,totalCarrito, onMostrarCarrito }) => {
         {/* Logo y título */}
        <div className="header-brand">
           {<FaShopify  className="header-logo" />}
-          <h1 className="header-titulo">{titulo || 'E-Shop'}</h1>
+          <h1 className="header-titulo">E-Shop Shoes</h1>
         </div> 
         
         <div className="flex items-center bg-indigo-50 rounded-full px-4 py-2">

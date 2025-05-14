@@ -1,31 +1,54 @@
-import Home from "./pages/Home.jsx";
+import HomePages from "./pages/HomePages.jsx";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./index.css";
 import "./App.css";
-//import CarritoPages from "./pages/CarritoPages.jsx";
-//import ListaPages from "./pages/ListaPages.jsx";
-//import Carrito from "./components/Carrito.jsx";
+import ListaPages from "./pages/ListaPages.jsx";
 import ListaProductos from "./components/ListaProductos.jsx";
 import NoFoundPages from "./pages/NoFoundPages.jsx";
 import ContactoPages from "./pages/ContactoPages.jsx";
 import { useState, useEffect } from "react";
 import DocumentacionPages from "./pages/DocumentacionPages.jsx";
 import CarritoPages from "./pages/CarritoPages.jsx";
-const API_KEY = "9tNEjFhwUIus25QDwOd8iywPhg5QEyYDWiVS9NlvWfD2MeSClgYAU125";
 
+//PENDIENTE CODIFICAR UNA FUNCIONPARA ELIMINAR PRODUCTO Y PASAR A CARRITO
+
+const API_KEY = "9tNEjFhwUIus25QDwOd8iywPhg5QEyYDWiVS9NlvWfD2MeSClgYAU125";
+/**
+ * Componente principal de la aplicación
+ * Maneja el estado global, rutas y efectos secundarios
+ */
 const App = () => {
-  const [mostrarCarrito, setMostrarCarrito] = useState(false);
+ 
+  /**
+   * Array que contiene los productos agregados al carrito
+   */
   const [carrito, setCarrito] = useState([]);
-  const [productos, setProductos] = useState([]);
+
+
+  const [productos, setProductos] = useState([]);// Array que contiene todos los productos disponibles
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [imagenes, setImagenes] = useState([]);
+  const [error, setError] = useState(null);// Null cuando no hay error, string con mensaje de error cuando ocurre uno
+  const [imagenes, setImagenes] = useState([]);// Array que contiene las imágenes obtenidas de Pexels API
+
+
   const LOADER_URL =
     "https://upload.wikimedia.org/wikipedia/commons/d/de/Ajax-loader.gif";
 
+
+ /**
+   * Efecto secundario para cargar datos al montar el componente
+   * Se ejecuta una vez al montar el componente (dependencias vacías [])
+   */
   useEffect(() => {
+    /**
+     * Función asíncrona para obtener datos de las APIs
+     * Realiza dos peticiones simultáneas:
+     * 1. A Pexels API para obtener imágenes de zapatillas
+     * 2. A MockAPI para obtener datos de productos
+     */
     const fetchData = async () => {
       try {
+         // Iniciar estado de carga y limpiar errores previos
         setLoading(true);
         setError(null);
 
@@ -53,67 +76,83 @@ const App = () => {
         // Guardar las imágenes por separado
         setImagenes(imagesData.photos);
         //console.log(imagesResponse);
-        console.log(productosResponse);
+        //console.log(productosResponse);
 
         // Combinar datos
         const combinedData = productosData.map((producto, index) => {
+
+          // Usar módulo para ciclar las imágenes si hay más productos que imágenes
           const imageIndex = index % imagesData.photos.length;
           return {
-            ...producto,
-            imagen:
+            ...producto,// Spread operator para mantener todas las propiedades del producto
+
+            imagen:// Asignar la imagen correspondiente o una imagen por defecto si no hay
               imagesData.photos[imageIndex]?.src.medium ||
               "https://via.placeholder.com/300",
           };
         });
 
-        setProductos(combinedData);
+        setProductos(combinedData); // Actualizar el estado de productos con los datos combinados
       } catch (err) {
         console.error("Error:", err);
         setError(err.message);
-      } finally {
+      } finally { // Finalizar carga independientemente del resultado
         setLoading(false);
       }
     };
     console.log(error);
 
-    fetchData();
-  }, []);
+    fetchData();// Llamar a la función para obtener datos
+  }, []);// Array de dependencias vacío para que solo se ejecute al montar
 
+
+  /**
+   * Función para agregar productos al carrito
+   * @param {Object} producto - El producto a agregar
+   * @param {number} cantidad - La cantidad del producto a agregar
+   */
   const handleAgregarCarrito = (producto, cantidad) => {
-    console.log("Producto a agregar:", producto);
+    //console.log("Producto a agregar:", producto);
 
-    setCarrito((prevItem = []) => {
-      // Valor por defecto para prevItem
-      // Verificación segura con operador opcional y fallback
+    // Actualizar el estado del carrito usando el callback del setter
+    // Esto asegura que tenemos el estado más actualizado
+    setCarrito((prevItem = []) => { // Valor por defecto para prevItem en caso de ser null/undefined
+      
       const itemExistente = (prevItem || []).find(
         (item) => item?.nombre === producto?.nombre
       );
 
-      if (itemExistente) {
+      if (itemExistente) { // Si el producto ya está en el carrito
+        // Mapear el carrito y actualizar solo la cantidad del producto existente
         return prevItem.map((item) =>
           item?.nombre === producto?.nombre ? { ...item, cantidad } : item
         );
       } else {
-        // Asegúrate de siempre retornar un array
+        // Si el producto no está en el carrito, agregarlo
+        // Usamos spread operator para mantener los items previos
         return [...(prevItem || []), { ...producto, cantidad }];
       }
     });
   };
+
+
   return (
     <Router>
       <Routes>
         <Route
           path="/"
           element={
-            <Home
+            <HomePages
               handleAgregarCarrito={handleAgregarCarrito}
               carrito={carrito}
             />
           }
         />
         {/* <Route path="./productos" element={<ListaPages
-        handleAgregarCarrito={handleAgregarCarrito} carrito={carrito}/>} /> */}
-        <Route
+          productos={productos}
+          carrito={carrito}
+          handleAgregarCarrito={handleAgregarCarrito}/>} />  */}
+        <Route 
           path="/productos"
           element={
             loading ? (
@@ -124,19 +163,19 @@ const App = () => {
               />
             ) : (
               <ListaProductos
-                productos={productos} //  productosLista importado de data.js
+                productos={productos}
                 agregarCarrito={handleAgregarCarrito}
-                mostrarCarrito={() => setMostrarCarrito(true)}
+                // mostrarCarrito={() => setMostrarCarrito(true)}
               />
             )
           }
-        />
+        /> 
         <Route
           path="/carrito"
           element={
             <CarritoPages
               carrito={carrito}
-              mostrarCarrito={() => setMostrarCarrito(true)}
+              // mostrarCarrito={() => setMostrarCarrito(true)}
             />
           }
         />
