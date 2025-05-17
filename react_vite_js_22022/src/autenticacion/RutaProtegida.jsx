@@ -1,0 +1,22 @@
+import React from 'react'
+import { Navigate } from 'react-router-dom'
+import Admin from '../components/Admin'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
+import { useUsuario } from '../contex/UsuarioContexto'
+
+const RutaProtegida = ({ children }) => {
+  const { autenticado } = useUsuario()
+  if(!autenticado){
+    return <Navigate to="/login" replace/>
+  }
+  return (
+ <>
+    <Header/>
+    {children}
+    <Footer/>
+ </>
+  )
+}
+
+export default RutaProtegida

@@ -1,28 +1,24 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
-import  Footer  from "./components/Footer.jsx"
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+// import Header from "./components/Header.jsx";
+// import Footer from "./components/Footer.jsx";
+import App from "./App.jsx";
+import { UsuarioProvider } from "./contex/UsuarioContexto.jsx";
+import { CarritoProvider } from "./contex/CarritoContexto.jsx";
+import AppContex from "./AppContex.jsx";
 
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element:  <App />,
-  },
-  // {
-  //   path: "/",
-  //   element: <></>,
-  // },
-]);
-
-
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>,
-)
+
+    <UsuarioProvider>
+      <CarritoProvider>
+      <AppContex />
+      {/* <App /> */}
+      </CarritoProvider>
+    </UsuarioProvider>
+  </StrictMode>
+);
+

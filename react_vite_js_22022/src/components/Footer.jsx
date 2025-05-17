@@ -1,5 +1,5 @@
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaCreditCard, FaShieldAlt, FaHeadset } from "react-icons/fa";
-
+import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <footer className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
@@ -7,16 +7,28 @@ const Footer = () => {
       <div className="container mx-auto px-4 py-8 grid grid-cols-2 md:grid-cols-4 gap-8">
         {/* Columna 1 */}
         <div>
-          <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">Navegación</h3>
-          <ul className="space-y-2">
-            {['Inicio', 'Productos', 'Ofertas', 'Categorías'].map((item) => (
-              <li key={item}>
-                <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-yellow-500 dark:hover:text-yellow-400 transition-colors">
-                  {item}
-                </a>
-              </li>
-            ))}
-          </ul>
+          <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">Navegacion</h3>
+                <ul className="space-y-2">
+  {[
+    { name: 'Inicio', path: '/' },
+    { name: 'Productos', path: '/productos' },
+    { name: 'Contacto', path: '/contacto' },
+    { name: 'Usuarios de prueba', path: '/usuarios' },
+    { name: 'Login', path: '/login' },
+    { name: 'Usuarios', path: '/usuarios' },
+    { name: 'Adminitracion', path: '/administracion' },
+    { name: 'Carrito', path: '/carrito' }
+  ].map((item) => (
+    <li key={item.name}>
+      <Link 
+        to={item.path} 
+        className="text-gray-600 dark:text-gray-400 hover:text-yellow-500 dark:hover:text-yellow-400 transition-colors"
+      >
+        {item.name}
+      </Link>
+    </li>
+  ))}
+</ul>
         </div>
 
         {/* Columna 2 */}
