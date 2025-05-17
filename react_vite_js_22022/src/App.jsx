@@ -15,7 +15,7 @@ import LoginPages from "./pages/LoginPages.jsx";
 import RutaProtegida from "./autenticacion/RutaProtegida.jsx";
 import Admin from "./components/Admin.jsx";
 
-//PENDIENTE CODIFICAR UNA FUNCIONPARA ELIMINAR PRODUCTO Y PASAR A CARRITO
+
 
 const API_KEY = "9tNEjFhwUIus25QDwOd8iywPhg5QEyYDWiVS9NlvWfD2MeSClgYAU125";
 /**
