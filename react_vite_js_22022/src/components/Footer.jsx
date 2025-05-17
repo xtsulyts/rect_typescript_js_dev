@@ -6,12 +6,18 @@ const Footer = () => {
       {/* Sección superior */}
       <div className="container mx-auto px-4 py-8 grid grid-cols-2 md:grid-cols-4 gap-8">
         {/* Columna 1 */}
-      <ul className="space-y-2">
+        <div>
+          <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">Navegacion</h3>
+                <ul className="space-y-2">
   {[
     { name: 'Inicio', path: '/' },
     { name: 'Productos', path: '/productos' },
     { name: 'Contacto', path: '/contacto' },
-    { name: 'Usuarios', path: '/usuarios' }
+    { name: 'Usuarios de prueba', path: '/usuarios' },
+    { name: 'Login', path: '/login' },
+    { name: 'Usuarios', path: '/usuarios' },
+    { name: 'Adminitracion', path: '/administracion' },
+    { name: 'Carrito', path: '/carrito' }
   ].map((item) => (
     <li key={item.name}>
       <Link 
@@ -23,6 +29,7 @@ const Footer = () => {
     </li>
   ))}
 </ul>
+        </div>
 
         {/* Columna 2 */}
         <div>

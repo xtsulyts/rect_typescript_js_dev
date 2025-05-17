@@ -60,6 +60,7 @@ const Productos = ({ producto, agregarCarrito }) => {
               className="w-full h-full object-cover"
               src={producto.imagen}
               alt={producto.nombre}
+              onClick={() => navigate(`/productos/${producto.id}`, replace)}
             />
             {/* Badge de código superpuesto */}
             <span className="absolute top-2 right-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded-full">
@@ -131,14 +132,14 @@ const Productos = ({ producto, agregarCarrito }) => {
               />
              
             </div>
-            <div className="flex space-x-2">
+            {/* <div className="flex space-x-2">
                <Boton
                 tipo="verMas"
                 children="Ver mas"
                  onClick={() => navigate(`/productos/${producto.id}`, replace)}
                 // onClick={<Navigate to="/productos"/>}
                 />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

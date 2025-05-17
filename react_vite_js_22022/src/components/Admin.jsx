@@ -1,27 +1,66 @@
-import React from 'react';
+//mport React, { useState } from 'react';
 import Boton from './Boton';
 import { useNavigate } from "react-router-dom";
+import { useUsuario } from '../contex/UsuarioContexto';
+import ListaProductos from './ListaProductos';
+import { useCarrito } from '../contex/CarritoContexto';
 
-const Admin = ({ autenticado }) => {
+const Admin = () => {
+  const {  usuario } = useUsuario();
+  const {  productos,
+              carrito,
+              handleAgregarCarrito} = useCarrito()
+ 
+  
   const navigate = useNavigate();
-  if (!autenticado) {
-    return (
-      <div className="max-w-md mx-auto p-6 bg-red-50 border border-red-200 rounded-lg text-center">
-        <h2 className="text-xl font-bold text-red-600 mb-2">Acceso denegado</h2>
-        <p className="text-red-500">Debes iniciar sesión como administrador</p>
-        <div className="flex space-x-2">
-               <Boton
-                tipo="login"
-                children="LOGIN"
-                 onClick={() => navigate("/login")}
-                // onClick={<Navigate to="/productos"/>}
-                />
-            </div>
-      </div>
-    );
+  //if (!autenticado) {  // Pendiente resolver el estado autenticado
+  if (!usuario) {
+ return (
+  <div className="max-w-md mx-auto mt-20 mb-20 p-8 bg-white border border-gray-200 rounded-xl shadow-md text-center">
+    <div className="flex justify-center mb-4">
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        className="h-12 w-12 text-red-500" 
+        fill="none" 
+        viewBox="0 0 24 24" 
+        stroke="currentColor"
+      >
+        <path 
+          strokeLinecap="round" 
+          strokeLinejoin="round" 
+          strokeWidth={2} 
+          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" 
+        />
+      </svg>
+    </div>
+    
+    <h2 className="text-2xl font-bold text-gray-800 mb-3">Acceso restringido</h2>
+    <p className="text-gray-600 mb-6">Necesitas privilegios de administrador para acceder a esta sección</p>
+    
+    <div className="flex justify-center gap-4">
+      <button
+        onClick={() => navigate("/")}
+        className="px-6 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+      >
+        Volver al inicio
+      </button>
+      <button
+        onClick={() => navigate("/login")}
+        className="px-6 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 transition-colors shadow-sm"
+      >
+        Iniciar sesión
+      </button>
+    </div>
+    
+    <p className="mt-6 text-xs text-gray-400">
+      ¿Problemas para acceder? <a href="#" className="text-red-500 hover:underline">Contacta al soporte</a>
+    </p>
+  </div>
+);
   }
 
   return (
+     <>
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
       <h1 className="text-2xl font-bold text-gray-800 mb-6">Panel de Administración</h1>
       
@@ -67,6 +106,11 @@ const Admin = ({ autenticado }) => {
       </div>
       
     </div>
+    <ListaProductos
+       productos={productos}
+              carrito={carrito}
+              agregarCarrito={handleAgregarCarrito}/>
+   </>
   );
 };
 

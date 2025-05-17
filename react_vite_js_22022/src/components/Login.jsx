@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { FaUser, FaLock } from 'react-icons/fa';
 import { useUsuario } from '../contex/UsuarioContexto'; // Importamos nuestro hook personalizado
-import { Navigate } from 'react-router-dom'
+import Boton from './Boton';
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
   
   // Accedemos a las funciones del contexto
   const { login } = useUsuario();
@@ -42,8 +44,8 @@ const Login = () => {
     try {
       setLoginError(null);
       await login({ email, password });
-      // Si el login es exitoso, podrías redirigir al usuario
-      // navigate('/dashboard'); // Si estás usando react-router
+
+       navigate('/administracion'); 
     } catch (error) {
       setLoginError(error.message);
     }
@@ -117,6 +119,16 @@ const Login = () => {
         >
           Ingresar
         </button>
+         <h2 className="text-2xl font-bold mb-6 mt-10 text-center text-gray-800">Usuarios de prueba</h2>
+        
+           <div className="flex space-x-2">
+               <Boton
+               tipo='verUsuarios'
+                children="Usuarios"
+                 onClick={() => navigate("/usuarios")}
+                // onClick={<Navigate to="/productos"/>}
+                />
+            </div>
       </form>
     </div>
   );

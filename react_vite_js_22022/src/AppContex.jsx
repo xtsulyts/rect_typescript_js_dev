@@ -46,7 +46,10 @@ function AppContex() {
         />
         <Route
           path="/productos/:id"
-          element={<DetallePages productos={productos} />}
+          element={<DetallePages  productos={productos}
+              carrito={carrito}
+              handleAgregarCarrito={handleAgregarCarrito}
+              loading={loading} />}
         />
         <Route
           path="/carrito"

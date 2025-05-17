@@ -8,7 +8,7 @@ import App from "./App.jsx";
 import { UsuarioProvider } from "./contex/UsuarioContexto.jsx";
 import { CarritoProvider } from "./contex/CarritoContexto.jsx";
 import AppContex from "./AppContex.jsx";
-n
+
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

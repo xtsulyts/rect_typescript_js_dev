@@ -19,7 +19,7 @@ export const UsuarioProvider = ({ children }) => {
   // Estado para almacenar los datos del usuario logueado
   const [usuario, setUsuario] = useState(null);
   // Estado para saber si el usuario está autenticado
-  const [autenticado, setAutenticado] = useState(false);
+  const [autenticado, setAutenticado] = useState(true);
   // Estado para manejar la carga inicial
   const [cargando, setCargando] = useState(true);
 
@@ -72,7 +72,8 @@ export const UsuarioProvider = ({ children }) => {
       if (usuarioEncontrado) {
         setUsuario(usuarioEncontrado);
         setAutenticado(true);
-        console.log("usuario autenticado:", {datosUsuario})
+        console.log(usuarioEncontrado)
+        console.log("usuario autenticado:", {usuarioEncontrado})
         localStorage.setItem('nombre', 'nombre del usuario pendiente')
         localStorage.setItem('token', 'token_simulado'); // En una app real sería un JWT
         return { success: true };

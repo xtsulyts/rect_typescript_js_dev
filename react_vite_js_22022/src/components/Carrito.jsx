@@ -87,7 +87,7 @@ return (
           <p className="text-sm text-gray-500 mb-4">Envío e impuestos calculados al finalizar</p>
           <div className="space-y-3">
             <button
-              onClick={() => navigate("/checkout")}
+              onClick={() => navigate("/")}
               className="w-full py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
             >
               Pagar ahora
