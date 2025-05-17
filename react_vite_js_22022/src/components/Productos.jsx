@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import Boton from "./Boton";
+import { Navigate, replace } from 'react-router-dom'
 //import "../components/estilos/Productos.css";
+import { useNavigate } from "react-router-dom";
 
-/**
- * Componente principal de la aplicación
- * Maneja el estado global, rutas y efectos secundarios
- */
+
 const Productos = ({ producto, agregarCarrito }) => {
   // console.log(agregarCarrito)
   // console.log(producto)
+
+  const navigate = useNavigate();
+
+
   const [cantidad, setCantidad] = useState(0);
   const [stock, setStock] = useState(producto.cantidad); //cantidad es un atriburo del array ListaProductos
   const [costoCompra, setCostoCompra] = useState(0);
@@ -124,6 +127,15 @@ const Productos = ({ producto, agregarCarrito }) => {
                 onClick={incrementar}
                 className="flex items-center justify-center h-8 w-8 rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors"
               />
+             
+            </div>
+            <div className="flex space-x-2">
+               <Boton
+                tipo="verMas"
+                children="Ver mas"
+                 onClick={() => navigate(`/productos/${producto.id}`, replace)}
+                // onClick={<Navigate to="/productos"/>}
+                />
             </div>
           </div>
         </div>

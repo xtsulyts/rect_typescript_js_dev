@@ -10,6 +10,7 @@ const Nav = ({ onMostrarCarrito }) => {
     { name: "Inicio", path: "/" },
     { name: "Productos", path: "/productos" },
     { name: "Contacto", path: "/contacto" },
+    { name: "Administracion", path: "/administracion" },
     { name: "Documentacion", path: "/documentacion" },
   ];
 

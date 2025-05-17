@@ -1,18 +1,14 @@
 import React from "react";
 import Productos from "./Productos";
 import "../components/estilos/ListaProductos.css"
-import Nav from "./Nav";
-import Header from "./Header";
 
 
-const ListaProductos = ({ productos, agregarCarrito, costoCompra }) => {
+const ListaProductos = ({ productos, agregarCarrito }) => {
  console.log(productos)
  
  
   return (
     <>
-    <Header
-     costo={costoCompra}/>
     <div className="galleryContainer">
       {productos.map((producto) => {
         return (

@@ -3,12 +3,17 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./index.css";
 import "./App.css";
 import ListaPages from "./pages/ListaPages.jsx";
-import ListaProductos from "./components/ListaProductos.jsx";
+//import ListaProductos from "./components/ListaProductos.jsx";
 import NoFoundPages from "./pages/NoFoundPages.jsx";
 import ContactoPages from "./pages/ContactoPages.jsx";
 import { useState, useEffect } from "react";
 import DocumentacionPages from "./pages/DocumentacionPages.jsx";
 import CarritoPages from "./pages/CarritoPages.jsx";
+import DetallePages from "./pages/DetallePages.jsx";
+import UsuariosPrueba from "./components/UsuariosPrueba.jsx";
+import LoginPages from "./pages/LoginPages.jsx";
+import RutaProtegida from "./autenticacion/RutaProtegida.jsx";
+import Admin from "./components/Admin.jsx";
 
 //PENDIENTE CODIFICAR UNA FUNCIONPARA ELIMINAR PRODUCTO Y PASAR A CARRITO
 
@@ -18,24 +23,20 @@ const API_KEY = "9tNEjFhwUIus25QDwOd8iywPhg5QEyYDWiVS9NlvWfD2MeSClgYAU125";
  * Maneja el estado global, rutas y efectos secundarios
  */
 const App = () => {
- 
   /**
    * Array que contiene los productos agregados al carrito
    */
   const [carrito, setCarrito] = useState([]);
 
-
-  const [productos, setProductos] = useState([]);// Array que contiene todos los productos disponibles
+  const [productos, setProductos] = useState([]); // Array que contiene todos los productos disponibles
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);// Null cuando no hay error, string con mensaje de error cuando ocurre uno
-  const [imagenes, setImagenes] = useState([]);// Array que contiene las imágenes obtenidas de Pexels API
-
-
+  const [error, setError] = useState(null); // Null cuando no hay error, string con mensaje de error cuando ocurre uno
+  const [imagenes, setImagenes] = useState([]); // Array que contiene las imágenes obtenidas de Pexels API
+  const [isAuth, setIsAuth] = useState(true)
   const LOADER_URL =
     "https://upload.wikimedia.org/wikipedia/commons/d/de/Ajax-loader.gif";
 
-
- /**
+  /**
    * Efecto secundario para cargar datos al montar el componente
    * Se ejecuta una vez al montar el componente (dependencias vacías [])
    */
@@ -48,7 +49,7 @@ const App = () => {
      */
     const fetchData = async () => {
       try {
-         // Iniciar estado de carga y limpiar errores previos
+        // Iniciar estado de carga y limpiar errores previos
         setLoading(true);
         setError(null);
 
@@ -80,13 +81,13 @@ const App = () => {
 
         // Combinar datos
         const combinedData = productosData.map((producto, index) => {
-
           // Usar módulo para ciclar las imágenes si hay más productos que imágenes
           const imageIndex = index % imagesData.photos.length;
           return {
-            ...producto,// Spread operator para mantener todas las propiedades del producto
+            ...producto, // Spread operator para mantener todas las propiedades del producto
 
-            imagen:// Asignar la imagen correspondiente o una imagen por defecto si no hay
+            // Asignar la imagen correspondiente o una imagen por defecto si no hay
+            imagen:
               imagesData.photos[imageIndex]?.src.medium ||
               "https://via.placeholder.com/300",
           };
@@ -96,15 +97,15 @@ const App = () => {
       } catch (err) {
         console.error("Error:", err);
         setError(err.message);
-      } finally { // Finalizar carga independientemente del resultado
+      } finally {
+        // Finalizar carga independientemente del resultado
         setLoading(false);
       }
     };
     console.log(error);
 
-    fetchData();// Llamar a la función para obtener datos
-  }, []);// Array de dependencias vacío para que solo se ejecute al montar
-
+    fetchData(); // Llamar a la función para obtener datos
+  }, []); // Array de dependencias vacío para que solo se ejecute al montar
 
   /**
    * Función para agregar productos al carrito
@@ -116,13 +117,15 @@ const App = () => {
 
     // Actualizar el estado del carrito usando el callback del setter
     // Esto asegura que tenemos el estado más actualizado
-    setCarrito((prevItem = []) => { // Valor por defecto para prevItem en caso de ser null/undefined
-      
+    setCarrito((prevItem = []) => {
+      // Valor por defecto para prevItem en caso de ser null/undefined
+
       const itemExistente = (prevItem || []).find(
         (item) => item?.nombre === producto?.nombre
       );
 
-      if (itemExistente) { // Si el producto ya está en el carrito
+      if (itemExistente) {
+        // Si el producto ya está en el carrito
         // Mapear el carrito y actualizar solo la cantidad del producto existente
         return prevItem.map((item) =>
           item?.nombre === producto?.nombre ? { ...item, cantidad } : item
@@ -135,7 +138,6 @@ const App = () => {
     });
   };
 
-
   return (
     <Router>
       <Routes>
@@ -145,31 +147,24 @@ const App = () => {
             <HomePages
               handleAgregarCarrito={handleAgregarCarrito}
               carrito={carrito}
+              productos={productos}
             />
           }
         />
-        {/* <Route path="./productos" element={<ListaPages
-          productos={productos}
-          carrito={carrito}
-          handleAgregarCarrito={handleAgregarCarrito}/>} />  */}
-        <Route 
+        <Route
           path="/productos"
           element={
-            loading ? (
-              <img
-                src={LOADER_URL}
-                alt="Cargando productos..."
-                className="w-80 h-80 object-contain animate-pulse rounded-lg shadow-xl hover:shadow-2xl transition-all duration-300"
-              />
-            ) : (
-              <ListaProductos
-                productos={productos}
-                agregarCarrito={handleAgregarCarrito}
-                // mostrarCarrito={() => setMostrarCarrito(true)}
-              />
-            )
+            <ListaPages
+              productos={productos}
+              carrito={carrito}
+              handleAgregarCarrito={handleAgregarCarrito}
+            />
           }
-        /> 
+        />
+        <Route
+          path="/productos/:id"
+          element={<DetallePages productos={productos} />}
+        />
         <Route
           path="/carrito"
           element={
@@ -185,6 +180,10 @@ const App = () => {
           element={<DocumentacionPages carrito={carrito} />}
         />
         <Route path="*" element={<NoFoundPages />} />
+        <Route path="/login" element={<LoginPages />} />
+        <Route path="/usuarios" element={<UsuariosPrueba />} />
+        <Route path="administracion" element={<RutaProtegida isAuth={isAuth}>
+      <Admin/> </RutaProtegida>}/>
       </Routes>
     </Router>
   );
