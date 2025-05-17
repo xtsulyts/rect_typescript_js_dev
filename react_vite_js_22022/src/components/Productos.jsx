@@ -1,13 +1,23 @@
 import React, { useState } from "react";
 import Boton from "./Boton";
+import { Navigate, replace } from 'react-router-dom'
 //import "../components/estilos/Productos.css";
+import { useNavigate } from "react-router-dom";
+
 
 const Productos = ({ producto, agregarCarrito }) => {
+  // console.log(agregarCarrito)
+  // console.log(producto)
+
+  const navigate = useNavigate();
+
+
   const [cantidad, setCantidad] = useState(0);
   const [stock, setStock] = useState(producto.cantidad); //cantidad es un atriburo del array ListaProductos
   const [costoCompra, setCostoCompra] = useState(0);
   // console.log(stock)
   //console.log(costoCompra)
+  
 
   const incrementar = () => {
     if (stock > 0) {
@@ -92,9 +102,11 @@ const Productos = ({ producto, agregarCarrito }) => {
           <div className="flex items-center justify-between">
              
              {cantidad !== 0 && (
-             <span className="animate-bounce bg-amber-400 text-black font-black px-2 py-1 rounded-lg shadow-[0_0_15px_#f59e0b]">
-             {cantidad}
-           </span>
+
+              <span className="animate-bounce bg-amber-500 text-black font-black px-3 py-1 rounded-lg shadow-[0_0_15px_#f59e0b]">
+                {cantidad}
+              </span>
+
             )}
             
             {costoCompra !== 0 && (
@@ -117,6 +129,15 @@ const Productos = ({ producto, agregarCarrito }) => {
                 onClick={incrementar}
                 className="flex items-center justify-center h-8 w-8 rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors"
               />
+             
+            </div>
+            <div className="flex space-x-2">
+               <Boton
+                tipo="verMas"
+                children="Ver mas"
+                 onClick={() => navigate(`/productos/${producto.id}`, replace)}
+                // onClick={<Navigate to="/productos"/>}
+                />
             </div>
           </div>
         </div>
