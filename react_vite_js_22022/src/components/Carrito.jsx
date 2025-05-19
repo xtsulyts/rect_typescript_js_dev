@@ -1,97 +1,110 @@
 import React from "react";
 import Boton from "./Boton";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon, ShoppingBagIcon } from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router-dom";
+import { TrashIcon } from "@heroicons/react/24/outline"; // o tu librería de iconos
+
 
 const Carrito = ({ carritoItems, onCerrar }) => {
+  const navigate = useNavigate();
   const importeCompra = carritoItems.reduce(
     (total, item) => total + item.precio * item.cantidad,
     0
   );
+return (
+  <div className="fixed inset-0 z-50 bg-white flex justify-center items-center">
+    <div className="w-full max-w-2xl h-[calc(100vh-8rem)] flex flex-col shadow-xl">
+      <div className="p-4 border-b flex justify-between items-center">
+        <h2 className="text-2xl font-bold text-gray-900">Tu Carrito</h2>
+        <button
+          onClick={onCerrar}
+          className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+        >
+          <XMarkIcon className="h-6 w-6 text-gray-500" />
+        </button>
+      </div>
 
-  return (
-    <div className="fixed inset-0 z-50 flex justify-end bg-green bg-opacity-50">
-      {/* Contenedor principal con altura automática */}
-      <div
-        className="max-w-md w-full bg-white/90  overflow-y-auto"
-        style={{
-          maxHeight: "90vh", // Altura máxima del 90% del viewport
-          top: "10vh", // Margen superior
-          bottom: "auto", // Anulamos el bottom:0
-          position: "fixed", // Mantenemos posición fija
-        }}
-      >
-        <div className="p-6">
-          {/* Encabezado */}
-          <div className="flex justify-between items-center mb-4 sticky top-0 bg-white z-10 pb-4 border-b">
-            <h2 className="text-2xl font-bold text-gray-800">
-              CARRITO DE COMPRAS
-            </h2>
+      <div className="flex-1 overflow-y-auto px-4 sm:px-6">
+        {carritoItems.length === 0 ? (
+          <div className="h-full flex flex-col items-center justify-center py-12">
+            <ShoppingBagIcon className="h-24 w-24 text-gray-300 mb-6" />
+            <p className="text-gray-500 text-xl mb-8">Tu carrito está vacío</p>
             <button
-              onClick={onCerrar}
-              className="text-gray-500 hover:text-gray-700 ml-4"
+              onClick={() => navigate("/productos")}
+              className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
             >
-              <XMarkIcon className="h-6 w-6" />
+              Explorar productos
             </button>
           </div>
+        ) : (
+          <ul className="divide-y divide-gray-200 py-4">
+            {carritoItems.filter(item => item.cantidad > 0).map((item, index) => (
+              <li key={index} className="py-6 flex">
+                <div className="flex-shrink-0 w-20 h-20 rounded-md overflow-hidden bg-gray-100">
+                  {item.imagen ? (
+                    <img src={item.imagen} alt={item.nombre} className="w-full h-full object-cover" />
+                  ) : (
+                    <ShoppingBagIcon className="w-full h-full text-gray-400 p-3" />
+                  )}
+                </div>
 
-          {/* Lista de items */}
-          {carritoItems.length === 0 ? (
-            <p className="text-gray-500 italic text-center py-4">
-              El carrito está vacío
-            </p>
-          ) : (
-            <>
-              <ul className="divide-y divide-gray-200">
-                {carritoItems
-                  .filter((item) => item.cantidad > 0)
-                  .map((item, index) => (
-                    <li
-                      key={index}
-                      className="py-3 flex justify-between hover:bg-gray-50 transition-colors"
-                    >
-                      <div className="flex gap-2">
-                        <span className="text-gray-700 font-medium">
-                          {item.nombre}
-                        </span>
-                        <span className="text-blue-600">x{item.cantidad}</span>
-                      </div>
-                      <span className="text-green-600 font-semibold">
-                        ${(item.precio * item.cantidad).toFixed(2)}
-                      </span>
-                    </li>
-                  ))}
-              </ul>
-
-              {/* Total - lo mantenemos sticky abajo */}
-              <div className="sticky bottom-0 bg-white pt-4 border-t border-gray-200">
-                <p className="text-xl font-bold text-gray-800 text-right mb-4">
-                  Total: ${importeCompra.toFixed(2)}
-                </p>
-                <Boton
-                  tipo="finalizarCompra"
-                  children={"Finalizar Compra"}
-                  onClick={() => {
-                    console.log("Finalizar Compra");
-                    onCerrar();
-                  }}
-                  className="w-full py-3" // Botón más prominente
-                />
-                <Boton
-                  tipo="seguirComprando"
-                  children={"Seguir Comprando"}
-                  onClick={() => {
-                    console.log("Seguir Comprando");
-                    onCerrar();
-                  }}
-                  className="w-full py-3" // Botón más prominente
-                />
-              </div>
-            </>
-          )}
-        </div>
+                <div className="ml-4 flex-1">
+                  <div className="flex justify-between">
+                    <h3 className="text-lg font-medium text-gray-900">{item.nombre}</h3>
+                    <p className="text-lg font-semibold text-green-600">
+                      ${(item.precio * item.cantidad).toFixed(2)}
+                    </p>
+                  </div>
+                  <p className="text-sm text-gray-500">${item.precio.toFixed(2)} c/u</p>
+                  
+                  <div className="flex items-center mt-3">
+                    <button className="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-l-md hover:bg-gray-200 transition-colors">
+                      -
+                    </button>
+                    <span className="w-10 text-center border-t border-b border-gray-100">
+                      {item.cantidad}
+                    </span>
+                    <button className="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-r-md hover:bg-gray-200 transition-colors">
+                      +
+                    </button>
+                    <button className="ml-4 p-1 text-gray-500 hover:text-red-500 transition-colors">
+                      <TrashIcon className="h-5 w-5" />
+                    </button>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
+
+      {carritoItems.length > 0 && (
+        <div className="p-4 border-t border-gray-200">
+          <div className="flex justify-between text-lg font-semibold mb-3">
+            <span>Subtotal</span>
+            <span>${importeCompra.toFixed(2)}</span>
+          </div>
+          <p className="text-sm text-gray-500 mb-4">Envío e impuestos calculados al finalizar</p>
+          <div className="space-y-3">
+            <button
+              onClick={() => navigate("/")}
+              className="w-full py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+            >
+              Pagar ahora
+            </button>
+            <button
+              onClick={() => navigate("/productos")}
+              className="w-full py-3 bg-white text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              Seguir comprando
+            </button>
+          </div>
+        </div>
+      )}
     </div>
-  );
+  </div>
+);
 };
+
 
 export default Carrito;
