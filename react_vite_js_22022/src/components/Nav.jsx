@@ -1,15 +1,19 @@
 import { useState } from "react";
 import { ShoppingCartIcon, Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link, useNavigate } from "react-router-dom";
+import { useCarrito } from "../contex/CarritoContexto";
 
-const Nav = ({ onMostrarCarrito }) => {
+
+const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const { precioTotal } = useCarrito();
   
   const menuItems = [
     { name: "Inicio", path: "/" },
     { name: "Productos", path: "/productos" },
     { name: "Contacto", path: "/contacto" },
+    { name: "Administracion", path: "/administracion" },
     { name: "Documentacion", path: "/documentacion" },
   ];
 
@@ -80,9 +84,8 @@ const Nav = ({ onMostrarCarrito }) => {
               </Link>
             ))}
             <button
-              onClick={() => {
-                onMostrarCarrito();
-                setIsOpen(false);
+              onClick={() => {<Link to={"/carrito"}/>
+                setIsOpen(true);
               }}
               className="w-full flex items-center justify-between px-3 py-3 rounded-md text-lg font-medium text-purple-600 hover:bg-purple-50 transition-colors duration-300"
             >
@@ -90,7 +93,7 @@ const Nav = ({ onMostrarCarrito }) => {
                 <ShoppingCartIcon className="h-5 w-5 mr-2" />
                 Carrito
               </span>
-              <span className="bg-purple-100 text-purple-600 rounded-full px-2 py-0.5 text-xs font-bold">0</span>
+              <span className="bg-purple-100 text-purple-600 rounded-full px-2 py-0.5 text-xs font-bold">${precioTotal}</span>
             </button>
           </div>
         </div>

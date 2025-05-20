@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import Boton from "./Boton"
+import Boton from "../components/Boton"
 
 const TarjetaProyecto = ({ nombreProyecto, descripcionProyecto })  => {
     const [ mensaje, setMensaje] = useState(null);

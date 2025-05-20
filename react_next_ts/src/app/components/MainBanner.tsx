@@ -10,7 +10,7 @@ const MainEcommerce = () => {
       name: 'Zapatos Deportivos Pro',
       price: 89.99,
       rating: 4.8,
-      image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff',
+      image: "https://images.pexels.com/photos/1464625/pexels-photo-1464625.jpeg?auto=compress&cs=tinysrgb&w=400",
       isNew: true,
     },
     {
@@ -18,7 +18,7 @@ const MainEcommerce = () => {
       name: 'Reloj Inteligente X3',
       price: 199.99,
       rating: 4.5,
-      image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30',
+      image: "/shoes_2.webp",
       discount: 80,
     },
     {
@@ -26,14 +26,14 @@ const MainEcommerce = () => {
       name: 'Audífonos Inalámbricos',
       price: 59.99,
       rating: 4.2,
-      image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e',
+      image: "/shoes_5.webp",
     },
     {
       id: 4,
       name: 'Cámara Profesional 4K',
       price: 499.99,
       rating: 4.9,
-      image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32',
+      image: "/shoes_6.webp",
       isNew: true,
     },
     {
@@ -41,14 +41,14 @@ const MainEcommerce = () => {
       name: 'Bolso Elegante',
       price: 79.99,
       rating: 4.3,
-      image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7',
-    },
+      image: "/shoes_7.webp",
+    },  
     {
       id: 6,
       name: 'Gafas de Sol Premium',
       price: 129.99,
       rating: 4.6,
-      image: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083',
+      image: "/shoes_3.webp",
     },
   ];
 

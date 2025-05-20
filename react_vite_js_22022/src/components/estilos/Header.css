@@ -58,7 +58,7 @@
   display: flex;
 }
 
-.header-menu {
+.header-user {
   display: flex;
   list-style: none;
   gap: 1.5rem;

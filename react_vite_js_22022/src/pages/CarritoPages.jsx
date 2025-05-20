@@ -1,5 +1,6 @@
 //import React, { useState } from 'react'
 import Carrito from "../components/Carrito";
+import Footer from "../components/Footer";
 import Header from "../components/Header";
 
 const CarritoPages = ({ carrito }) => {
@@ -7,10 +8,13 @@ const CarritoPages = ({ carrito }) => {
   console.log(carrito);
 
   return (
-    <div>
-      <Header carritoItems={carrito} />
-      <Carrito carritoItems={carrito} />
-    </div>
+    <>
+      <Header />
+        <Carrito carritoItems={carrito} />
+      <Footer/>
+
+    </>     
+    
   );
 };
 
