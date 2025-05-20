@@ -15,8 +15,13 @@ const Footer = () => {
     { name: 'Contacto', path: '/contacto' },
     { name: 'Usuarios de prueba', path: '/usuarios' },
     { name: 'Login', path: '/login' },
+<<<<<<< HEAD
     { name: 'Administracion', path: '/administracion' },
     { name: 'Documentacion', path: '/documentacion' },
+=======
+    { name: 'Usuarios', path: '/usuarios' },
+    { name: 'Adminitracion', path: '/administracion' },
+>>>>>>> f63c6462a0891478695b7fd30d063a3435835e6e
     { name: 'Carrito', path: '/carrito' }
   ].map((item) => (
     <li key={item.name}>
