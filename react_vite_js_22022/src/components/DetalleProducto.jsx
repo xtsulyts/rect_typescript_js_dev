@@ -3,30 +3,17 @@ import { useParams } from "react-router-dom";
 import ListaProductos from "./ListaProductos";
 import { useCarrito } from "../contex/CarritoContexto";
 
-<<<<<<< HEAD
 const DetalleProducto = ({ productos, agregarCarrito }) => {
   console.log(productos);
   const { id } = useParams();
   const { handleAgregarCarrito } = useCarrito()
-=======
-const DetalleProducto = ({
-  productos,
-
-  handleAgregarCarrito,
-}) => {
-  console.log(productos);
-  const { id } = useParams();
->>>>>>> f63c6462a0891478695b7fd30d063a3435835e6e
 
   const productoDetalle = productos.find(
     (productoDetalle) => productoDetalle.id == id
   );
 
   return (
-<<<<<<< HEAD
     <>
-=======
->>>>>>> f63c6462a0891478695b7fd30d063a3435835e6e
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
       <div className="flex flex-col md:flex-row gap-8">
         {/* Imagen del producto */}
@@ -64,9 +51,7 @@ const DetalleProducto = ({
             </div>
 
             <p className="text-gray-700 mb-6">
-              Descripción del producto (puedes agregar este campo al objeto si
-              lo necesitas). Estos deliciosos chips de bambú son perfectos para
-              un snack saludable.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda dolor voluptate deleniti hic nobis a, aperiam quo blanditiis magnam consequuntur laborum recusandae, consequatur eos tenetur perferendis neque ratione. Aliquam, modi?
             </p>
           </div>
 
@@ -78,11 +63,7 @@ const DetalleProducto = ({
               </button>
               <span className="px-4 py-2">1</span>
               <button
-<<<<<<< HEAD
                 onClick={agregarCarrito}
-=======
-                onClick={handleAgregarCarrito}
->>>>>>> f63c6462a0891478695b7fd30d063a3435835e6e
                 className="px-4 py-2 bg-gray-100 text-gray-600 hover:bg-gray-200"
               >
                 +
@@ -116,14 +97,11 @@ const DetalleProducto = ({
         </ul>
       </div>
     </div>
-<<<<<<< HEAD
     <ListaProductos
           productos={productos}
           agregarCarrito={handleAgregarCarrito}
         />
     </>
-=======
->>>>>>> f63c6462a0891478695b7fd30d063a3435835e6e
   );
 };
 

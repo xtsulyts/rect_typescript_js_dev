@@ -10,14 +10,10 @@ const CarritoPages = ({ carrito }) => {
   return (
     <>
       <Header />
-      <Carrito carritoItems={carrito} />
+        <Carrito carritoItems={carrito} />
       <Footer/>
 
-<<<<<<< HEAD
-      </>     
-=======
-      </>
->>>>>>> f63c6462a0891478695b7fd30d063a3435835e6e
+    </>     
     
   );
 };

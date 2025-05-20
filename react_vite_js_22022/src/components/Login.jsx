@@ -45,22 +45,14 @@ const Login = () => {
       setLoginError(null);
       await login({ email, password });
 
-<<<<<<< HEAD
        navigate('/'); 
-=======
-       navigate('/administracion'); 
->>>>>>> f63c6462a0891478695b7fd30d063a3435835e6e
     } catch (error) {
       setLoginError(error.message);
     }
   };
 
   return (
-<<<<<<< HEAD
     <div className="min-h-screen  flex items-center justify-center bg-gray-100">
-=======
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
->>>>>>> f63c6462a0891478695b7fd30d063a3435835e6e
       <form
         onSubmit={handleSubmit}
         className="bg-white p-8 rounded-lg shadow-md w-full max-w-md"

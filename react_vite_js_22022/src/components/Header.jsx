@@ -7,10 +7,7 @@ import Nav from './Nav';
 import { useUsuario } from '../contex/UsuarioContexto';
 import { useNavigate } from 'react-router-dom';
 import { useCarrito } from '../contex/CarritoContexto';
-<<<<<<< HEAD
 import { HiUser } from "react-icons/hi";
-=======
->>>>>>> f63c6462a0891478695b7fd30d063a3435835e6e
 
 
 
@@ -21,11 +18,6 @@ const Header = () => {
   const navigate = useNavigate();
   const { usuario } = useUsuario();
   console.log(usuario);
-<<<<<<< HEAD
-=======
-  
-
->>>>>>> f63c6462a0891478695b7fd30d063a3435835e6e
   
 
   
@@ -50,15 +42,9 @@ const Header = () => {
 
 
         {/* Área de usuario */}
-<<<<<<< HEAD
         <div className="flex">
           {usuario ? (
             <span className='flex'> <HiUser/>__{usuario.name}</span>
-=======
-        <div className="header-user">
-          {usuario ? (
-            <span>Bienvenido, {usuario.name}</span>
->>>>>>> f63c6462a0891478695b7fd30d063a3435835e6e
           ) : (
             <button  onClick={() => navigate("/login")} className="header-login-btn">
               Iniciar sesión

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { ClipboardDocumentIcon, CheckIcon } from '@heroicons/react/24/outline';
-<<<<<<< HEAD
 import { useUsuario } from '../contex/UsuarioContexto';
 import { useNavigate } from 'react-router-dom';
 const DocumentacionApi = () => {
@@ -55,12 +54,6 @@ const DocumentacionApi = () => {
      </div>
    );
      }
-=======
-
-const DocumentacionApi = () => {
-  const [copied, setCopied] = useState(null);
-  const [activeTab, setActiveTab] = useState('integracion');
->>>>>>> f63c6462a0891478695b7fd30d063a3435835e6e
 
   // Función para copiar al portapapeles
   const copyToClipboard = (text, section) => {
