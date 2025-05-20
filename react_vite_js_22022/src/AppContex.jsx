@@ -12,9 +12,16 @@ import DetallePages from "./pages/DetallePages.jsx";
 import UsuariosPrueba from "./components/UsuariosPrueba.jsx";
 import LoginPages from "./pages/LoginPages.jsx";
 import RutaProtegida from "./autenticacion/RutaProtegida.jsx";
+<<<<<<< HEAD
+//import Admin from "./components/Admin.jsx";
+import { useCarrito } from "./contex/CarritoContexto.jsx";
+import { useUsuario } from "./contex/UsuarioContexto.jsx";
+import AdminPages from "./pages/AdminPages.jsx";
+=======
 import Admin from "./components/Admin.jsx";
 import { useCarrito } from "./contex/CarritoContexto.jsx";
 import { useUsuario } from "./contex/UsuarioContexto.jsx";
+>>>>>>> f63c6462a0891478695b7fd30d063a3435835e6e
 
 function AppContex() {
   const { carrito, handleAgregarCarrito, productos, autenticado, loading  } = useCarrito();
@@ -63,8 +70,18 @@ function AppContex() {
         <Route path="/contacto" element={<ContactoPages />} />
         <Route
           path="/documentacion"
+<<<<<<< HEAD
+          element={<RutaProtegida autenticado={autenticado}>
+          <DocumentacionPages />{" "}
+        </RutaProtegida>}
+        />
+    
+
+
+=======
           element={<DocumentacionPages carrito={carrito} />}
         />
+>>>>>>> f63c6462a0891478695b7fd30d063a3435835e6e
         <Route path="*" element={<NoFoundPages />} />
         <Route path="/login" element={<LoginPages login={login}/>} />
         <Route path="/usuarios" element={<UsuariosPrueba />} />
@@ -72,7 +89,11 @@ function AppContex() {
           path="administracion"
           element={
             <RutaProtegida autenticado={autenticado}>
+<<<<<<< HEAD
+              <AdminPages />{" "}
+=======
               <Admin />{" "}
+>>>>>>> f63c6462a0891478695b7fd30d063a3435835e6e
             </RutaProtegida>
           }
         />

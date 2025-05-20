@@ -1,9 +1,66 @@
 import React, { useState, useEffect } from 'react';
 import { ClipboardDocumentIcon, CheckIcon } from '@heroicons/react/24/outline';
+<<<<<<< HEAD
+import { useUsuario } from '../contex/UsuarioContexto';
+import { useNavigate } from 'react-router-dom';
+const DocumentacionApi = () => {
+  const [copied, setCopied] = useState(null);
+  const [activeTab, setActiveTab] = useState('integracion');
+  const { usuario } = useUsuario()
+
+   const navigate = useNavigate();
+
+  //if (!autenticado) {  // Pendiente resolver el estado autenticado
+  if (!usuario) {
+    return (
+     <div className="max-w-md mx-auto mt-20 mb-20 p-8 bg-white border border-gray-200 rounded-xl shadow-md text-center">
+       <div className="flex justify-center mb-4">
+         <svg 
+           xmlns="http://www.w3.org/2000/svg" 
+           className="h-12 w-12 text-red-500" 
+           fill="none" 
+           viewBox="0 0 24 24" 
+           stroke="currentColor"
+         >
+           <path 
+             strokeLinecap="round" 
+             strokeLinejoin="round" 
+             strokeWidth={2} 
+             d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" 
+           />
+         </svg>
+       </div>
+       
+       <h2 className="text-2xl font-bold text-gray-800 mb-3">Acceso restringido</h2>
+       <p className="text-gray-600 mb-6">Necesitas privilegios de administrador para acceder a esta sección</p>
+       
+       <div className="flex justify-center gap-4">
+         <button
+           onClick={() => navigate("/")}
+           className="px-6 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+         >
+           Volver al inicio
+         </button>
+         <button
+           onClick={() => navigate("/login")}
+           className="px-6 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 transition-colors shadow-sm"
+         >
+           Iniciar sesión
+         </button>
+       </div>
+       
+       <p className="mt-6 text-xs text-gray-400">
+         ¿Problemas para acceder? <a href="#" className="text-red-500 hover:underline">Contacta al soporte</a>
+       </p>
+     </div>
+   );
+     }
+=======
 
 const DocumentacionApi = () => {
   const [copied, setCopied] = useState(null);
   const [activeTab, setActiveTab] = useState('integracion');
+>>>>>>> f63c6462a0891478695b7fd30d063a3435835e6e
 
   // Función para copiar al portapapeles
   const copyToClipboard = (text, section) => {

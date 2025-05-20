@@ -6,7 +6,11 @@ import Footer from '../components/Footer'
 const DocumentacionPages = () => {
   return (
    <>
+<<<<<<< HEAD
+    <Header/>
+=======
    <Header/>
+>>>>>>> f63c6462a0891478695b7fd30d063a3435835e6e
       <DocumentacionApi/>
     <Footer/>
    </>

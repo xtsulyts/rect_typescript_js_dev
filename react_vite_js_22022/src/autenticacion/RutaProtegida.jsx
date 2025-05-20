@@ -12,9 +12,15 @@ const RutaProtegida = ({ children }) => {
   }
   return (
  <>
+<<<<<<< HEAD
+    
+    {children}
+    
+=======
     <Header/>
     {children}
     <Footer/>
+>>>>>>> f63c6462a0891478695b7fd30d063a3435835e6e
  </>
   )
 }
