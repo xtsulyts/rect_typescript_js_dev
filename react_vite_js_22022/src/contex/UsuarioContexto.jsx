@@ -74,8 +74,8 @@ export const UsuarioProvider = ({ children }) => {
         setAutenticado(true);
         console.log(usuarioEncontrado)
         console.log("usuario autenticado:", {usuarioEncontrado})
-        localStorage.setItem('nombre', 'nombre del usuario pendiente')
         localStorage.setItem('token', 'token_simulado'); // En una app real sería un JWT
+        localStorage.setItem('usuario', usuarioEncontrado.nombre);
         return { success: true };
       } else {
         throw new Error('Credenciales incorrectas');

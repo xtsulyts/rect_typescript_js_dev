@@ -5,7 +5,7 @@ import Footer from '../components/Footer'
 
 
 const DetallePages = ({productos}) => {
-  console.log(productos)
+  //console.log(productos)
   return (
    <>
    <Header/>

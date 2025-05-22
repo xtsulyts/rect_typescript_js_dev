@@ -4,7 +4,7 @@ import "../components/estilos/ListaProductos.css"
 
 
 const ListaProductos = ({ productos, agregarCarrito }) => {
- console.log(productos)
+ //console.log(productos)
  
  
   return (

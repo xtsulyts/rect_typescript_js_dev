@@ -65,9 +65,9 @@ const Footer = () => {
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
               <FaHeadset className="text-yellow-500 dark:text-yellow-400" />
-              <span className="text-gray-600 dark:text-gray-400">Soporte 24/7</span>
+              <span className="text-gray-600 dark:text-gray-400">Soporte</span>
             </div>
-            <p className="text-gray-600 dark:text-gray-400">contacto@ecommerce.com</p>
+            <p className="text-gray-600 dark:text-gray-400">contacto@e-shopshoes.com</p>
             <div className="flex space-x-4">
               {[FaFacebook, FaTwitter, FaInstagram, FaLinkedin].map((Icon, index) => (
                 <a key={index} href="#" className="text-gray-600 dark:text-gray-400 hover:text-yellow-500 dark:hover:text-yellow-400 transition-colors">
@@ -98,7 +98,7 @@ const Footer = () => {
       {/* Copyright */}
       <div className="bg-gray-50 dark:bg-gray-900 py-4">
         <div className="container mx-auto px-4 text-center text-gray-600 dark:text-gray-400 text-sm">
-          © {new Date().getFullYear()} E-Commerce. Todos los derechos reservados.
+          © {new Date().getFullYear()} E-Shoes Shop. Todos los derechos reservados.
         </div>
       </div>
     </footer>

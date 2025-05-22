@@ -5,7 +5,7 @@ const DetalleProductoPages = ({productos}) => {
     console.log(productos)
   return (
     <>
-    <DetalleProducto carrito={carrito}/>
+    <DetalleProducto/>
     </>
   )
 }
