@@ -12,7 +12,7 @@ const Login = () => {
   const navigate = useNavigate();
   
   // Accedemos a las funciones del contexto
-  const { login } = useUsuario();
+  const { login, isAuth } = useUsuario();
 
   const [loginError, setLoginError] = useState(null);
 

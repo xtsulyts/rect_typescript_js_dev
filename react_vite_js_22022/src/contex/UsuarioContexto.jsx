@@ -74,7 +74,7 @@ export const UsuarioProvider = ({ children }) => {
         setAutenticado(true);
         console.log(usuarioEncontrado)
         console.log("usuario autenticado:", {usuarioEncontrado})
-        localStorage.setItem('token', 'token_simulado'); // En una app real sería un JWT
+        localStorage.setItem('token', 'token_simulado'); // pendiente JWT
         localStorage.setItem('usuario', usuarioEncontrado.nombre);
         return { success: true };
       } else {
@@ -94,6 +94,7 @@ export const UsuarioProvider = ({ children }) => {
     setUsuario(null);
     setAutenticado(false);
     localStorage.removeItem('token');
+    localStorage.removeItem('usuario')
   };
 
   // Valor que será accesible para los componentes que consuman este contexto

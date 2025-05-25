@@ -34,7 +34,7 @@ const Nav = () => {
                   <Link
                     key={item.name}
                     to={item.path}
-                    className="text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-lg font-medium transition-colors duration-300 relative group"
+                    className="text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-lg  transition-colors duration-300 relative group"
                   >
                     {item.name}
                     <span className="absolute bottom-0 left-0 w-0 h-1 bg-gradient-to-r from-pink-500 to-purple-500 transition-all duration-300 group-hover:w-full"></span>

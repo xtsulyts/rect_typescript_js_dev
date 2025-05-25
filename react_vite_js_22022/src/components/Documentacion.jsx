@@ -2,10 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { ClipboardDocumentIcon, CheckIcon } from '@heroicons/react/24/outline';
 import { useUsuario } from '../contex/UsuarioContexto';
 import { useNavigate } from 'react-router-dom';
+import { useCarrito } from '../contex/CarritoContexto';
+
+
 const DocumentacionApi = () => {
+
   const [copied, setCopied] = useState(null);
   const [activeTab, setActiveTab] = useState('integracion');
   const { usuario } = useUsuario()
+  const { imagen } = useCarrito();
+
 
    const navigate = useNavigate();
 

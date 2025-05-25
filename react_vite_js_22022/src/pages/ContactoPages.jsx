@@ -1,5 +1,5 @@
 import React from 'react'
-import Formulario from '../components/Formulario'
+import FormularioContacto from '../components/FormularioContacto'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 const Contacto = ({ carrito }) => {
@@ -7,7 +7,7 @@ const Contacto = ({ carrito }) => {
   return (
     <div>
       <Header carritoItems={carrito}/>
-        <Formulario/>
+        <FormularioContacto/>
       <Footer/>
       
     </div>

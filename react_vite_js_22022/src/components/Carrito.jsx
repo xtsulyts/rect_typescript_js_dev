@@ -3,21 +3,26 @@ import Boton from "./Boton";
 import { XMarkIcon, ShoppingBagIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { TrashIcon } from "@heroicons/react/24/outline"; // o tu librería de iconos
+import { useCarrito } from  "../contex/CarritoContexto"
 
 
-const Carrito = ({ carritoItems, onCerrar }) => {
+
+const Carrito = ({ carritoItems }) => {
+  console.log(carritoItems)
   const navigate = useNavigate();
   const importeCompra = carritoItems.reduce(
     (total, item) => total + item.precio * item.cantidad,
     0
   );
+  const { totalItems } = useCarrito();
+  console.log(totalItems);
 return (
   <div className="fixed inset-0 z-50 bg-white flex justify-center items-center">
     <div className="w-full max-w-2xl h-[calc(100vh-8rem)] flex flex-col shadow-xl">
       <div className="p-4 border-b flex justify-between items-center">
         <h2 className="text-2xl font-bold text-gray-900">Tu Carrito</h2>
         <button
-          onClick={onCerrar}
+          onClick={() => navigate("/productos")}
           className="p-2 rounded-full hover:bg-gray-100 transition-colors"
         >
           <XMarkIcon className="h-6 w-6 text-gray-500" />

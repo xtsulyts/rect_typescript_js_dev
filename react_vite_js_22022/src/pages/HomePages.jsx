@@ -28,14 +28,8 @@ const HomePages = ({ carrito, productos, handleAgregarCarrito }) => {
       </section>
          <main className="container mx-auto px-4 py-6">
       <Banner />
-      
-    </main>
+         </main>
       <Main />
-
-      <ListaProductos
-        productos={productos}
-        agregarCarrito={handleAgregarCarrito}
-      />
       <Footer />
     </>
   );
