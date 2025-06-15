@@ -1,26 +1,22 @@
 import React from "react";
 import Productos from "./Productos";
-import "../components/estilos/ListaProductos.css"
+import "../components/estilos/ListaProductos.css";
+import { useCarrito } from "../contex/CarritoContexto";
 
 
-const ListaProductos = ({ productos, agregarCarrito }) => {
- //console.log(productos)
- 
- 
+const ListaProductos = () => {
+  const { productos } = useCarrito();
+  console.log(productos);
+
+
+
   return (
     <>
-    <div className="galleryContainer">
-      {productos.map((producto) => {
-        return (
-          <Productos
-            key={producto.codigo} // Key única basada en producto.codigo
-            producto={producto}
-            agregarCarrito={agregarCarrito}
-            costo={producto.precio} // Se pasa como referencia
-          />
-        );
-      })}
-    </div>
+      <div className="galleryContainer">
+        {productos.map((producto) => {
+          return <Productos producto={producto} />;
+        })}
+      </div>
     </>
   );
 };

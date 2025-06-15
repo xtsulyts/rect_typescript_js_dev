@@ -2,19 +2,21 @@ import React from "react";
 import ListaProductos from "../components/ListaProductos";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-const LOADER_URL =
-  "https://upload.wikimedia.org/wikipedia/commons/d/de/Ajax-loader.gif";
+import { useCarrito } from "../contex/CarritoContexto";
 
-const ListaPages = ({ carrito, productos, handleAgregarCarrito, loading }) => {
+const ListaPages = () => {
+  const { carrito, productos, handleAgregarCarrito, loading, LOADER_URL } = useCarrito()
   return (
     <>
       <Header carritoItems={carrito} />
       {loading ? (
-        <img
-          src={LOADER_URL}
-          alt="Cargando productos..."
-          className="w-80 h-80 object-contain animate-pulse rounded-lg shadow-xl hover:shadow-2xl transition-all duration-300"
-        />
+       <div className="flex justify-center items-center min-h-screen bg-gray-50"> 
+  <img
+    src={LOADER_URL}
+    alt="Cargando productos..."
+    className="w-40 h-40 object-contain animate-pulse"  // Tamaño reducido para elegancia
+  />
+</div>
       ) : (
         <ListaProductos
           productos={productos}

@@ -11,12 +11,11 @@ import { useUsuario } from "../contex/UsuarioContexto";
  * @param {Array} props.productos - Lista de todos los productos disponibles
  * @returns {JSX.Element} - Elemento JSX que representa el detalle del producto
  */
-const DetalleProducto = ({ productos }) => {
+const DetalleProducto = () => {
   const { id } = useParams();
-  const { handleAgregarCarrito, totalItems } = useCarrito();
+  const { handleAgregarCarrito, totalItems, productos } = useCarrito();
   const { usuario} = useUsuario();
-  console.log(totalItems);
-  
+  console.log(totalItems); // Cantidad de productos agregados al carrito
   
   // Estado local para manejar la cantidad seleccionada del producto
   const [cantidad, setCantidad] = useState(0);

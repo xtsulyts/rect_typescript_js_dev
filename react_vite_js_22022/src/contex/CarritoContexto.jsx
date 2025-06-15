@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
+import { RingLoader } from 'react-spinners';
 
 const API_KEY = "9tNEjFhwUIus25QDwOd8iywPhg5QEyYDWiVS9NlvWfD2MeSClgYAU125";
 
@@ -8,7 +9,7 @@ const API_KEY = "9tNEjFhwUIus25QDwOd8iywPhg5QEyYDWiVS9NlvWfD2MeSClgYAU125";
  * - Lista de productos
  * - Estado del carrito
  * - Funciones para manipular el carrito
- * - Estado de autenticación
+ * - Estado de autenticación         
  */
 const CarritoContext = createContext();
 
@@ -46,7 +47,7 @@ export const CarritoProvider = ({ children }) => {
    * - MockAPI para datos de productos
    */
   useEffect(() => {
-    //const API_KEY = process.env.REACT_APP_PEXELS_API_KEY; // Asegúrate de tener esta variable de entorno
+    
 
     const fetchData = async () => {
       try {
@@ -88,6 +89,10 @@ export const CarritoProvider = ({ children }) => {
 
     fetchData();
   }, []);
+    useEffect(() => {
+    console.log("Productos actualizados:", productos);
+  }, [productos]);
+
 
   /**
    * Agrega un producto al carrito o actualiza su cantidad si ya existe
@@ -162,7 +167,6 @@ export const CarritoProvider = ({ children }) => {
     imagenes,
     loading,
     error,
-    isAuth,
     LOADER_URL,
     totalItems,
     precioTotal,

@@ -7,7 +7,7 @@ import "./index.css";
 //import App from "./App.jsx";
 import { UsuarioProvider } from "./contex/UsuarioContexto.jsx";
 import { CarritoProvider } from "./contex/CarritoContexto.jsx";
-import AppContex from "./AppContex.jsx";
+import App from "./App.jsx";
 
 
 createRoot(document.getElementById("root")).render(
@@ -15,10 +15,8 @@ createRoot(document.getElementById("root")).render(
 
     <UsuarioProvider>
       <CarritoProvider>
-      <AppContex />
-      {/* <App /> */}
+      <App />
       </CarritoProvider>
     </UsuarioProvider>
   </StrictMode>
 );
-

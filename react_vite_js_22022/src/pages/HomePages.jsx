@@ -4,11 +4,14 @@ import ListaProductos from "../components/ListaProductos";
 import Footer from "../components/Footer";
 import CarruselOfertas from "../components/CarrouselOfertas";
 import Banner from "../components/Banner"
+import { useCarrito } from "../contex/CarritoContexto";
 
 
 
-const HomePages = ({ carrito, productos, handleAgregarCarrito }) => {
-  console.log(productos);
+const HomePages = () => {
+  const { carrito, productos } = useCarrito()
+  console.log(carrito);
+  
 
   return (
     <>

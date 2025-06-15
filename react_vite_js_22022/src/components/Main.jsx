@@ -1,10 +1,10 @@
 import React from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useCarrito } from '../contex/CarritoContexto';
 
 const Main = () => {
-  const { handleAgregarCarrito, productos } = useCarrito();
-  const navigate = useNavigate();
+  const { productos } = useCarrito();
+ 
 
   // Seleccionamos un producto destacado (podría venir de una API o ser el primero)
   const productoDestacado = productos.length > 0 ? productos[1] : null;

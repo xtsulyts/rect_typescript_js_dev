@@ -2,9 +2,10 @@
 import Carrito from "../components/Carrito";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import { useCarrito } from "../contex/CarritoContexto";
 
-const CarritoPages = ({ carrito }) => {
-  //const [mostrarCarrito, setMostrarCarrito] = useState(false);
+const CarritoPages = () => {
+  const { carrito } = useCarrito()
   console.log(carrito);
 
   return (

@@ -25,15 +25,15 @@ export const UsuarioProvider = ({ children }) => {
 
   /**
    * Efecto para verificar la autenticación al cargar la aplicación.
-   * Aquí podrías verificar si hay un token en localStorage, por ejemplo.
+   * Hola como andan, lo ultimo de logica es sacar props y pasar todo por contexto? ya no hay mas contenidoerificar si hay un token en localStorage, por ejemplo.
    */
   useEffect(() => {
     const verificarAutenticacion = () => {
-      // Simulamos una verificación de token (en una app real, sería asíncrono)
+      // verificación de token
       const token = localStorage.getItem('token');
       const nombreUsuario = localStorage.getItem('nombre');
       
-      if (token) {
+      if (!token) {
         setAutenticado(false);
         // Aquí podrías hacer una llamada a la API para obtener los datos del usuario
       }
@@ -68,13 +68,14 @@ export const UsuarioProvider = ({ children }) => {
       const usuarioEncontrado = usuarios.find(
         u => u.email === datosUsuario.email && u.password === datosUsuario.password
       );
-
+      if (!usuarioEncontrado)
+        throw new Error('Usuario no encontrado')//Skyla.Rohan67@hotmail.com   LeQoyGrNSmwdCsR
       if (usuarioEncontrado) {
         setUsuario(usuarioEncontrado);
         setAutenticado(true);
         console.log(usuarioEncontrado)
         console.log("usuario autenticado:", {usuarioEncontrado})
-        localStorage.setItem('token', 'token_simulado'); // pendiente JWT
+        localStorage.setItem('token', 'token_simulado'); 
         localStorage.setItem('usuario', usuarioEncontrado.nombre);
         return { success: true };
       } else {
@@ -103,7 +104,7 @@ export const UsuarioProvider = ({ children }) => {
     autenticado,
     cargando,
     login,
-    logout
+    logout,
   };
 
   return (

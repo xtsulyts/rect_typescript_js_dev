@@ -3,19 +3,22 @@ import Boton from "./Boton";
 import { XMarkIcon, ShoppingBagIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { TrashIcon } from "@heroicons/react/24/outline"; // o tu librería de iconos
-import { useCarrito } from  "../contex/CarritoContexto"
+//import { useCarrito } from  "../contex/CarritoContexto"
 
 
 
 const Carrito = ({ carritoItems }) => {
   console.log(carritoItems)
+  localStorage.setItem("compra", {carritoItems})
+  
   const navigate = useNavigate();
   const importeCompra = carritoItems.reduce(
     (total, item) => total + item.precio * item.cantidad,
     0
   );
-  const { totalItems } = useCarrito();
-  console.log(totalItems);
+  // const { totalItems } = useCarrito();
+  // localStorage.setItem("compra", {totalItems})
+  // console.log(totalItems);
 return (
   <div className="fixed inset-0 z-50 bg-white flex justify-center items-center">
     <div className="w-full max-w-2xl h-[calc(100vh-8rem)] flex flex-col shadow-xl">
@@ -60,7 +63,7 @@ return (
                       ${(item.precio * item.cantidad).toFixed(2)}
                     </p>
                   </div>
-                  <p className="text-sm text-gray-500">${item.precio.toFixed(2)} c/u</p>
+                  <p className="text-sm text-gray-500">${item.precio} c/u</p>
                   
                   <div className="flex items-center mt-3">
                     <button className="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-l-md hover:bg-gray-200 transition-colors">

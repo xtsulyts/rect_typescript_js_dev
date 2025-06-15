@@ -1,55 +1,96 @@
 import { useState } from 'react';
+//import { useCarrito } from '../contex/CarritoContexto';
 import { FaUser, FaLock } from 'react-icons/fa';
 import { useUsuario } from '../contex/UsuarioContexto'; // Importamos nuestro hook personalizado
 import Boton from './Boton';
 import { useNavigate } from 'react-router-dom'
 
-const Login = () => {
-
+const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   
   // Accedemos a las funciones del contexto
-  const { login, isAuth } = useUsuario();
+  const { login, logout} = useUsuario();
 
   const [loginError, setLoginError] = useState(null);
 
-  const validateForm = () => {
-    const newErrors = {};
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+/**
+ * Valida los campos de un formulario de inicio de sesión/registro.
+ * Verifica que el email tenga formato correcto y que la contraseña cumpla con longitud mínima.
+ * 
+ * @returns {boolean} - Retorna `true` si no hay errores de validación, `false` si hay errores
+ * 
+ * @example
+ * const isValid = validateForm();
+ * if (isValid) {
+ *   // Proceder con el envío del formulario
+ * }
+ */
+const validateForm = () => {
+  // Objeto para almacenar los mensajes de error
+  const newErrors = {};
+  
+  // Expresión regular para validar formato de email
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!email) {
-      newErrors.email = 'El email es requerido';
-    } else if (!emailRegex.test(email)) {
-      newErrors.email = 'Email no válido';
-    }
+  // Validación del campo email
+  if (!email) {
+    newErrors.email = 'El email es requerido';
+  } else if (!emailRegex.test(email)) {
+    newErrors.email = 'Email no válido';
+  }
 
-    if (!password) {
-      newErrors.password = 'La contraseña es requerida';
-    } else if (password.length < 6) {
-      newErrors.password = 'Mínimo 6 caracteres';
-    }
+  // Validación del campo contraseña
+  if (!password) {
+    newErrors.password = 'La contraseña es requerida';
+  } else if (password.length < 6) {
+    newErrors.password = 'Mínimo 6 caracteres';
+  }
 
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+  // Actualiza el estado de errores con los nuevos mensajes
+  setErrors(newErrors);
+  
+  // Retorna true si no hay errores (el objeto newErrors está vacío)
+  return Object.keys(newErrors).length === 0;
+};
 
-  const handleSubmit = async (e) => {
+
+
+  /**
+ * Maneja el envío del formulario de inicio de sesión.
+ * Realiza validación, autenticación y manejo de errores.
+ * 
+ * @param {Event} e - Evento de submit del formulario
+ * @async
+ * 
+ * @example
+ * <form onSubmit={handleSubmit}>
+ *   {/* Campos del formulario *\/}
+ * </form>
+ */
+const handleSubmit = async (e) => {
+    // Previene el comportamiento por defecto del formulario (recarga de página)
     e.preventDefault();
     
+    // Valida el formulario y sale si hay errores
     if (!validateForm()) return;
     
     try {
+      // Limpia errores previos
       setLoginError(null);
+      
+      // Intenta hacer login (llamada asíncrona a API/servicio)
       await login({ email, password });
 
-       navigate('/'); 
+      // Navega a la página principal si el login es exitoso
+      navigate('/'); 
     } catch (error) {
+      // Captura y muestra errores de autenticación
       setLoginError(error.message);
     }
-  };
+};
 
   return (
     <div className="min-h-screen  flex items-center justify-center bg-gray-100">
@@ -134,4 +175,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginForm;

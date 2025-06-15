@@ -13,6 +13,7 @@ import { useUsuario } from "../contex/UsuarioContexto";
  * @returns {JSX.Element} - Elemento JSX que representa el producto
  */
 const Productos = ({ producto }) => {
+  console.log(producto)
   const navigate = useNavigate();
   const { handleAgregarCarrito } = useCarrito();
   const {usuario} = useUsuario()
@@ -58,9 +59,9 @@ const Productos = ({ producto }) => {
   const agregarAlCarrito = () => {
     if (cantidad > 0) {
       handleAgregarCarrito(producto, cantidad);
-      // Opcional: Resetear los estados después de agregar
-      // setCantidad(0);
-      // setCostoCompra(0);
+     
+      setCantidad(cantidad);
+      setCostoCompra(costoCompra);
     }
   };
 
@@ -94,7 +95,7 @@ const Productos = ({ producto }) => {
               {producto.nombre}
             </h3>
             <span className="text-xl font-bold text-gray-900 whitespace-nowrap">
-              ${producto.precio.toFixed(2)}
+              ${producto.precio}
             </span>
           </div>
 
