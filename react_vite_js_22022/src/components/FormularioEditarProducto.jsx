@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import FormularioAgregarProducto from './FormularioAgregarProducto';
 
 const API_KEY = "9tNEjFhwUIus25QDwOd8iywPhg5QEyYDWiVS9NlvWfD2MeSClgYAU125";
 const MOCKAPI_URL = 'https://67f5e9af913986b16fa5e489.mockapi.io/api/products';
 
-const ProductosCRUD = () => {
+const FormularioEditarProducto = () => {
   
   const [productos, setProductos] = useState([]);
   const [imagenes, setImagenes] = useState([]);
@@ -153,9 +154,11 @@ const ProductosCRUD = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
+
+  
       {/* Modal de edición */}
       {editingProduct && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div className="fixed inset-0 bg-white bg-opacity-50 flex items-center justify-center p-4 z-50 mt-16">
           <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl overflow-hidden">
             {/* Encabezado */}
             <div className="bg-gradient-to-r from-indigo-600 to-indigo-800 px-6 py-4 flex justify-between items-center">
@@ -283,6 +286,7 @@ const ProductosCRUD = () => {
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-800">Gestión de Productos</h1>
         <p className="text-gray-600 mt-2">Administra el inventario de productos</p>
+            <FormularioAgregarProducto/>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
@@ -356,4 +360,4 @@ const ProductosCRUD = () => {
   );
 };
 
-export default ProductosCRUD;
+export default FormularioEditarProducto ;

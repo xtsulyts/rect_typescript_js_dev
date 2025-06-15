@@ -4,18 +4,23 @@ import Boton from './Boton';
 //import { useNavigate } from "react-router-dom";
 //import { useUsuario } from '../contex/UsuarioContexto';
 //import { useCarrito } from '../contex/CarritoContexto';
-import ProductosCRUD from "./FormularioEditar"
-import FormularioProducto from './FormularioProducto';
+import FormularioEditarProducto  from "./FormularioEditarProducto"
+import FormularioAgregarProducto from './FormularioAgregarProducto';
 
 
 const Admin = () => {
 
   return (
      <>
-     <FormularioProducto/>
-     <ProductosCRUD />
+     
+     <FormularioEditarProducto  />
+     {/* <FormularioAgregarProducto/> */}
     </>
   );
 };
 
 export default Admin;
+
+
+
+
