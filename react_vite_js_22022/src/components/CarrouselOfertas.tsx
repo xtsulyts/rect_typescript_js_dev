@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import React from "react";
 import { useUsuario } from '../contex/UsuarioContexto';
 import { useCarrito } from '../contex/CarritoContexto';
 
@@ -136,6 +137,7 @@ const CarruselOfertas = ({
   }
 
   return (
+    <>
     <div 
       className="relative w-full max-w-6xl mx-auto overflow-hidden rounded-xl shadow-xl"
       onMouseEnter={() => setIsHovered(true)}
@@ -230,6 +232,7 @@ const CarruselOfertas = ({
         </div>
       )}
     </div>
+    </>
   );
 };
 

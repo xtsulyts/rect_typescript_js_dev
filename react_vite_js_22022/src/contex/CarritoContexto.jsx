@@ -40,56 +40,77 @@ export const CarritoProvider = ({ children }) => {
   // URL para el loader de carga
   const LOADER_URL = "https://upload.wikimedia.org/wikipedia/commons/d/de/Ajax-loader.gif";
 
-  /**
-   * Efecto para cargar datos al montar el componente
-   * Realiza peticiones a:
-   * - API de Pexels para imágenes de productos
-   * - MockAPI para datos de productos
-   */
-  useEffect(() => {
-    
+ // Función hash para generar un índice estable a partir del ID del producto
+function hashId(str) {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash = hash & hash; // Convertir a entero de 32 bits
+  }
+  return Math.abs(hash);
+}
 
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        setError(null);
+/**
+ * Efecto para cargar datos al montar el componente
+ * Realiza peticiones a:
+ * - API de Pexels para imágenes de productos
+ * - MockAPI para datos de productos
+ */
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
 
-        const [imagesResponse, productosResponse] = await Promise.all([
-          fetch("https://api.pexels.com/v1/search?query=sneakers&per_page=148", {
-            headers: { Authorization: API_KEY },
-          }),
-          fetch("https://67f5e9af913986b16fa5e489.mockapi.io/api/products"),
-        ]);
+      const [imagesResponse, productosResponse] = await Promise.all([
+        fetch("https://api.pexels.com/v1/search?query=sneakers&per_page=148", {
+          headers: { Authorization: API_KEY },
+        }),
+        fetch("https://67f5e9af913986b16fa5e489.mockapi.io/api/products"),
+      ]);
 
-        if (!imagesResponse.ok) throw new Error("Error en API de imágenes");
-        if (!productosResponse.ok) throw new Error("Error en API de productos");
+      if (!imagesResponse.ok) throw new Error("Error en API de imágenes");
+      if (!productosResponse.ok) throw new Error("Error en API de productos");
 
-        const [imagesData, productosData] = await Promise.all([
-          imagesResponse.json(),
-          productosResponse.json(),
-        ]);
+      const [imagesData, productosData] = await Promise.all([
+        imagesResponse.json(),
+        productosResponse.json(),
+      ]);
 
-        setImagenes(imagesData.photos);
+      setImagenes(imagesData.photos);
 
-        // Combinar productos con sus imágenes
-        const combinedData = productosData.map((producto, index) => ({
+      // Combinar productos con sus imágenes usando índice estable
+      const combinedData = productosData.map((producto) => {
+        // Si no hay imágenes disponibles, usar placeholder
+        if (!imagesData.photos.length) {
+          return {
+            ...producto,
+            imagen: "https://via.placeholder.com/300",
+          };
+        }
+        
+        // Generar índice estable basado en el ID del producto
+        const stableIndex = hashId(producto.id) % imagesData.photos.length;
+        return {
           ...producto,
-          imagen: imagesData.photos[index % imagesData.photos.length]?.src.medium || 
-                 "https://via.placeholder.com/300",
-        }));
+          imagen: imagesData.photos[stableIndex]?.src.medium || "https://via.placeholder.com/300",
+        };
+      });
 
-        setProductos(combinedData);
-      } catch (err) {
-        console.error("Error:", err);
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+      setProductos(combinedData);
+    } catch (err) {
+      console.error("Error:", err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchData();
-  }, []);
-    useEffect(() => {
+  fetchData();
+}, []);
+
+useEffect(() => {
     console.log("Productos actualizados:", productos);
   }, [productos]);
 
