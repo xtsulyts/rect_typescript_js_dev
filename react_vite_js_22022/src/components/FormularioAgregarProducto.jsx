@@ -17,7 +17,7 @@ import { useCarrito } from "../contex/CarritoContexto";
  */
 const FormularioAgregarProducto = () => {
   // Obtiene el estado global del carrito y su función de actualización
-  const { productos, imagenes } = useCarrito();
+  const { productos, imagenes, setProducto } = useCarrito();
   console.log(imagenes)
   const [isModalOpen, setIsModalOpen] = useState()
   
@@ -81,7 +81,7 @@ const FormularioAgregarProducto = () => {
         alert(`Producto "${productoAgregado.nombre}" agregado con éxito!`);
         
         // Actualiza el estado global con el nuevo producto
-        setNuevoProducto([...productos, productoAgregado]);
+        setProducto([...productos, productoAgregado]);
         
         // Limpia el formulario
         setNuevoProducto({

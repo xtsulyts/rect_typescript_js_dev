@@ -3,7 +3,7 @@ import Boton from "./Boton";
 import { XMarkIcon, ShoppingBagIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { TrashIcon } from "@heroicons/react/24/outline"; // o tu librería de iconos
-//import { useCarrito } from  "../contex/CarritoContexto"
+import { useCarrito } from  "../contex/CarritoContexto"
 
 
 
@@ -12,13 +12,12 @@ const Carrito = ({ carritoItems }) => {
   localStorage.setItem("compra", {carritoItems})
   
   const navigate = useNavigate();
+  const { eliminarDelCarrito, productos } = useCarrito()
   const importeCompra = carritoItems.reduce(
     (total, item) => total + item.precio * item.cantidad,
     0
   );
-  // const { totalItems } = useCarrito();
-  // localStorage.setItem("compra", {totalItems})
-  // console.log(totalItems);
+
 return (
   <div className="fixed inset-0 z-50 bg-white flex justify-center items-center">
     <div className="w-full max-w-2xl h-[calc(100vh-8rem)] flex flex-col shadow-xl">
@@ -73,9 +72,11 @@ return (
                       {item.cantidad}
                     </span>
                     <button className="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-r-md hover:bg-gray-200 transition-colors">
-                      +
+                      +  
                     </button>
-                    <button className="ml-4 p-1 text-gray-500 hover:text-red-500 transition-colors">
+                    <button 
+                    onClick={()=> eliminarDelCarrito(productos.id       )}
+                    className="ml-4 p-1 text-gray-500 hover:text-red-500 transition-colors">
                       <TrashIcon className="h-5 w-5" />
                     </button>
                   </div>

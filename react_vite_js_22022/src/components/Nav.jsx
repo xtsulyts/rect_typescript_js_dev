@@ -50,7 +50,7 @@ const Nav = () => {
                 className="flex items-center gap-1 bg-gradient-to-r from-pink-500 to-purple-500 text-white px-4 py-2 rounded-full hover:shadow-lg hover:from-pink-600 hover:to-purple-600 transition-all duration-300"
               >
                 <ShoppingCartIcon className="h-5 w-5" />
-                <span>Carrito</span>
+                <span></span>
               </button>
             </div>
 

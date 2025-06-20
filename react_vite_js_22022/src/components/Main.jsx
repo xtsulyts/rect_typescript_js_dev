@@ -7,7 +7,7 @@ const Main = () => {
  
 
   // Seleccionamos un producto destacado (podría venir de una API o ser el primero)
-  const productoDestacado = productos.length > 0 ? productos[1] : null;
+  const productoDestacado = productos.length > 0 ? productos[7] : null;
 
   if (!productoDestacado) {
     return (
