@@ -10,7 +10,7 @@ const UsuariosPrueba = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch('https://67f5e9af913986b16fa5e489.mockapi.io/api/usuarios');
+        const response = await fetch('https://dummyjson.com/users');
         if (!response.ok) {
           throw new Error('Error al obtener los usuarios');
         }

@@ -1,132 +1,126 @@
-import { useState } from 'react';
-//import { useCarrito } from '../contex/CarritoContexto';
+import { useState, useEffect } from 'react';
 import { FaUser, FaLock } from 'react-icons/fa';
-import { useUsuario } from '../contex/UsuarioContexto'; // Importamos nuestro hook personalizado
+import { useUsuario } from '../contex/UsuarioContexto';
 import Boton from './Boton';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [credentials, setCredentials] = useState({
+    username: 'kminchelle', // Valor de prueba por defecto
+    password: '0lelplR'    // Valor de prueba por defecto
+  });
   const [errors, setErrors] = useState({});
+  const [loginError, setLoginError] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   
-  // Accedemos a las funciones del contexto
-  const { login, logout} = useUsuario();
+  const { login, isAuthenticated } = useUsuario();
 
-  const [loginError, setLoginError] = useState(null);
-
-/**
- * Valida los campos de un formulario de inicio de sesión/registro.
- * Verifica que el email tenga formato correcto y que la contraseña cumpla con longitud mínima.
- * 
- * @returns {boolean} - Retorna `true` si no hay errores de validación, `false` si hay errores
- * 
- * @example
- * const isValid = validateForm();
- * if (isValid) {
- *   // Proceder con el envío del formulario
- * }
- */
-const validateForm = () => {
-  // Objeto para almacenar los mensajes de error
-  const newErrors = {};
-  
-  // Expresión regular para validar formato de email
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  // Validación del campo email
-  if (!email) {
-    newErrors.email = 'El email es requerido';
-  } else if (!emailRegex.test(email)) {
-    newErrors.email = 'Email no válido';
-  }
-
-  // Validación del campo contraseña
-  if (!password) {
-    newErrors.password = 'La contraseña es requerida';
-  } else if (password.length < 6) {
-    newErrors.password = 'Mínimo 6 caracteres';
-  }
-
-  // Actualiza el estado de errores con los nuevos mensajes
-  setErrors(newErrors);
-  
-  // Retorna true si no hay errores (el objeto newErrors está vacío)
-  return Object.keys(newErrors).length === 0;
-};
-
-
+  // Redirigir si ya está autenticado (con protección contra bucles)
+  useEffect(() => {
+    if (isAuthenticated && window.location.pathname !== '/administracion') {
+      navigate('/administracion');
+    }
+  }, [isAuthenticated, navigate]);
 
   /**
- * Maneja el envío del formulario de inicio de sesión.
- * Realiza validación, autenticación y manejo de errores.
- * 
- * @param {Event} e - Evento de submit del formulario
- * @async
- * 
- * @example
- * <form onSubmit={handleSubmit}>
- *   {/* Campos del formulario *\/}
- * </form>
- */
-const handleSubmit = async (e) => {
-    // Previene el comportamiento por defecto del formulario (recarga de página)
+   * Valida los campos del formulario
+   * @returns {boolean} True si el formulario es válido
+   */
+  const validateForm = () => {
+    const newErrors = {};
+    
+    if (!credentials.username.trim()) {
+      newErrors.username = 'El nombre de usuario es requerido';
+    }
+
+    if (!credentials.password) {
+      newErrors.password = 'La contraseña es requerida';
+    } else if (credentials.password.length < 6) {
+      newErrors.password = 'Mínimo 6 caracteres';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  /**
+   * Maneja cambios en los inputs
+   * @param {React.ChangeEvent<HTMLInputElement>} e 
+   */
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setCredentials(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    
+    // Limpiar error al escribir
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: undefined }));
+    }
+    if (loginError) setLoginError(null);
+  };
+
+  /**
+   * Maneja el envío del formulario
+   * @param {React.FormEvent} e 
+   */
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Valida el formulario y sale si hay errores
-    if (!validateForm()) return;
+    if (!validateForm()) return;  
     
     try {
-      // Limpia errores previos
-      setLoginError(null);
-      
-      // Intenta hacer login (llamada asíncrona a API/servicio)
-      await login({ email, password });
-
-      // Navega a la página principal si el login es exitoso
-      navigate('/'); 
+      setIsSubmitting(true);
+      await login(credentials);
+      navigate('/contacto'); // Cambiado para que coincida con el efecto
     } catch (error) {
-      // Captura y muestra errores de autenticación
-      setLoginError(error.message);
+      console.error('Login error:', error);
+      setLoginError(error.message || 'Error al iniciar sesión');
+    } finally {
+      setIsSubmitting(false);
     }
-};
+  };
 
   return (
-    <div className="min-h-screen  flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
       <form
         onSubmit={handleSubmit}
         className="bg-white p-8 rounded-lg shadow-md w-full max-w-md"
+        noValidate
       >
         <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Iniciar Sesión</h2>
         
         {loginError && (
-          <div className="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+          <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded text-sm">
             {loginError}
           </div>
         )}
 
-        {/* Campo Email */}
+        {/* Campo Username */}
         <div className="mb-4">
-          <label htmlFor="email" className="block text-gray-700 mb-2">
-            Email
+          <label htmlFor="username" className="block text-gray-700 mb-2">
+            Nombre de Usuario
           </label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <FaUser className="text-gray-500" />
             </div>
             <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="ejemplo@tienda.com"
+              type="text"
+              id="username"
+              name="username"
+              value={credentials.username}
+              onChange={handleChange}
+              placeholder="kminchelle"
               className={`w-full pl-10 pr-3 py-2 border rounded-lg focus:outline-none ${
-                errors.email ? 'border-red-500' : 'border-gray-300 focus:border-blue-500'
+                errors.username ? 'border-red-500' : 'border-gray-300 focus:border-blue-500'
               }`}
+              autoComplete="username"
             />
           </div>
-          {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+          {errors.username && <p className="text-red-500 text-sm mt-1">{errors.username}</p>}
         </div>
 
         {/* Campo Contraseña */}
@@ -141,12 +135,14 @@ const handleSubmit = async (e) => {
             <input
               type="password"
               id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              name="password"
+              value={credentials.password}
+              onChange={handleChange}
               placeholder="••••••••"
               className={`w-full pl-10 pr-3 py-2 border rounded-lg focus:outline-none ${
                 errors.password ? 'border-red-500' : 'border-gray-300 focus:border-blue-500'
               }`}
+              autoComplete="current-password"
             />
           </div>
           {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
@@ -155,21 +151,31 @@ const handleSubmit = async (e) => {
         {/* Botón de Submit */}
         <button
           type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200"
-          
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 disabled:opacity-70"
+          disabled={isSubmitting}
         >
-          Ingresar
+          {isSubmitting ? (
+            <span className="flex items-center justify-center">
+              <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Procesando...
+            </span>
+          ) : 'Ingresar'}
         </button>
-         <h2 className="text-2xl font-bold mb-6 mt-10 text-center text-gray-800">Usuarios de prueba</h2>
-        
-           <div className="flex space-x-2">
-               <Boton
-               tipo='verUsuarios'
-                children="Usuarios"
-                 onClick={() => navigate("/usuarios")}
-                // onClick={<Navigate to="/productos"/>}
-                />
-            </div>
+
+        <div className="mt-8 pt-6 border-t border-gray-200">
+          <h2 className="text-xl font-bold mb-4 text-center text-gray-800">Usuarios de prueba</h2>
+          <div className="flex justify-center">
+            <Boton
+              tipo='verUsuarios'
+              onClick={() => navigate("/usuarios")}
+            >
+              Ver usuarios de prueba
+            </Boton>
+          </div>
+        </div>
       </form>
     </div>
   );

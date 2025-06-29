@@ -12,7 +12,7 @@ const Header = () => {
   const { precioTotal } = useCarrito(0);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
-  const { usuario, logout } = useUsuario();
+  const { usuario, logout, isAuthenticated } = useUsuario();
 
   return (
     <>
@@ -33,15 +33,29 @@ const Header = () => {
 
           {/* Área de usuario */}
           <div className="flex relative">
-            {usuario ? (
+            {isAuthenticated ? (
               <div className="relative">
-                {/* Botón del usuario - ahora con onClick y estilos hover */}
+                {/* Botón del usuario - ahora con imagen en lugar del icono */}
                 <div
                   className="flex items-center cursor-pointer hover:text-yellow-400 hover:underline"
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 >
-                  <HiUser />
-                  <span className="ml-1">__{usuario.name}</span>
+                  {usuario?.image ? (
+                    <img
+                      src={usuario.image}
+                      alt={usuario.username}
+                      className="w-6 h-6 rounded-full object-cover mr-2"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = 'https://via.placeholder.com/128';
+                      }}
+                    />
+                  ) : (
+                    <div className="w-6 h-6 rounded-full bg-gray-300 flex items-center justify-center mr-2">
+                      <span className="text-xs text-gray-600">?</span>
+                    </div>
+                  )}
+                  <span className="ml-1">{usuario.username}</span>
                 </div>
 
                 {/* Menú desplegable - se activa solo por click */}
@@ -76,7 +90,7 @@ const Header = () => {
           </div>
         </div>
       </header>
-      <Nav/>
+      <Nav />
     </>
   );
 };

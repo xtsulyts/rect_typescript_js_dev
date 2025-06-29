@@ -6,8 +6,8 @@ import Footer from '../components/Footer'
 import { useUsuario } from '../contex/UsuarioContexto'
 
 const RutaProtegida = ({ children }) => {
-  const { autenticado } = useUsuario()
-  if(!autenticado){
+  const {isAuthenticated } = useUsuario()
+  if(!isAuthenticated){
     return <Navigate to="/login" replace/>
   }
   return (

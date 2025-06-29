@@ -1,11 +1,13 @@
-import React from "react";
+//import React,{ useEffect, useState }from "react";
 import ListaProductos from "../components/ListaProductos";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useCarrito } from "../contex/CarritoContexto";
 
+
 const ListaPages = () => {
-  const { carrito, productos, handleAgregarCarrito, loading, LOADER_URL } = useCarrito()
+  const { carrito, productos, handleAgregarCarrito, LOADER_URL, loading } = useCarrito()
+
   return (
     <>
       <Header carritoItems={carrito} />

@@ -18,9 +18,9 @@ import { useUsuario } from "./contex/UsuarioContexto.jsx";
 import AdminPages from "./pages/AdminPages.jsx";
 
 function App() {
-  const { carrito, handleAgregarCarrito, productos, autenticado, loading } =
+  const { carrito, handleAgregarCarrito, productos, loading } =
     useCarrito();
-  const { login } = useUsuario();
+  const { login, isAuthenticated  } = useUsuario();
 
   return (
     <Router>
@@ -53,7 +53,7 @@ function App() {
         <Route
           path="/documentacion"
           element={
-            <RutaProtegida autenticado={autenticado}>
+            <RutaProtegida autenticado={isAuthenticated}>
               <DocumentacionPages />{" "}
             </RutaProtegida>
           }
@@ -65,7 +65,7 @@ function App() {
         <Route
           path="administracion"
           element={
-            <RutaProtegida autenticado={autenticado}>
+            <RutaProtegida autenticado={isAuthenticated}>
               <AdminPages />{" "}
             </RutaProtegida>
           }

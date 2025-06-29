@@ -1,5 +1,5 @@
 //mport React, { useState } from 'react';
-import Boton from './Boton';
+//import Boton from './Boton';
 
 //import { useNavigate } from "react-router-dom";
 //import { useUsuario } from '../contex/UsuarioContexto';
@@ -14,7 +14,8 @@ const Admin = () => {
      <>
      
      <FormularioEditarProducto  />
-     {/* <FormularioAgregarProducto/> */}
+     <FormularioAgregarProducto/>
+    
     </>
   );
 };

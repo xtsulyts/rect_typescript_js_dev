@@ -175,6 +175,7 @@ export const CarritoProvider = ({ children }) => {
     actualizarCantidad,
     vaciarCarrito,
     setProductos,
+    setError,
   };
 
   return (

@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { useCarrito } from "../contex/CarritoContexto";
+import { useAdmin } from "../contex/AdminContex"
+
+
 
 /**
  * Componente FormularioProducto - Permite agregar nuevos productos al sistema
@@ -16,88 +18,27 @@ import { useCarrito } from "../contex/CarritoContexto";
  * @returns {JSX.Element} Componente de formulario para agregar productos
  */
 const FormularioAgregarProducto = () => {
-  // Obtiene el estado global del carrito y su función de actualización
-  const { productos, imagenes, setProducto } = useCarrito();
-  console.log(imagenes)
-  const [isModalOpen, setIsModalOpen] = useState()
-  
-  // Estado local para manejar los valores del formulario
-  const [nuevoProducto, setNuevoProducto] = useState({
-    nombre: "",
-    precio: 0,
-    cantidad: 0,
-    codigo: 0,
-  });
+  const { 
+        loading,
+        open,
+        setOpen,
+        productos,
+        error,
+        imagenes,
+        abrirEditor,
+        setAbrirEditor,
+        nuevoProducto,
+        setNuevoProducto,
+        seleccionado,
+        agregarProducto,
+        editarProducto,
+        eliminarProducto,
+        handleChange,
+        prepararEdicion,
+   } = useAdmin();
 
-  /**
-   * Maneja los cambios en los campos del formulario
-   * 
-   * Esta función se ejecuta cada vez que un campo del formulario cambia.
-   * Convierte automáticamente los valores numéricos (precio, cantidad, código) a Number.
-   * 
-   * @param {Object} e - Evento del cambio en el input
-   */
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setNuevoProducto({
-      ...nuevoProducto,
-      [name]: name === "precio" || name === "cantidad" || name === "codigo" 
-        ? Number(value) 
-        : value,
-    });
-  };
-
-  /**
-   * Maneja el envío del formulario
-   * 
-   * Realiza una petición POST a la API para agregar el nuevo producto.
-   * Si es exitoso, actualiza el estado global y limpia el formulario.
-   * Muestra alertas en caso de éxito o error.
-   * 
-   * @param {Object} e - Evento de submit del formulario
-   */
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      // Validación básica antes de enviar
-      if (!nuevoProducto.nombre || nuevoProducto.precio <= 0) {
-        alert("Por favor complete todos los campos requeridos correctamente");
-        return;
-      }
-
-      const response = await fetch(
-        "https://67f5e9af913986b16fa5e489.mockapi.io/api/products",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(nuevoProducto),
-        }
-      );
-
-      if (response.ok) {
-        const productoAgregado = await response.json();
-        alert(`Producto "${productoAgregado.nombre}" agregado con éxito!`);
-        
-        // Actualiza el estado global con el nuevo producto
-        setProducto([...productos, productoAgregado]);
-        
-        // Limpia el formulario
-        setNuevoProducto({
-          nombre: "",
-          precio: Number,
-          cantidad: Number,
-          codigo: Number,
-        });
-      } else {
-        throw new Error("Error al agregar el producto");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Hubo un error al agregar el producto. Por favor intente nuevamente.");
-    }
-  };
+   const [isModalOpen, setIsModalOpen] = useState()
+ 
 
  return (
     <>
@@ -145,7 +86,7 @@ const FormularioAgregarProducto = () => {
                 </p>
               </div>
 
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={agregarProducto}>
                 <div className="space-y-5">
                   {/* Nombre */}
                   <div>

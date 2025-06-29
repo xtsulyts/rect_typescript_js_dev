@@ -1,130 +1,114 @@
-import { createContext, useState, useContext, useEffect } from 'react';
+import { createContext, useState, useContext, useEffect, useCallback } from 'react';
 
-/**
- * Creación del contexto de usuario.
- * Este contexto permitirá compartir el estado de autenticación y los datos del usuario
- * en toda la aplicación sin necesidad de pasar props manualmente.
- */
 const UsuarioContexto = createContext();
 
-/**
- * Proveedor del contexto de usuario.
- * Este componente envolverá las partes de la aplicación que necesiten acceder
- * a los datos de autenticación.
- * 
- * @param {Object} props - Propiedades del componente
- * @param {ReactNode} props.children - Componentes hijos que tendrán acceso al contexto
- */
 export const UsuarioProvider = ({ children }) => {
-  // Estado para almacenar los datos del usuario logueado
   const [usuario, setUsuario] = useState(null);
-  // Estado para saber si el usuario está autenticado
-  const [autenticado, setAutenticado] = useState(true);
-  // Estado para manejar la carga inicial
-  const [cargando, setCargando] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  /**
-   * Efecto para verificar la autenticación al cargar la aplicación.
-   * Hola como andan, lo ultimo de logica es sacar props y pasar todo por contexto? ya no hay mas contenidoerificar si hay un token en localStorage, por ejemplo.
-   */
-  useEffect(() => {
-    const verificarAutenticacion = () => {
-      // verificación de token
-      const token = localStorage.getItem('token');
-      const nombreUsuario = localStorage.getItem('nombre');
-      
-      if (!token) {
-        setAutenticado(false);
-        // Aquí podrías hacer una llamada a la API para obtener los datos del usuario
-      }
-      
-      setCargando(false);
-      if (nombreUsuario) {
-        setAutenticado(true);
-      }
+
+
+  // Limpiar autenticación
+  const clearAuth = () => {
+    localStorage.removeItem('avatar');
+    localStorage.removeItem('usuarioData');
+    setUsuario(null);
+    setIsAuthenticated(false);
+    setError(null);
+  };
+
+  // Login mejorado según dummyjson API
+  const login = useCallback(async (credentials) => {
+  try {
+    setIsLoading(true);
+    setError(null);
+    
+    // Validación de credenciales
+    if (!credentials?.username || !credentials?.password) {
+      throw new Error('usuarui y password requeridos');
+    }
+
+    const response = await fetch('https://dummyjson.com/auth/login', {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: credentials.username,
+        password: credentials.password,
+        // expiresInMins: 30 // opcional: tiempo de expiración en minutos
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      // Extraer mensaje de error de la respuesta
+      const errorMsg = data.message || 'Authentication failed';
+      throw new Error(errorMsg);
+    }
+
+    // Estructura de datos según respuesta de DummyJSON
+    const usuarioData = {
+      id: data.id,
+      username: data.username,
+      email: data.email,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      gender: data.gender,
+      image: data.image,
     };
 
-    verificarAutenticacion();
+    // Guardar en estado y almacenamiento local
+    setUsuario(usuarioData);
+    setIsAuthenticated(true);
+    localStorage.setItem('avatar', data.image);
+    localStorage.setItem('usuarioData', JSON.stringify(usuarioData));
+
+    return { success: true, usuario: usuarioData };
+  } catch (err) {
+    setError(err.message);
+    console.error('Login error:', err);
+    throw err; // Re-lanzar el error para manejo en el componente
+  } finally {
+    setIsLoading(false);
+  }
+}, []);
+
+  // Logout
+  const logout = useCallback(() => {
+    clearAuth();
   }, []);
 
-  /**
-   * Función para iniciar sesión.
-   * 
-   * @param {Object} datosUsuario - Objeto con los datos del usuario
-   * @param {string} datosUsuario.email - Email del usuario
-   * @param {string} datosUsuario.password - Contraseña del usuario
-   * @returns {Promise} Promesa que resuelve cuando el login es exitoso
-   */
-  const login = async (datosUsuario) => {
-    console.log(datosUsuario);
-    
-    try {
-      // Aquí iría la llamada real a tu API de autenticación
-      // Esto es un mock para demostración
-      const response = await fetch('https://67f5e9af913986b16fa5e489.mockapi.io/api/usuarios');
-      const usuarios = await response.json();
-      
-      // Buscamos el usuario que coincida con email y contraseña
-      const usuarioEncontrado = usuarios.find(
-        u => u.email === datosUsuario.email && u.password === datosUsuario.password
-      );
-      if (!usuarioEncontrado)
-        throw new Error('Usuario no encontrado')//Skyla.Rohan67@hotmail.com   LeQoyGrNSmwdCsR
-      if (usuarioEncontrado) {
-        setUsuario(usuarioEncontrado);
-        setAutenticado(true);
-        console.log(usuarioEncontrado)
-        console.log("usuario autenticado:", {usuarioEncontrado})
-        localStorage.setItem('token', 'token_simulado'); 
-        localStorage.setItem('usuario', usuarioEncontrado.nombre);
-        return { success: true };
-      } else {
-        throw new Error('Credenciales incorrectas');
-      }
-    } catch (error) {
-      console.error('Error en login:', error);
-      throw error;
+  // Valor del contexto
+  const value = {
+    usuario,
+    isAuthenticated,
+    isLoading,
+    error,
+    login,
+    logout,
+    // Opcional: función para refrescar token
+    refreshToken: async () => {
+      // Implementación para refrescar token
     }
   };
 
-  /**
-   * Función para cerrar sesión.
-   * Limpia los datos del usuario y el estado de autenticación.
-   */
-  const logout = () => {
-    setUsuario(null);
-    setAutenticado(false);
-    localStorage.removeItem('token');
-    localStorage.removeItem('usuario')
-  };
-
-  // Valor que será accesible para los componentes que consuman este contexto
-  const valor = {
-    usuario,
-    autenticado,
-    cargando,
-    login,
-    logout,
-  };
-
   return (
-    <UsuarioContexto.Provider value={valor}>
+    <UsuarioContexto.Provider value={value}>
       {children}
     </UsuarioContexto.Provider>
   );
 };
 
-/**
- * Hook personalizado para acceder al contexto de usuario.
- * Simplifica el uso del contexto en los componentes.
- * 
- * @returns {Object} Objeto con los valores y funciones del contexto
- */
+// Hook personalizado
 export const useUsuario = () => {
   const context = useContext(UsuarioContexto);
   
   if (!context) {
-    throw new Error('useUsuario debe ser usado dentro de un UsuarioProvider');
+    throw new Error('useUsuario must be used within an UsuarioProvider');
   }
   
   return context;
