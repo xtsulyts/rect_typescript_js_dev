@@ -19,7 +19,7 @@ const LoginForm = () => {
   // Redirigir si ya está autenticado (con protección contra bucles)
   useEffect(() => {
     if (isAuthenticated && window.location.pathname !== '/administracion') {
-      navigate('/administracion');
+      navigate('/');
     }
   }, [isAuthenticated, navigate]);
 

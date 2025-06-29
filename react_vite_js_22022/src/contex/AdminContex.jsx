@@ -82,10 +82,10 @@ export const AdminContexProvider = ({ children }) => {
       const productoAgregado = await response.json();
       
       // Asignar una imagen aleatoria del stock
-      const randomImage = imagenes[Math.floor(Math.random() * imagenes.length)]?.src.medium || 
-                         "https://via.placeholder.com/300";
+      // const randomImage = imagenes[Math.floor(Math.random() * imagenes.length)]?.src.medium || 
+      //                    "https://via.placeholder.com/300";
       
-      setProductos([...productos, {...productoAgregado, imagen: randomImage}]);
+      setProductos([...productos, {...productoAgregado        }]);
       setNuevoProducto({
         nombre: "",
         precio: 0,
@@ -95,7 +95,7 @@ export const AdminContexProvider = ({ children }) => {
       });
       setOpen(false);
     } catch (err) {
-      console.error("Error:", err);
+      console.error("Error:", err);   
       setError(err.message);
     } finally {
       setLoading(false);

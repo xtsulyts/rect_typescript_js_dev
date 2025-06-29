@@ -6,11 +6,11 @@ import Admin from '../components/Admin'
 //import { useCarrito } from '../contex/CarritoContexto'
 import { useAdmin } from "../contex/AdminContex"
 const AdminPages = () => {
-  const { productos } = useAdmin()
+  const { seleccionados } = useAdmin()
   return (
   <>
   <Header/>
-  < Admin productos={productos}/>
+  < Admin seleccionados={seleccionados}/>
   <Footer/>
   </>
   )

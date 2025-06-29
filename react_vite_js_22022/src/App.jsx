@@ -66,7 +66,7 @@ function App() {
           path="administracion"
           element={
             <RutaProtegida autenticado={isAuthenticated}>
-              <AdminPages />{" "}
+              <AdminPages />{isAuthenticated}
             </RutaProtegida>
           }
         />

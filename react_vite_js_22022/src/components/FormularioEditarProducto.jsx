@@ -54,23 +54,14 @@ const fetchData = async () => {
 
     setImagenes(imagesData.photos);
 
-    // Combinar productos con sus imágenes usando un índice estable (basado en el ID)
-    const combinedData = productosData.map((producto) => {
-      // Si no hay imágenes disponibles, usar placeholder
-      if (!imagesData.photos.length) {
-        return {
+ 
+        // Combinar productos con sus imágenes
+        const combinedData = productosData.map((producto, index) => ({
           ...producto,
-          imagen: "https://via.placeholder.com/300",
-        };
-      }
-      
-      // Generar índice estable basado en el ID del producto
-      const stableIndex = hashId(producto.id) % imagesData.photos.length;
-      return {
-        ...producto,
-        imagen: imagesData.photos[stableIndex]?.src.medium || "https://via.placeholder.com/300",
-      };
-    });
+          imagen: imagesData.photos[index % imagesData.photos.length]?.src.medium || 
+                 "https://via.placeholder.com/300",
+        }));
+
 
     setProductos(combinedData);
   } catch (err) {

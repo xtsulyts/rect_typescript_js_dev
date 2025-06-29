@@ -19,6 +19,20 @@ export const UsuarioProvider = ({ children }) => {
     setError(null);
   };
 
+  // Función que se ejecuta al inicio
+const initializeAuth = () => {
+  const userData = localStorage.getItem('usuarioData');
+  if (userData) {
+    setUsuario(JSON.parse(userData));
+    setIsAuthenticated(true);
+  }
+};
+
+// Ejecutar al montar el contexto
+useEffect(() => {
+  initializeAuth();
+}, []);
+
   // Login mejorado según dummyjson API
   const login = useCallback(async (credentials) => {
   try {

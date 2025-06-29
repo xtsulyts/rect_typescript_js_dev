@@ -3,14 +3,16 @@ import ListaProductos from "../components/ListaProductos";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useCarrito } from "../contex/CarritoContexto";
+import { useAdmin } from "../contex/AdminContex";
 
 
 const ListaPages = () => {
-  const { carrito, productos, handleAgregarCarrito, LOADER_URL, loading } = useCarrito()
+  const { productos } = useAdmin()
+  const { handleAgregarCarrito, LOADER_URL, loading } = useCarrito()
 
   return (
     <>
-      <Header carritoItems={carrito} />
+      <Header  />
       {loading ? (
        <div className="flex justify-center items-center min-h-screen bg-gray-50"> 
   <img

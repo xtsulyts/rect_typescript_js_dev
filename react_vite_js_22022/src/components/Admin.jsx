@@ -5,7 +5,7 @@
 //import { useUsuario } from '../contex/UsuarioContexto';
 //import { useCarrito } from '../contex/CarritoContexto';
 import FormularioEditarProducto  from "./FormularioEditarProducto"
-import FormularioAgregarProducto from './FormularioAgregarProducto';
+//import FormularioAgregarProducto from './FormularioAgregarProducto';
 
 
 const Admin = () => {
@@ -14,7 +14,7 @@ const Admin = () => {
      <>
      
      <FormularioEditarProducto  />
-     <FormularioAgregarProducto/>
+    
     
     </>
   );
