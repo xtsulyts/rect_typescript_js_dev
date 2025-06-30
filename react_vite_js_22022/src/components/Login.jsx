@@ -114,7 +114,7 @@ const LoginForm = () => {
       className="flex items-center cursor-pointer hover:bg-gray-100 px-2 py-1 rounded"
       onClick={() => {
         navigator.clipboard.writeText('emilys');
-        alert('Usuario copiado: emilys');
+       
       }}
     >
       <span className="font-semibold mr-2">Usuario:</span>
@@ -127,7 +127,7 @@ const LoginForm = () => {
       className="flex items-center cursor-pointer hover:bg-gray-100 px-2 py-1 rounded"
       onClick={() => {
         navigator.clipboard.writeText('emilyspass');
-        alert('Contraseña copiada: emilyspass');
+       
       }}
     >
       <span className="font-semibold mr-2">Password:</span>
