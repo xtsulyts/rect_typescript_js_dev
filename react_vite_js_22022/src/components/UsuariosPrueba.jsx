@@ -65,10 +65,10 @@ const UsuariosPrueba = () => {
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Edad</th>
+                {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Edad</th> */}
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Género</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Teléfono</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Password</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
               </tr>
             </thead>
@@ -86,10 +86,10 @@ const UsuariosPrueba = () => {
                       {user.firstName} {user.lastName}
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user.age}</td>
+                  {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user.age}</td> */}
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 capitalize">{user.gender}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user.email}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user.phone}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user.password}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     <button
                       onClick={() => handleUserClick(user)}

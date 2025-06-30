@@ -1,7 +1,9 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
-import { RingLoader } from 'react-spinners';
+//import { RingLoader } from 'react-spinners';
 
 const API_KEY = "9tNEjFhwUIus25QDwOd8iywPhg5QEyYDWiVS9NlvWfD2MeSClgYAU125";
+
+const MOCKAPI_URL = "https://67f5e9af913986b16fa5e489.mockapi.io/api/products"
 
 /**
  * Contexto para manejar el estado global del carrito de compras
@@ -45,49 +47,62 @@ export const CarritoProvider = ({ children }) => {
    * - MockAPI para datos de productos
    */
   useEffect(() => {
-    
+  // Función hash mejorada para generar un índice estable a partir de un string (ID)
+  function hashId(str, max) {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      const char = str.charCodeAt(i);
+      hash = (hash << 5) - hash + char;
+      hash = hash & hash; // Convierte a entero de 32 bits
+    }
+    return Math.abs(hash) % max;
+  }
 
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-
-        const [imagesResponse, productosResponse] = await Promise.all([
-          fetch("https://api.pexels.com/v1/search?query=sneakers&per_page=148", {
-            headers: { Authorization: API_KEY },
-          }),
-          fetch("https://67f5e9af913986b16fa5e489.mockapi.io/api/products"),
-        ]);
-
-        if (!imagesResponse.ok) throw new Error("Error en API de imágenes");
-        if (!productosResponse.ok) throw new Error("Error en API de productos");
-
-        const [imagesData, productosData] = await Promise.all([
-          imagesResponse.json(),
-          productosResponse.json(),
-        ]);
-
-        setImagenes(imagesData.photos);
-
-        // Combinar productos con sus imágenes
-        const combinedData = productosData.map((producto, index) => ({
+  // Fetch inicial de datos
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+  
+      const [imagesResponse, productosResponse] = await Promise.all([
+        fetch("https://api.pexels.com/v1/search?query=sneakers+shoes&per_page=80&orientation=landscape&size=medium", {
+          headers: { Authorization: API_KEY },
+        }),
+        fetch(MOCKAPI_URL),
+      ]);
+  
+      if (!imagesResponse.ok) throw new Error("Error en API de imágenes");
+      if (!productosResponse.ok) throw new Error("Error en API de productos");
+  
+      const [imagesData, productosData] = await Promise.all([
+        imagesResponse.json(),
+        productosResponse.json(),
+      ]);
+  
+      setImagenes(imagesData.photos);
+  
+      // Combinar productos con sus imágenes usando hashId para asignación consistente
+      const combinedData = productosData.map(producto => {
+        // Usamos el ID del producto para obtener siempre la misma imagen
+        const imageIndex = hashId(producto.id.toString(), imagesData.photos.length);
+        return {
           ...producto,
-          imagen: imagesData.photos[index % imagesData.photos.length]?.src.medium || 
+          imagen: imagesData.photos[imageIndex]?.src.medium || 
                  "https://via.placeholder.com/300",
-        }));
-
-        setProductos(combinedData);
-      } catch (err) {
-        console.error("Error:", err);
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
+        };
+      });
+  
+      setProductos(combinedData);
+    } catch (err) {
+      console.error("Error:", err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  fetchData();
+}, []); // <-- Aquí solo debe haber un cierre del useEffect
 
     useEffect(() => {
     console.log("Productos actualizados:", productos);

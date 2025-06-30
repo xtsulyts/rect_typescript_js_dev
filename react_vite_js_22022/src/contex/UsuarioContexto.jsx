@@ -1,4 +1,5 @@
 import { createContext, useState, useContext, useEffect, useCallback } from 'react';
+import Swal from 'sweetalert2';
 
 const UsuarioContexto = createContext();
 
@@ -12,8 +13,10 @@ export const UsuarioProvider = ({ children }) => {
 
   // Limpiar autenticación
   const clearAuth = () => {
+    alertaLogout();
     localStorage.removeItem('avatar');
     localStorage.removeItem('usuarioData');
+    localStorage.removeItem('compra')
     setUsuario(null);
     setIsAuthenticated(false);
     setError(null);
@@ -41,7 +44,7 @@ useEffect(() => {
     
     // Validación de credenciales
     if (!credentials?.username || !credentials?.password) {
-      throw new Error('usuarui y password requeridos');
+      throw new Error('usuario y password requeridos');
     }
 
     const response = await fetch('https://dummyjson.com/auth/login', {
@@ -52,7 +55,7 @@ useEffect(() => {
       body: JSON.stringify({
         username: credentials.username,
         password: credentials.password,
-        // expiresInMins: 30 // opcional: tiempo de expiración en minutos
+      
       })
     });
 
@@ -91,9 +94,65 @@ useEffect(() => {
   }
 }, []);
 
+const alertaLogout = () => {
+  Swal.fire({
+    title: "¿Estás seguro de cerrar sesión?",
+    text: "Serás redirigido al inicio de sesión",
+    icon: "question",
+    showCancelButton: true,
+    confirmButtonText: "Sí, cerrar sesión",
+    cancelButtonText: "Cancelar",
+    reverseButtons: true,
+    customClass: {
+      popup: 'bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700',
+      title: 'text-lg font-semibold text-gray-900 dark:text-white',
+      htmlContainer: 'text-gray-700 dark:text-gray-300',
+      confirmButton: 'px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200',
+      cancelButton: 'px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors duration-200 mr-3',
+    },
+    buttonsStyling: false,
+    backdrop: `
+      rgba(0,0,0,0.4)
+      url("/images/nyan-cat.gif")
+      left top
+      no-repeat
+    `
+  }).then((result) => {
+    if (result.isConfirmed) {
+      //función de logout
+      logout(); 
+      
+      Swal.fire({
+        title: "Sesión cerrada",
+        text: "Has salido correctamente del sistema",
+        icon: "success",
+        timer: 2000,
+        showConfirmButton: false,
+        customClass: {
+          popup: 'bg-white dark:bg-gray-800 rounded-lg shadow-xl',
+          title: 'text-lg font-semibold text-green-600 dark:text-green-400',
+        }
+      });
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      Swal.fire({
+        title: "Cancelado",
+        text: "Tu sesión sigue activa",
+        icon: "info",
+        timer: 2000,
+        showConfirmButton: false,
+        customClass: {
+          popup: 'bg-white dark:bg-gray-800 rounded-lg shadow-xl',
+          title: 'text-lg font-semibold text-blue-600 dark:text-blue-400',
+        }
+      });
+    }
+  });
+};
   // Logout
   const logout = useCallback(() => {
+    
     clearAuth();
+    
   }, []);
 
   // Valor del contexto

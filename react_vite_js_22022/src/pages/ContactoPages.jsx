@@ -2,11 +2,11 @@ import React from 'react'
 import FormularioContacto from '../components/FormularioContacto'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-const Contacto = ({ carrito }) => {
+const Contacto = () => {
   
   return (
     <div>
-      <Header carritoItems={carrito}/>
+      <Header />
         <FormularioContacto/>
       <Footer/>
       

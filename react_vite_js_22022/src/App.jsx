@@ -16,6 +16,7 @@ import RutaProtegida from "./autenticacion/RutaProtegida.jsx";
 import { useCarrito } from "./contex/CarritoContexto.jsx";
 import { useUsuario } from "./contex/UsuarioContexto.jsx";
 import AdminPages from "./pages/AdminPages.jsx";
+import ComprasPages from "./pages/ComprasPages.jsx";
 
 function App() {
   const { carrito, handleAgregarCarrito, productos, loading } =
@@ -48,6 +49,7 @@ function App() {
             />
           }
         />
+        <Route path="/compras" element={<ComprasPages/>}/>
         <Route path="/carrito" element={<CarritoPages carrito={carrito} />} />
         <Route path="/contacto" element={<ContactoPages />} />
         <Route

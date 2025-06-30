@@ -6,6 +6,7 @@ import { useUsuario } from "../contex/UsuarioContexto";
 import { useNavigate } from "react-router-dom";
 //import { useCarrito } from "../contex/CarritoContexto";
 //import { HiUser } from "react-icons/hi";
+//import Swal from "sweetalert2";
 import Nav from "./Nav";
 
 const Header = () => {
@@ -13,6 +14,8 @@ const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const { usuario, logout, isAuthenticated } = useUsuario();
+
+
 
   return (
     <>

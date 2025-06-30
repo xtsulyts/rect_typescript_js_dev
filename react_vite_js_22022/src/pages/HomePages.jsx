@@ -8,6 +8,8 @@ import { useCarrito } from "../contex/CarritoContexto";
 
 
 
+
+
 const HomePages = () => {
   const { carrito, productos } = useCarrito()
   console.log(carrito);
@@ -15,7 +17,7 @@ const HomePages = () => {
 
   return (
     <>
-      <Header carritoItems={carrito} />
+      <Header carritoItems={productos} />
 
       <section className="py-12 px-4">
         {/* <h2 className="text-3xl font-bold text-center mb-8">

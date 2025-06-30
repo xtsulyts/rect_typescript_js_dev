@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useCarrito } from '../contex/CarritoContexto';
+import Swal from 'sweetalert2';
 
 const Main = () => {
   const { productos } = useCarrito();
@@ -16,6 +17,18 @@ const Main = () => {
       </div>
     );
   }
+
+  const funcionalidadPendiente = () => {
+    Swal.fire({
+      title: "Funcionalidad pendiente",
+      text: "Esta característica estará disponible pronto",
+      icon: "info",
+      timer: 1500,
+      timerProgressBar: true,
+      showConfirmButton: false
+    });
+  };
+  
 
     return (
     <section className="relative max-w-6xl mx-auto my-12 bg-gradient-to-r from-gray-900 to-gray-800 rounded-xl shadow-xl overflow-hidden">
@@ -60,7 +73,7 @@ const Main = () => {
 
             <div className="flex flex-wrap gap-3">
               <button
-                 onClick={()=>alert("Funcionalidad pendiente")}//onClick={() => handleAgregarCarrito(productoDestacado)}
+                 onClick={()=>funcionalidadPendiente()}//onClick={() => handleAgregarCarrito(productoDestacado)}
                 className="px-5 py-2 bg-amber-500 hover:bg-amber-600 text-black font-medium rounded-lg transition-colors duration-300 flex items-center gap-2"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

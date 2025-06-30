@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import React from "react";
 import { useUsuario } from '../contex/UsuarioContexto';
 import { useCarrito } from '../contex/CarritoContexto';
+import Swal from 'sweetalert2';
 
 /**
  * Componente CarruselOfertas - Muestra ofertas especiales en formato de carrusel
@@ -35,7 +36,7 @@ const CarruselOfertas = ({
   // Crear ofertas basadas en los productos recibidos
   const [ofertas, setOfertas] = useState(() => {
     // Solo toma los primeros 3 productos para el carrusel
-    const productosDestacados = productos.map((producto, index) => ({
+    const productosDestacados = productos.map((producto) => ({
       id: producto.id,
       imagen: producto.imagen,
       titulo: producto.nombre,
@@ -95,24 +96,6 @@ const CarruselOfertas = ({
     return () => clearInterval(timer);
   }, [ofertas.length, autoPlay, interval, isHovered]);
 
-  // Manejar agregar al carrito desde una oferta
-  const agregarAlCarrito = (productoId) => {
-    if (!autenticado) {
-      console.log('Debes iniciar sesión para agregar al carrito');
-      return;
-    }
-    
-    const producto = ofertas.find(p => p.id === productoId);
-    if (producto) {
-      handleAgregarCarrito({
-        id: producto.id,
-        nombre: producto.titulo,
-        precio: producto.precio,
-        imagen: producto.imagen,
-        cantidad: 1 // Se añade 1 unidad por defecto
-      });
-    }
-  };
 
   // Cambiar slide manualmente
   const goToSlide = (index) => {
@@ -135,6 +118,19 @@ const CarruselOfertas = ({
       </div>
     );
   }
+
+const funcionalidadPendiente = () => {
+  Swal.fire({
+    title: "Funcionalidad pendiente",
+    text: "Esta característica estará disponible pronto",
+    icon: "info",
+    timer: 1500,
+    timerProgressBar: true,
+    showConfirmButton: false
+  });
+};
+
+
 
   return (
     <>
@@ -170,13 +166,13 @@ const CarruselOfertas = ({
                   
                   <div className="flex gap-4">
                     <a
-                      onClick={()=>alert("Funcionalidad pendiente")}
+                      onClick={()=>funcionalidadPendiente()}
                       className="px-6 py-3 bg-transparent border-2 border-white text-white font-medium rounded-lg hover:bg-white hover:text-black transition-colors duration-300"
                     >
                       Ver detalles
                     </a>
                     <button
-                      onClick={()=>alert("Funcionalidad pendiente")}//onClick={() => agregarAlCarrito(oferta.id)}
+                      onClick={()=>funcionalidadPendiente()}//onClick={() => agregarAlCarrito(oferta.id)}
                       className="px-6 py-3 bg-amber-500 text-black font-medium rounded-lg hover:bg-amber-600 transition-colors duration-300 flex items-center gap-2"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

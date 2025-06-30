@@ -20,15 +20,15 @@ const FormularioEditarProducto = () => {
   });
   const navigate = useNavigate();
 
-// Función hash para generar un índice estable a partir de un string (ID)
-function hashId(str) {
+// Función hash mejorada para generar un índice estable a partir de un string (ID)
+function hashId(str, max) {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
     const char = str.charCodeAt(i);
     hash = (hash << 5) - hash + char;
     hash = hash & hash; // Convierte a entero de 32 bits
   }
-  return Math.abs(hash);
+  return Math.abs(hash) % max;
 }
 
 // Fetch inicial de datos
@@ -38,7 +38,7 @@ const fetchData = async () => {
     setError(null);
 
     const [imagesResponse, productosResponse] = await Promise.all([
-      fetch("https://api.pexels.com/v1/search?query=sneakers&per_page=148", {
+      fetch("https://api.pexels.com/v1/search?query=sneakers+shoes&per_page=80&orientation=landscape&size=medium", {
         headers: { Authorization: API_KEY },
       }),
       fetch(MOCKAPI_URL),
@@ -54,14 +54,16 @@ const fetchData = async () => {
 
     setImagenes(imagesData.photos);
 
- 
-        // Combinar productos con sus imágenes
-        const combinedData = productosData.map((producto, index) => ({
-          ...producto,
-          imagen: imagesData.photos[index % imagesData.photos.length]?.src.medium || 
-                 "https://via.placeholder.com/300",
-        }));
-
+    // Combinar productos con sus imágenes usando hashId para asignación consistente
+    const combinedData = productosData.map(producto => {
+      // Usamos el ID del producto para obtener siempre la misma imagen
+      const imageIndex = hashId(producto.id.toString(), imagesData.photos.length);
+      return {
+        ...producto,
+        imagen: imagesData.photos[imageIndex]?.src.medium || 
+               "https://via.placeholder.com/300",
+      };
+    });
 
     setProductos(combinedData);
   } catch (err) {
@@ -100,7 +102,7 @@ useEffect(() => {
       precio: producto.precio,
       cantidad: producto.cantidad,
       codigo: producto.codigo
-    });
+    });     
   };
 
   // Manejar cambios en el formulario

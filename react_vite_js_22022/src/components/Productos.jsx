@@ -18,20 +18,10 @@ const Productos = ({ producto }) => {
   const { handleAgregarCarrito } = useCarrito();
   const {usuario} = useUsuario()
 
-
-  // Estado para la cantidad seleccionada del producto
   const [cantidad, setCantidad] = useState(0);
-
-  // Estado para el stock disponible del producto
   const [stock, setStock] = useState(producto.cantidad);
-
-  // Estado para el costo total de la compra
   const [costoCompra, setCostoCompra] = useState(0);
 
-  /**
-   * Incrementa la cantidad del producto en 1
-   * Actualiza el estado local pero no modifica el carrito hasta que se confirme
-   */
   const incrementar = () => {
     if (stock > 0) {
       setCantidad((prev) => prev + 1);
@@ -40,10 +30,6 @@ const Productos = ({ producto }) => {
     }
   };
 
-  /**
-   * Decrementa la cantidad del producto en 1
-   * Actualiza el estado local pero no modifica el carrito hasta que se confirme
-   */
   const decrementar = () => {
     if (cantidad > 0) {
       setCantidad((prev) => prev - 1);
@@ -52,14 +38,9 @@ const Productos = ({ producto }) => {
     }
   };
 
-  /**
-   * Maneja el evento de agregar al carrito
-   * Solo aquí se actualiza el carrito con la cantidad seleccionada
-   */
   const agregarAlCarrito = () => {
     if (cantidad > 0) {
       handleAgregarCarrito(producto, cantidad);
-     
       setCantidad(cantidad);
       setCostoCompra(costoCompra);
     }
@@ -68,20 +49,19 @@ const Productos = ({ producto }) => {
   return (
     <div className="galleryContainer">
       <div
-        className="productCard relative border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+        className="productCard relative bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 group"
         key={producto.codigo}
       >
         {/* Imagen del producto */}
         {producto.imagen && (
-          <div className="h-48 w-full overflow-hidden">
+          <div className="h-48 w-full overflow-hidden relative">
             <img
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               src={producto.imagen}
               alt={producto.nombre}
               onClick={() => navigate(`/productos/${producto.id}`)}
             />
-            {/* Badge de código */}
-            <span className="absolute top-2 right-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded-full">
+            <span className="absolute top-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded-full backdrop-blur-sm">
               #{producto.codigo}
             </span>
           </div>
@@ -91,75 +71,89 @@ const Productos = ({ producto }) => {
         <div className="p-4">
           {/* Nombre y precio */}
           <div className="flex justify-between items-start mb-2">
-            <h3 className="text-lg font-semibold text-gray-900 truncate pr-2">
+            <h3 
+              className="text-lg font-semibold text-gray-900 truncate pr-2 hover:text-amber-600 transition-colors cursor-pointer"
+              onClick={() => navigate(`/productos/${producto.id}`)}
+            >
               {producto.nombre}
             </h3>
             <span className="text-xl font-bold text-gray-900 whitespace-nowrap">
-              ${producto.precio}
+              ${producto.precio.toLocaleString()}
             </span>
+            
+            
           </div>
-
+          <h1>{producto.descripcion}</h1>
           {/* Estado de stock */}
-          <div className="mb-3">
+          <div className="mb-4">
             <p
-              className={`text-sm font-medium py-1 px-3 rounded-full inline-block ${
+              className={`text-xs font-medium py-1 px-2 rounded-full inline-flex items-center ${
                 !stock
                   ? "bg-red-100 text-red-800"
                   : stock < 3
-                  ? "bg-yellow-100 text-yellow-800"
-                  : "bg-green-100 text-green-800"
+                  ? "bg-amber-100 text-amber-800"
+                  : "bg-emerald-100 text-emerald-800"
               }`}
             >
               {!stock
                 ? "❌ Agotado"
                 : stock < 15
-                ? `⚠️ Poco stock (${stock})`
-                : `✔️ Disponibles: ${stock}`}
+                ? `⚠️ ${stock} disponibles`
+                : `✔️ ${stock} disponibles`}
             </p>
           </div>
 
-          {/* Controles de cantidad y precio */}
+          {/* Controles de cantidad */}
           <div className="flex items-center justify-between">
-            {/* Mostrar cantidad solo si es mayor a 0 */}
-            {cantidad !== 0 && (
-              <span className="animate-bounce bg-amber-500 text-black font-black px-3 py-1 rounded-lg shadow-[0_0_15px_#f59e0b]">
-                {cantidad}
-              </span>
-            )}
+            <div className="flex items-center space-x-3">
+              <button
+                onClick={decrementar}
+                disabled={cantidad === 0}
+                className={`flex items-center justify-center h-8 w-8 rounded-full transition-all duration-200 focus:outline-none ${
+                  cantidad === 0 
+                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300 active:bg-gray-400'
+                }`}
+              >
+                <span className="text-lg">−</span>
+              </button>
 
-            {/* Mostrar costo solo si es mayor a 0 */}
-            {costoCompra !== 0 && (
-              <span className="text-sm font-medium text-blue-600 ml-auto mr-3">
+              {cantidad > 0 && (
+                <span className="inline-flex items-center justify-center min-w-[2rem] px-2 py-1 text-base font-bold text-gray-900">
+                  {cantidad}
+                </span>
+              )}
+
+              <button
+                onClick={incrementar}
+                disabled={stock === 0}
+                className={`flex items-center justify-center h-8 w-8 rounded-full transition-all duration-200 focus:outline-none ${
+                  stock === 0
+                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300 active:bg-gray-400'
+                }`}
+              >
+                <span className="text-lg">+</span>
+              </button>
+            </div>
+
+            {costoCompra > 0 && (
+              <span className="text-sm font-semibold text-amber-600 ml-2">
                 ${costoCompra.toFixed(2)}
               </span>
             )}
-
-            {/* Botones de incremento/decremento */}
-            <div className="flex space-x-2">
-              <Boton
-                tipo="eliminar"
-                children="➖"
-                onClick={decrementar}
-                className="flex items-center justify-center h-8 w-8 rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors"
-              />
-              <Boton
-                tipo="Agregar"
-                children="➕"
-                onClick={incrementar}
-                className="flex items-center justify-center h-8 w-8 rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors"
-              />
-            </div>
           </div>
 
-          {/* Botón para agregar al carrito (solo visible si hay cantidad seleccionada) */}
-          {cantidad !== 0 && usuario && (
-            <div className="mt-6">
-              <Boton tipo="verUsuarios" onClick={agregarAlCarrito}>
-                <span className="flex items-center gap-2">
-                  Agregar al carrito
-                  <ShoppingCartIcon className="h-5 w-5 text-white" />
-                </span>
-              </Boton>
+          {/* Botón para agregar al carrito */}
+          {cantidad > 0 && usuario && (
+            <div className="mt-4">
+              <button
+                onClick={agregarAlCarrito}
+                className="w-full bg-amber-500 hover:bg-amber-600 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
+              >
+                Agregar al carrito
+                <ShoppingCartIcon className="h-5 w-5" />
+              </button>
             </div>
           )}
         </div>

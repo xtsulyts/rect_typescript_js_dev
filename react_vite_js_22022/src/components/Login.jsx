@@ -3,11 +3,12 @@ import { FaUser, FaLock } from 'react-icons/fa';
 import { useUsuario } from '../contex/UsuarioContexto';
 import Boton from './Boton';
 import { useNavigate } from 'react-router-dom';
+import Swal from "sweetalert2";
 
 const LoginForm = () => {
   const [credentials, setCredentials] = useState({
-    username: 'kminchelle', // Valor de prueba por defecto
-    password: '0lelplR'    // Valor de prueba por defecto
+    username: 'Nombre', // Valor de prueba por defecto
+    password: '12345678'    // Valor de prueba por defecto
   });
   const [errors, setErrors] = useState({});
   const [loginError, setLoginError] = useState(null);
@@ -74,6 +75,8 @@ const LoginForm = () => {
     try {
       setIsSubmitting(true);
       await login(credentials);
+      alertaLoginExito()
+
       navigate('/contacto'); // Cambiado para que coincida con el efecto
     } catch (error) {
       console.error('Login error:', error);
@@ -83,13 +86,58 @@ const LoginForm = () => {
     }
   };
 
+  const alertaLoginExito = ()=>{
+    
+  Swal.fire({
+    title: "Bienvenida/o!",
+    icon: "success",
+    //draggable: true
+    timer: "2000"
+  });
+    }
+  
+
   return (
+    
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+
+      
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-8 rounded-lg shadow-md w-full max-w-md"
+        className="bg-white p-8 rounded-lg shadow-md w-full max-w-md mt-1"
         noValidate
       >
+<div className="mb-4 p-4 bg-gray-50 border border-gray-200 rounded-md text-sm text-gray-600">
+  <p className="font-medium mb-1">Credenciales de prueba (click para copiar):</p>
+  <div className="space-y-1">
+    <div 
+      className="flex items-center cursor-pointer hover:bg-gray-100 px-2 py-1 rounded"
+      onClick={() => {
+        navigator.clipboard.writeText('emilys');
+        alert('Usuario copiado: emilys');
+      }}
+    >
+      <span className="font-semibold mr-2">Usuario:</span>
+      <span className="font-mono bg-gray-100 px-2 py-0.5 rounded">emilys</span>
+      <svg className="w-4 h-4 ml-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+      </svg>
+    </div>
+    <div 
+      className="flex items-center cursor-pointer hover:bg-gray-100 px-2 py-1 rounded"
+      onClick={() => {
+        navigator.clipboard.writeText('emilyspass');
+        alert('Contraseña copiada: emilyspass');
+      }}
+    >
+      <span className="font-semibold mr-2">Password:</span>
+      <span className="font-mono bg-gray-100 px-2 py-0.5 rounded">emilyspass</span>
+      <svg className="w-4 h-4 ml-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+      </svg>
+    </div>
+  </div>
+</div>
         <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Iniciar Sesión</h2>
         
         {loginError && (
@@ -113,7 +161,7 @@ const LoginForm = () => {
               name="username"
               value={credentials.username}
               onChange={handleChange}
-              placeholder="kminchelle"
+              placeholder="Nombre"
               className={`w-full pl-10 pr-3 py-2 border rounded-lg focus:outline-none ${
                 errors.username ? 'border-red-500' : 'border-gray-300 focus:border-blue-500'
               }`}
@@ -165,7 +213,7 @@ const LoginForm = () => {
           ) : 'Ingresar'}
         </button>
 
-        <div className="mt-8 pt-6 border-t border-gray-200">
+        {/* <div className="mt-8 pt-6 border-t border-gray-200">
           <h2 className="text-xl font-bold mb-4 text-center text-gray-800">Usuarios de prueba</h2>
           <div className="flex justify-center">
             <Boton
@@ -175,7 +223,7 @@ const LoginForm = () => {
               Ver usuarios de prueba
             </Boton>
           </div>
-        </div>
+        </div> */}
       </form>
     </div>
   );
