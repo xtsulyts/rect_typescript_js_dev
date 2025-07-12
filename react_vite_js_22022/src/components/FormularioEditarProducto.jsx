@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FormularioAgregarProducto from './FormularioAgregarProducto';
+import Swal from 'sweetalert2';
 
 const API_KEY = "9tNEjFhwUIus25QDwOd8iywPhg5QEyYDWiVS9NlvWfD2MeSClgYAU125";
 const MOCKAPI_URL = 'https://67f5e9af913986b16fa5e489.mockapi.io/api/products';
@@ -78,8 +79,24 @@ useEffect(() => {
   fetchData();
 }, []);
 
-  // Manejar eliminación de producto
-  const handleDelete = async (id) => {
+
+
+// Manejar eliminación de producto
+const handleDelete = async (id) => {
+  // Mostrar alerta de confirmación
+  const result = await Swal.fire({
+    title: '¿Estás seguro?',
+    text: "¡No podrás revertir esto!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Sí, eliminar',
+    cancelButtonText: 'Cancelar'
+  });
+
+  // Si el usuario confirma la eliminación
+  if (result.isConfirmed) {
     try {
       const response = await fetch(`${MOCKAPI_URL}/${id}`, {
         method: 'DELETE',
@@ -88,11 +105,26 @@ useEffect(() => {
       if (!response.ok) throw new Error('Error al eliminar producto');
 
       setProductos(productos.filter(producto => producto.id !== id));
+      
+      // Mostrar alerta de éxito
+      Swal.fire(
+        '¡Eliminado!',
+        'El producto ha sido eliminado.',
+        'success'
+      );
     } catch (err) {
       console.error("Error al eliminar:", err);
       setError(err.message);
+      
+      // Mostrar alerta de error
+      Swal.fire(
+        'Error',
+        'No se pudo eliminar el producto',
+        'error'
+      );
     }
-  };
+  }
+};
 
   // Iniciar edición
   const startEdit = (producto) => {
@@ -166,6 +198,19 @@ useEffect(() => {
       </button>
     </div>
   );
+
+
+  const alertaEliminar = () => {
+  Swal.fire({
+    title: "Funcionalidad pendiente",
+    text: "Esta característica estará disponible pronto",
+    icon: "info",
+    timer: 1500,
+    timerProgressBar: true,
+    showConfirmButton: false
+  });
+};
+
 
   return (
     <div className="container mx-auto px-4 py-8">

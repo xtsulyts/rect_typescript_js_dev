@@ -49,16 +49,7 @@ const CarruselOfertas = ({
     
     // Si no hay productos, usa datos de ejemplo
     return productosDestacados.length > 0 ? productosDestacados : [
-      {
-        id: '1',
-        imagen: 'https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?auto=compress&cs=tinysrgb&h=350',
-        titulo: 'Fresh Bamboo Chips',
-        descripcion: '¡Oferta especial! $57 (Código 48)',
-        productoId: '1',
-        enlace: '/productos/1',
-        precio: 57,
-        cantidad: 21
-      },
+   
       {
         id: '2',
         imagen: 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',

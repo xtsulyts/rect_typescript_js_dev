@@ -57,7 +57,7 @@ const Carrito = ({ carritoItems }) => {
 
     vaciarCarrito();
     // Redirigir (puedes cambiar esto según tu flujo)
-    navigate("/");
+    navigate("/compras");
     
   };
   
