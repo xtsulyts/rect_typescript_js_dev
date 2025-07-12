@@ -124,12 +124,12 @@ const ComprobantesCompra = () => {
   return (
     <div className="space-y-8 p-4 md:p-8">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-gray-800">Mis Comprobantes de Compra</h1>
-        {contadorCompras > 0 && (
+        <h1 className="text-2xl font-bold text-gray-800">Comprobantes de Compra</h1>
+        {/* {contadorCompras > 0 && (
           <span className="bg-blue-100 text-blue-800 text-sm font-semibold px-3 py-1 rounded-full">
             Total de compras: {contadorCompras}
           </span>
-        )}
+        )} */}
       </div>
       
       {compras.length === 0 ? (

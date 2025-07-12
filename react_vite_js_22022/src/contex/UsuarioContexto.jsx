@@ -13,7 +13,6 @@ export const UsuarioProvider = ({ children }) => {
 
   // Limpiar autenticación
   const clearAuth = () => {
-    alertaLogout();
     localStorage.removeItem('avatar');
     localStorage.removeItem('usuarioData');
     localStorage.removeItem('compra')
@@ -94,8 +93,9 @@ useEffect(() => {
   }
 }, []);
 
-const alertaLogout = () => {
-  Swal.fire({
+// Función de alerta modificada que devuelve una Promise
+const mostrarAlertaLogout = () => {
+  return Swal.fire({
     title: "¿Estás seguro de cerrar sesión?",
     text: "Serás redirigido al inicio de sesión",
     icon: "question",
@@ -110,19 +110,21 @@ const alertaLogout = () => {
       confirmButton: 'px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200',
       cancelButton: 'px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors duration-200 mr-3',
     },
-    buttonsStyling: false,
-    backdrop: `
-      rgba(0,0,0,0.4)
-      url("/images/nyan-cat.gif")
-      left top
-      no-repeat
-    `
-  }).then((result) => {
-    if (result.isConfirmed) {
-      //función de logout
-      logout(); 
+    buttonsStyling: false
+  });
+};
+
+// Función de logout principal
+const logout = useCallback(async () => {
+  const result = await mostrarAlertaLogout();
+  
+  if (result.isConfirmed) {
+    try {
+      // Ejecutar la limpieza de autenticación
+      await clearAuth();
       
-      Swal.fire({
+      // Mostrar confirmación
+      await Swal.fire({
         title: "Sesión cerrada",
         text: "Has salido correctamente del sistema",
         icon: "success",
@@ -133,27 +135,28 @@ const alertaLogout = () => {
           title: 'text-lg font-semibold text-green-600 dark:text-green-400',
         }
       });
-    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      
+      // Redirigir después de cerrar sesión
+      window.location.href = '/login';
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
       Swal.fire({
-        title: "Cancelado",
-        text: "Tu sesión sigue activa",
-        icon: "info",
-        timer: 2000,
-        showConfirmButton: false,
-        customClass: {
-          popup: 'bg-white dark:bg-gray-800 rounded-lg shadow-xl',
-          title: 'text-lg font-semibold text-blue-600 dark:text-blue-400',
-        }
+        title: "Error",
+        text: "No se pudo cerrar la sesión correctamente",
+        icon: "error"
       });
     }
-  });
-};
-  // Logout
-  const logout = useCallback(() => {
-    
-    clearAuth();
-    
-  }, []);
+  } else {
+    // Si cancela, mostrar mensaje opcional
+    await Swal.fire({
+      title: "Cancelado",
+      text: "Tu sesión sigue activa",
+      icon: "info",
+      timer: 2000,
+      showConfirmButton: false
+    });
+  }
+}, []);
 
   // Valor del contexto
   const value = {
